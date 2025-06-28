@@ -7883,7 +7883,7 @@ void gf_PrepareRoomCharArtifactLogic () {
 bool gf_LabCrystalEnabled () {
     // Automatic Variable Declarations
     // Implementation
-    return libCamp_gf_MissionStatusCheck(libCamp_ge_MapID_MapTTychus02, libCamp_ge_MissionStatus_Completed);
+    return true;
 }
 
 void gf_PrepareRoomLabCrystalAtrifactVisibilityLogic () {
