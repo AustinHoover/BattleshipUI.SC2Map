@@ -2129,6 +2129,7 @@ Trigger/Name/62EAD063=Debriefing THorner02
 Trigger/Name/62F20EA3=Init 02F - Scenes
 Trigger/Name/62FBFFD5=TVNews - Horner02 Skippable
 Trigger/Name/6370F502=Briefing - TTosh03A Preload
+Trigger/Name/63865E37=Init CUSTOM ADDITIONS
 Trigger/Name/63BA11D7=BridgeHanson Clicked Post Callback
 Trigger/Name/6489CCAF=Animatic07 - Bar Fight
 Trigger/Name/64A6BD19=End of Time

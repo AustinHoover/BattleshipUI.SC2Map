@@ -1548,6 +1548,7 @@ trigger gt_Init03UI;
 trigger gt_Init04Environment;
 trigger gt_Init05Sounds;
 trigger gt_Init06Intro;
+trigger gt_InitCUSTOMADDITIONS;
 trigger gt_ReturnToArmory;
 trigger gt_ReturnToBridge;
 trigger gt_ReturnToCantina;
@@ -15792,6 +15793,7 @@ bool gt_MapInit_Func (bool testConds, bool runActions) {
     TriggerExecute(gt_Init04Environment, true, false);
     TriggerExecute(gt_Init05Sounds, true, false);
     TriggerExecute(gt_Init06Intro, true, false);
+    TriggerExecute(gt_InitCUSTOMADDITIONS, true, false);
     return true;
 }
 
@@ -17135,6 +17137,40 @@ bool gt_Init06Intro_Func (bool testConds, bool runActions) {
 //--------------------------------------------------------------------------------------------------
 void gt_Init06Intro_Init () {
     gt_Init06Intro = TriggerCreate("gt_Init06Intro_Func");
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Init CUSTOM ADDITIONS
+//--------------------------------------------------------------------------------------------------
+bool gt_InitCUSTOMADDITIONS_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    UISetFrameVisible(PlayerGroupAll(), c_syncFrameTypeUpkeep, false);
+    UISetFrameVisible(PlayerGroupAll(), c_syncFrameTypeSupply, false);
+    UISetFrameVisible(PlayerGroupAll(), c_syncFrameTypeCashPanel, false);
+    UISetFrameVisible(PlayerGroupAll(), c_syncFrameTypeCharacterSheetButton, false);
+    UISetFrameVisible(PlayerGroupAll(), c_syncFrameTypeCommandPanel, false);
+    UISetFrameVisible(PlayerGroupAll(), c_syncFrameTypeConsolePanel, false);
+    UISetFrameVisible(PlayerGroupAll(), c_syncFrameTypeControlGroupPanel, false);
+    UISetFrameVisible(PlayerGroupAll(), c_syncFrameTypeMinimapPanel, false);
+    UISetFrameVisible(PlayerGroupAll(), c_syncFrameTypeStatusUI, false);
+    UISetFrameVisible(PlayerGroupAll(), c_syncFrameTypeMenuBar, false);
+    UISetFrameVisible(PlayerGroupAll(), c_syncFrameTypeTeamResourceButton, false);
+    UISetFrameVisible(PlayerGroupAll(), c_syncFrameTypeArmyButton, false);
+    UISetFrameVisible(PlayerGroupAll(), c_syncFrameTypeResourcePanel, false);
+    UISetFrameVisible(PlayerGroupAll(), c_syncFrameTypePingPanel, false);
+    UISetFrameVisible(PlayerGroupAll(), c_syncFrameTypeIdleWorkerButton, false);
+    UISetFrameVisible(PlayerGroupAll(), c_syncFrameTypeMissionTimePanel, false);
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void gt_InitCUSTOMADDITIONS_Init () {
+    gt_InitCUSTOMADDITIONS = TriggerCreate("gt_InitCUSTOMADDITIONS_Func");
 }
 
 //--------------------------------------------------------------------------------------------------
@@ -41385,6 +41421,7 @@ void InitTriggers () {
     gt_Init04Environment_Init();
     gt_Init05Sounds_Init();
     gt_Init06Intro_Init();
+    gt_InitCUSTOMADDITIONS_Init();
     gt_ReturnToArmory_Init();
     gt_ReturnToBridge_Init();
     gt_ReturnToCantina_Init();
