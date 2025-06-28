@@ -19,6 +19,9 @@ void InitLibs () {
 //--------------------------------------------------------------------------------------------------
 // Constants
 //--------------------------------------------------------------------------------------------------
+const int gv_missionCount = 1;
+const int gv_missionNoPlanetSelected = -1;
+const int gv_maxPlanetsAtOnce = 5;
 const string gv_aNIMID_BRIEFING = "Briefing";
 const string gv_aNIMID_BRIEFINGVIDEOSWAP = "BriefingVideoSwap";
 const string gv_aNIMID_HIGHLIGHT = "Highlight";
@@ -64,6 +67,19 @@ const fixed gv_c_TIPINTERVALSTART = 1.0;
 //--------------------------------------------------------------------------------------------------
 // Global Structures
 //--------------------------------------------------------------------------------------------------
+struct gs_Mission {
+    string lv_planetIcon;
+    string lv_missionPath;
+    string lv_name;
+    string lv_objective;
+    string lv_bonusObjective;
+    string lv_reward;
+    string lv_research;
+    string lv_bonusOpportunities;
+    string lv_mapViewBackgroundPortraitModel;
+    string lv_mapViewContactPortraitModel;
+};
+
 struct gs_REC_JUKEBOX_PLAYBACK {
     int lv_trackCurrent;
     sound lv_music;
@@ -364,13 +380,24 @@ const int ge_ABChoiceAB_B = 1;
 //--------------------------------------------------------------------------------------------------
 // Global Variables
 //--------------------------------------------------------------------------------------------------
-int gv_maxPlanetsAtOnce;
-int[6] gv_customPlanetIconButtons;
-int[6] gv_customPlanetIconPanels;
+gs_Mission[gv_missionCount + 1] gv_missionRegistry;
+int gv_missionSelectedIndex;
+int gv_customPlanetAvailablePlanetCount;
+int[gv_maxPlanetsAtOnce + 1] gv_customPlanetUISlottoMissionIndexMap;
+int[gv_maxPlanetsAtOnce + 1] gv_customPlanetIconButtons;
+int[gv_maxPlanetsAtOnce + 1] gv_customPlanetIconPanels;
 int gv_customPlanetButtonCycleBackward;
 int gv_customPlanetButtonCycleForward;
 int gv_customPlanetButtonClose;
 int gv_customPlanetPanel;
+int gv_customPlanetMissionTitle;
+int gv_customPlanetMissionObjective;
+int gv_customPlanetMissionBonusObjective;
+int gv_customPlanetMissionReward;
+int gv_customPlanetMissionResearch;
+int gv_customPlanetMissionBonusOpportunities;
+int gv_customPlanetMissionBackgroundPortrait;
+int gv_customPlanetMissionContactPortrait;
 fixed gv_talkBlendTime;
 fixed gv_standBlendTime;
 fixed gv_idleFidgetStartTime;
@@ -835,17 +862,40 @@ void InitGlobals () {
     int init_i1;
     int init_i2;
 
-    gv_maxPlanetsAtOnce = 5;
-    for (init_i = 0; init_i <= 5; init_i += 1) {
+    for (init_i = 0; init_i <= gv_missionCount; init_i += 1) {
+        gv_missionRegistry[init_i].lv_planetIcon = "PlanetMarSara";
+        gv_missionRegistry[init_i].lv_missionPath = "";
+        gv_missionRegistry[init_i].lv_name = "";
+        gv_missionRegistry[init_i].lv_objective = "";
+        gv_missionRegistry[init_i].lv_bonusObjective = "";
+        gv_missionRegistry[init_i].lv_reward = "";
+        gv_missionRegistry[init_i].lv_research = "";
+        gv_missionRegistry[init_i].lv_bonusOpportunities = "";
+        gv_missionRegistry[init_i].lv_mapViewBackgroundPortraitModel = "PlanetViewMarSara";
+        gv_missionRegistry[init_i].lv_mapViewContactPortraitModel = "AdjutantPortrait";
+    }
+    gv_missionSelectedIndex = gv_missionNoPlanetSelected;
+    for (init_i = 0; init_i <= gv_maxPlanetsAtOnce; init_i += 1) {
+        gv_customPlanetUISlottoMissionIndexMap[init_i] = gv_missionNoPlanetSelected;
+    }
+    for (init_i = 0; init_i <= gv_maxPlanetsAtOnce; init_i += 1) {
         gv_customPlanetIconButtons[init_i] = c_invalidDialogControlId;
     }
-    for (init_i = 0; init_i <= 5; init_i += 1) {
+    for (init_i = 0; init_i <= gv_maxPlanetsAtOnce; init_i += 1) {
         gv_customPlanetIconPanels[init_i] = c_invalidDialogControlId;
     }
     gv_customPlanetButtonCycleBackward = c_invalidDialogControlId;
     gv_customPlanetButtonCycleForward = c_invalidDialogControlId;
     gv_customPlanetButtonClose = c_invalidDialogControlId;
     gv_customPlanetPanel = c_invalidDialogControlId;
+    gv_customPlanetMissionTitle = c_invalidDialogControlId;
+    gv_customPlanetMissionObjective = c_invalidDialogControlId;
+    gv_customPlanetMissionBonusObjective = c_invalidDialogControlId;
+    gv_customPlanetMissionReward = c_invalidDialogControlId;
+    gv_customPlanetMissionResearch = c_invalidDialogControlId;
+    gv_customPlanetMissionBonusOpportunities = c_invalidDialogControlId;
+    gv_customPlanetMissionBackgroundPortrait = c_invalidDialogControlId;
+    gv_customPlanetMissionContactPortrait = c_invalidDialogControlId;
     gv_talkBlendTime = 0.75;
     gv_standBlendTime = 0.75;
     gv_idleFidgetStartTime = 40.0;
@@ -1074,8 +1124,12 @@ void InitGlobals () {
 //--------------------------------------------------------------------------------------------------
 // Global Function Declarations
 //--------------------------------------------------------------------------------------------------
-void gf_CustomPlanetInjectPlanets (int lp_index);
+bool gf_MissionIsAvailable (int lp_missionIndex);
+void gf_CustomPlanetResetUI ();
 void gf_CustomPlanetShow ();
+void gf_CustomPlanetInjectPlanet (int lp_uISlot, int lp_missionIndex);
+void gf_CustomPlanetInjectPlanets ();
+void gf_CustomPlanetSelectPlanet (int lp_index);
 void gf_CustomFadeInOut (bool lp_fadeIn, fixed lp_duration, bool lp_waitUntilDone);
 void gf_TurnClickableOnOff (unit lp_unit, bool lp_desiredState);
 void gf_TurnClickablesOnOff (unitgroup lp_whichClickables, bool lp_desiredState);
@@ -1512,6 +1566,7 @@ void gf_StartTipHint ();
 //--------------------------------------------------------------------------------------------------
 // Trigger Variables
 //--------------------------------------------------------------------------------------------------
+trigger gt_RegisterMissions;
 trigger gt_CustomPlanetInit;
 trigger gt_CustomPlanetIconClick;
 trigger gt_CustomPlanetClose;
@@ -2341,7 +2396,33 @@ trigger gt_TipAfterTValerian01;
 //--------------------------------------------------------------------------------------------------
 // Global Functions
 //--------------------------------------------------------------------------------------------------
-void gf_CustomPlanetInjectPlanets (int lp_index) {
+bool gf_MissionIsAvailable (int lp_missionIndex) {
+    // Automatic Variable Declarations
+    // Implementation
+    return true;
+}
+
+void gf_CustomPlanetResetUI () {
+    // Automatic Variable Declarations
+    // Implementation
+    libNtve_gf_SetDialogItemText(gv_customPlanetMissionTitle, StringToText(""), PlayerGroupAll());
+    libNtve_gf_SetDialogItemText(gv_customPlanetMissionObjective, StringToText(""), PlayerGroupAll());
+    libNtve_gf_SetDialogItemText(gv_customPlanetMissionBonusObjective, StringToText(""), PlayerGroupAll());
+    libNtve_gf_SetDialogItemText(gv_customPlanetMissionReward, StringToText(""), PlayerGroupAll());
+    libNtve_gf_SetDialogItemText(gv_customPlanetMissionResearch, StringToText(""), PlayerGroupAll());
+    libNtve_gf_SetDialogItemText(gv_customPlanetMissionBonusOpportunities, StringToText(""), PlayerGroupAll());
+    libNtve_gf_SetDialogItemModel(gv_customPlanetMissionBackgroundPortrait, "PlanetViewGalaxy", PlayerGroupAll());
+}
+
+void gf_CustomPlanetShow () {
+    // Automatic Variable Declarations
+    // Implementation
+    gf_CustomPlanetResetUI();
+    DialogControlSetVisible(gv_customPlanetPanel, PlayerGroupAll(), true);
+    gf_CustomPlanetInjectPlanets();
+}
+
+void gf_CustomPlanetInjectPlanet (int lp_uISlot, int lp_missionIndex) {
     // Variable Declarations
     int lv_unitModelItem;
     int lv_panel;
@@ -2359,10 +2440,10 @@ void gf_CustomPlanetInjectPlanets (int lp_index) {
     DialogControlSetSize(lv_panel, PlayerGroupAll(), 150, 150);
     libCamp_gf_MoveDialogItemInGridRelative(lv_panel, PlayerGroupAll(), c_anchorTop, gv_customPlanetPanel, c_anchorCenter, 0.0, 0.0);
     DialogControlSetVisible(lv_panel, PlayerGroupAll(), true);
-    gv_customPlanetIconPanels[lp_index] = lv_panel;
+    gv_customPlanetIconPanels[lp_uISlot] = lv_panel;
     DialogControlCreateInPanelFromTemplate(lv_panel, c_triggerControlTypeUnitModel, "PlanetIcon/UnitModelFrame");
     lv_unitModelItem = DialogControlLastCreated();
-    libNtve_gf_SetDialogItemUnitLink(lv_unitModelItem, "PlanetMarSara2", PlayerGroupAll());
+    libNtve_gf_SetDialogItemUnitLink(lv_unitModelItem, gv_missionRegistry[lp_missionIndex].lv_planetIcon, PlayerGroupAll());
     libCamp_gf_MoveDialogItemInGridRelative(lv_unitModelItem, PlayerGroupAll(), c_anchorCenter, lv_panel, c_anchorCenter, 0.0, 0.0);
     DialogControlSetVisible(lv_unitModelItem, PlayerGroupAll(), true);
     DialogControlCreateInPanelFromTemplate(lv_panel, c_triggerControlTypeButton, "PlanetIconHiddenButton/DecrementArrowButton");
@@ -2370,14 +2451,65 @@ void gf_CustomPlanetInjectPlanets (int lp_index) {
     DialogControlSetSize(lv_button, PlayerGroupAll(), 150, 150);
     libCamp_gf_MoveDialogItemInGridRelative(lv_button, PlayerGroupAll(), c_anchorTop, gv_customPlanetPanel, c_anchorCenter, 0.0, 0.0);
     DialogControlSetVisible(lv_button, PlayerGroupAll(), true);
-    gv_customPlanetIconButtons[lp_index] = lv_button;
+    gv_customPlanetIconButtons[lp_uISlot] = lv_button;
+    gv_customPlanetUISlottoMissionIndexMap[lp_uISlot] = lp_missionIndex;
 }
 
-void gf_CustomPlanetShow () {
+void gf_CustomPlanetInjectPlanets () {
+    // Variable Declarations
+    int lv_i;
+    int lv_missionsCreated;
+
+    // Automatic Variable Declarations
+    int auto43308BEF_ae;
+    const int auto43308BEF_ai = 1;
+    int autoCA09B517_ae;
+    const int autoCA09B517_ai = 1;
+
+    // Variable Initialization
+
+    // Implementation
+    gv_customPlanetAvailablePlanetCount = 0;
+    auto43308BEF_ae = (gv_maxPlanetsAtOnce - 1);
+    lv_i = 0;
+    for ( ; ( (auto43308BEF_ai >= 0 && lv_i <= auto43308BEF_ae) || (auto43308BEF_ai < 0 && lv_i >= auto43308BEF_ae) ) ; lv_i += auto43308BEF_ai ) {
+        gv_customPlanetUISlottoMissionIndexMap[lv_i] = gv_missionNoPlanetSelected;
+    }
+    autoCA09B517_ae = (gv_missionCount - 1);
+    lv_i = 0;
+    for ( ; ( (autoCA09B517_ai >= 0 && lv_i <= autoCA09B517_ae) || (autoCA09B517_ai < 0 && lv_i >= autoCA09B517_ae) ) ; lv_i += autoCA09B517_ai ) {
+        gv_customPlanetUISlottoMissionIndexMap[lv_i] = gv_missionNoPlanetSelected;
+        if ((gf_MissionIsAvailable(lv_i) == true)) {
+            gv_customPlanetAvailablePlanetCount = (gv_customPlanetAvailablePlanetCount + 1);
+        }
+
+    }
+    if ((gv_customPlanetAvailablePlanetCount > gv_maxPlanetsAtOnce)) {
+        gv_customPlanetAvailablePlanetCount = gv_maxPlanetsAtOnce;
+    }
+
+    lv_i = 0;
+    while ((lv_missionsCreated < gv_customPlanetAvailablePlanetCount) && (lv_i < gv_missionCount)) {
+        if ((gf_MissionIsAvailable(lv_i) == true)) {
+            gf_CustomPlanetInjectPlanet(lv_missionsCreated, lv_i);
+            lv_missionsCreated = (lv_missionsCreated + 1);
+        }
+
+        lv_i = (lv_i + 1);
+    }
+}
+
+void gf_CustomPlanetSelectPlanet (int lp_index) {
     // Automatic Variable Declarations
     // Implementation
-    DialogControlSetVisible(gv_customPlanetPanel, PlayerGroupAll(), true);
-    gf_CustomPlanetInjectPlanets(0);
+    libNtve_gf_SetDialogItemText(gv_customPlanetMissionTitle, StringToText(gv_missionRegistry[gv_customPlanetUISlottoMissionIndexMap[lp_index]].lv_name), PlayerGroupAll());
+    libNtve_gf_SetDialogItemText(gv_customPlanetMissionObjective, StringToText(gv_missionRegistry[gv_customPlanetUISlottoMissionIndexMap[lp_index]].lv_objective), PlayerGroupAll());
+    libNtve_gf_SetDialogItemText(gv_customPlanetMissionBonusObjective, StringToText(gv_missionRegistry[gv_customPlanetUISlottoMissionIndexMap[lp_index]].lv_bonusObjective), PlayerGroupAll());
+    libNtve_gf_SetDialogItemText(gv_customPlanetMissionReward, StringToText(gv_missionRegistry[gv_customPlanetUISlottoMissionIndexMap[lp_index]].lv_reward), PlayerGroupAll());
+    libNtve_gf_SetDialogItemText(gv_customPlanetMissionResearch, StringToText(gv_missionRegistry[gv_customPlanetUISlottoMissionIndexMap[lp_index]].lv_research), PlayerGroupAll());
+    libNtve_gf_SetDialogItemText(gv_customPlanetMissionBonusOpportunities, StringToText(gv_missionRegistry[gv_customPlanetUISlottoMissionIndexMap[lp_index]].lv_bonusOpportunities), PlayerGroupAll());
+    libNtve_gf_SetDialogItemModel(gv_customPlanetMissionBackgroundPortrait, "PlanetViewMarSara", PlayerGroupAll());
+    libNtve_gf_SetDialogItemModel(gv_customPlanetMissionContactPortrait, "AdjutantPortrait", PlayerGroupAll());
 }
 
 void gf_CustomFadeInOut (bool lp_fadeIn, fixed lp_duration, bool lp_waitUntilDone) {
@@ -14815,6 +14947,40 @@ void gf_StartTipHint () {
 }
 
 //--------------------------------------------------------------------------------------------------
+// Trigger: RegisterMissions
+//--------------------------------------------------------------------------------------------------
+bool gt_RegisterMissions_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    int lv_missionIndex;
+
+    // Automatic Variable Declarations
+    // Variable Initialization
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    lv_missionIndex = 0;
+    gv_missionRegistry[lv_missionIndex].lv_name = "Name of my mission";
+    gv_missionRegistry[lv_missionIndex].lv_missionPath = "Path/To/My/Mission";
+    gv_missionRegistry[lv_missionIndex].lv_planetIcon = "PlanetMarSara";
+    gv_missionRegistry[lv_missionIndex].lv_objective = "Some Objective";
+    gv_missionRegistry[lv_missionIndex].lv_bonusObjective = "Some Bonus Objective";
+    gv_missionRegistry[lv_missionIndex].lv_reward = "Some Reward";
+    gv_missionRegistry[lv_missionIndex].lv_research = "Some Research Opportunities";
+    gv_missionRegistry[lv_missionIndex].lv_bonusOpportunities = "Some Bonus Opportunities";
+    gv_missionRegistry[lv_missionIndex].lv_mapViewBackgroundPortraitModel = "PlanetViewMarSara";
+    gv_missionRegistry[lv_missionIndex].lv_mapViewContactPortraitModel = "AdjutantPortrait";
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void gt_RegisterMissions_Init () {
+    gt_RegisterMissions = TriggerCreate("gt_RegisterMissions_Func");
+}
+
+//--------------------------------------------------------------------------------------------------
 // Trigger: CustomPlanet - Init
 //--------------------------------------------------------------------------------------------------
 bool gt_CustomPlanetInit_Func (bool testConds, bool runActions) {
@@ -14826,6 +14992,22 @@ bool gt_CustomPlanetInit_Func (bool testConds, bool runActions) {
 
     DialogControlHookupStandard(c_triggerControlTypePanel, "UIContainer/CustomPlanetPanel");
     gv_customPlanetPanel = DialogControlLastCreated();
+    DialogControlHookupStandard(c_triggerControlTypeLabel, "UIContainer/CustomPlanetPanel/MissionTextLabel");
+    gv_customPlanetMissionTitle = DialogControlLastCreated();
+    DialogControlHookupStandard(c_triggerControlTypeLabel, "UIContainer/CustomPlanetPanel/ObjectiveTextLabel");
+    gv_customPlanetMissionObjective = DialogControlLastCreated();
+    DialogControlHookupStandard(c_triggerControlTypeLabel, "UIContainer/CustomPlanetPanel/BonusObjectiveTextLabel");
+    gv_customPlanetMissionBonusObjective = DialogControlLastCreated();
+    DialogControlHookupStandard(c_triggerControlTypeLabel, "UIContainer/CustomPlanetPanel/RewardTextLabel");
+    gv_customPlanetMissionReward = DialogControlLastCreated();
+    DialogControlHookupStandard(c_triggerControlTypeLabel, "UIContainer/CustomPlanetPanel/ResearchTextLabel");
+    gv_customPlanetMissionResearch = DialogControlLastCreated();
+    DialogControlHookupStandard(c_triggerControlTypeLabel, "UIContainer/CustomPlanetPanel/BonusTextLabel");
+    gv_customPlanetMissionBonusOpportunities = DialogControlLastCreated();
+    DialogControlHookupStandard(c_triggerControlTypePortrait, "UIContainer/CustomPlanetPanel/BackgroundPortrait");
+    gv_customPlanetMissionBackgroundPortrait = DialogControlLastCreated();
+    DialogControlHookupStandard(c_triggerControlTypePortrait, "UIContainer/CustomPlanetPanel/ContactPortrait");
+    gv_customPlanetMissionContactPortrait = DialogControlLastCreated();
     DialogControlHookupStandard(c_triggerControlTypeButton, "UIContainer/CustomPlanetPanel/CloseButton");
     gv_customPlanetButtonClose = DialogControlLastCreated();
     DialogControlHookupStandard(c_triggerControlTypeButton, "UIContainer/CustomPlanetPanel/IncrementArrowButton");
@@ -14863,7 +15045,7 @@ bool gt_CustomPlanetIconClick_Func (bool testConds, bool runActions) {
     lv_planetIconIndex = 0;
     for ( ; ( (auto32FEF863_ai >= 0 && lv_planetIconIndex <= auto32FEF863_ae) || (auto32FEF863_ai < 0 && lv_planetIconIndex >= auto32FEF863_ae) ) ; lv_planetIconIndex += auto32FEF863_ai ) {
         if ((gv_customPlanetIconButtons[lv_planetIconIndex] == EventDialogControl())) {
-            TriggerDebugOutput(1, StringExternal("Param/Value/AB9BA6FC"), true);
+            gf_CustomPlanetSelectPlanet(lv_planetIconIndex);
         }
 
     }
@@ -14884,7 +15066,7 @@ bool gt_CustomPlanetClose_Func (bool testConds, bool runActions) {
     int lv_planetIconIndex;
 
     // Automatic Variable Declarations
-    int auto388974FA_ae;
+    const int auto388974FA_ae = gv_maxPlanetsAtOnce;
     const int auto388974FA_ai = 1;
 
     // Variable Initialization
@@ -14903,7 +15085,6 @@ bool gt_CustomPlanetClose_Func (bool testConds, bool runActions) {
 
     DialogControlSetVisible(gv_customPlanetPanel, PlayerGroupAll(), false);
     TriggerExecute(gt_BridgeStarmapLeave, true, false);
-    auto388974FA_ae = gv_maxPlanetsAtOnce;
     lv_planetIconIndex = 0;
     for ( ; ( (auto388974FA_ai >= 0 && lv_planetIconIndex <= auto388974FA_ae) || (auto388974FA_ai < 0 && lv_planetIconIndex >= auto388974FA_ae) ) ; lv_planetIconIndex += auto388974FA_ai ) {
         DialogControlDestroy(gv_customPlanetIconButtons[lv_planetIconIndex]);
@@ -16053,6 +16234,7 @@ bool gt_MapInit_Func (bool testConds, bool runActions) {
     TriggerExecute(gt_Init05Sounds, true, false);
     TriggerExecute(gt_Init06Intro, true, false);
     TriggerExecute(gt_HideBaseGameUI, true, false);
+    TriggerExecute(gt_RegisterMissions, true, false);
     TriggerExecute(gt_CustomPlanetInit, true, false);
     return true;
 }
@@ -41592,6 +41774,7 @@ void gt_TipAfterTValerian01_Init () {
 // Trigger Initialization
 //--------------------------------------------------------------------------------------------------
 void InitTriggers () {
+    gt_RegisterMissions_Init();
     gt_CustomPlanetInit_Init();
     gt_CustomPlanetIconClick_Init();
     gt_CustomPlanetClose_Init();
