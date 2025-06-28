@@ -8968,47 +8968,10 @@ bool gf_RoomIsEnabled (int lp_room) {
     int lv_indexResearch;
 
     // Automatic Variable Declarations
-    int autoDB3D4E18_val;
-    int auto6BB3FD42_i;
-
     // Variable Initialization
     lv_indexResearch = libCamp_ge_StoryResearchID_ResearchNone;
 
     // Implementation
-    if ((gf_RoomLocationIsEnabled(gf_RoomLocation(lp_room)) == false)) {
-        return false;
-    }
-
-    autoDB3D4E18_val = lp_room;
-    if (autoDB3D4E18_val == ge_RoomID_RoomCantina) {
-        if ((libCamp_gf_NumberOfMissions(libCamp_ge_MissionCountOptions_Completed) >= 4)) {
-            return true;
-        }
-
-        return false;
-    }
-    else if (autoDB3D4E18_val == ge_RoomID_RoomLab) {
-        if ((libCamp_gf_NumberOfMissions(libCamp_ge_MissionCountOptions_Completed) >= 5)) {
-            return true;
-        }
-
-        if ((PlayerGetPropertyInt(1, c_playerPropResearchPoints) > 0)) {
-            return true;
-        }
-
-        auto6BB3FD42_i = libCamp_gv_TSC_RESEARCH_FIRST;
-        while (auto6BB3FD42_i <= libCamp_gv_TSC_RESEARCH_LAST) {
-            lv_indexResearch = libCamp_gv_tS_ResearchID[auto6BB3FD42_i];
-            if ((libCamp_gf_StoryResearchStateCheck(lv_indexResearch, libCamp_ge_StoryResearchState_ResearchStatePurchased) == true)) {
-                return true;
-            }
-
-            auto6BB3FD42_i = auto6BB3FD42_i + 1;
-        }
-        return false;
-    }
-    else {
-    }
     return true;
 }
 
