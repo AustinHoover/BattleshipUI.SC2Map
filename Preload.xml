@@ -2,4 +2,25 @@
 <Preload>
 <Actor id="SYSTEM_ActorConfig"/>
 <Terrain id="StoryMode"/>
+<Unit id="SMFirstOfficer"/>
+<Unit id="SMHyperionBridgeBriefingLeft"/>
+<Unit id="SMBountyHunter"/>
+<Unit id="SMCivilian"/>
+<Unit id="SMHyperionArmorer"/>
+<Unit id="SMRaynorCommander"/>
+<Unit id="SMRaynorMarine"/>
+<Unit id="SMMarine01"/>
+<Unit id="SMCade"/>
+<Unit id="SMHall"/>
+<Unit id="SMBralik"/>
+<Unit id="SMAnnabelle"/>
+<Unit id="SMEarl"/>
+<Unit id="SMKachinsky"/>
+<Unit id="SMGenericMaleGreaseMonkey01"/>
+<Unit id="SMGenericMaleOfficer01"/>
+<Unit id="SMGenericMaleOfficer02"/>
+<Unit id="SMStetmann"/>
+<Unit id="SMCooper"/>
+<Unit id="SMHill"/>
+<Unit id="SMYbarra"/>
 </Preload>

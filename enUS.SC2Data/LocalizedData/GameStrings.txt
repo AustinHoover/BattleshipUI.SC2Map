@@ -299,6 +299,7 @@ Param/Value/BE1CE0ED=TBD
 Param/Value/BF0C5D8D=Hanson End A
 Param/Value/BF15A5E2=Room: Armory
 Param/Value/BF17A6A7=Preload Character: 
+Param/Value/BF2C7CC3=Preload unit 
 Param/Value/C0EC7241=  Converted = 
 Param/Value/C2DA54AC=Preloading location 
 Param/Value/C36090F4=Warfield

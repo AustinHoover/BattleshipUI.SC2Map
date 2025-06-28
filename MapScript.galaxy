@@ -7517,6 +7517,7 @@ void gf_PreloadUnitGroup (unitgroup lp_unitGroup) {
 void gf_PreloadUnitStoryMap (unit lp_unit) {
     // Automatic Variable Declarations
     // Implementation
+    TriggerDebugOutput(1, (StringExternal("Param/Value/BF2C7CC3") + UnitTypeGetName(UnitGetType(lp_unit))), true);
     PreloadObject(c_gameCatalogUnit, (UnitGetType(lp_unit)), false);
     UnitLoadModel(lp_unit);
 }
