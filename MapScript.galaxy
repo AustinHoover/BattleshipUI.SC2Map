@@ -21003,13 +21003,6 @@ bool gt_WalkinArmory_Func (bool testConds, bool runActions) {
         return true;
     }
 
-    if ((libCamp_gf_StoryState(libCamp_ge_StoryStateID_StoryStateArmoryIntroDone) == 0) && (libCamp_gf_MissionStatusCheck(libCamp_ge_MapID_MapTTychus04, libCamp_ge_MissionStatus_Completed) == false)) {
-        libCamp_gf_SetStoryState(libCamp_ge_StoryStateID_StoryStateArmoryIntroDone, 1);
-        TriggerExecute(gt_ScriptSceneArmoryIntro, true, true);
-        gf_ChangeRoom(ge_RoomID_RoomArmory, false);
-        return true;
-    }
-
     gf_ResetActorToLocation(ge_ActorID_ActorRaynor, PointFromId(40));
     return true;
 }
