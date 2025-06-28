@@ -11133,7 +11133,6 @@ void gf_PlayGossip (int lp_actor) {
 
     // Implementation
     if (((lp_actor == ge_ActorID_ActorNone) || (lp_actor == gv_currentGossipActor) || (UnitTestState(gf_ActorUnit(lp_actor), c_unitStateHighlightable) == false) || (gf_ActorWithFidget(lp_actor) == false))) {
-        TriggerDebugOutput(1, (((StringExternal("Param/Value/67A4BF87") + gf_ActorName(gv_currentGossipActor)) + libNtve_gf_ConvertBooleanToText(UnitTestState(gf_ActorUnit(lp_actor), c_unitStateHighlightable))) + libNtve_gf_ConvertBooleanToText(gf_ActorWithFidget(lp_actor))), true);
         return ;
     }
 
@@ -11269,14 +11268,12 @@ void gf_PlayGossip (int lp_actor) {
     else {
     }
     if ((lv_gossip == null)) {
-        TriggerDebugOutput(1, StringExternal("Param/Value/D4F07554"), true);
         return ;
     }
 
     gv_currentGossipActor = lp_actor;
     gf_SetAllSoundChannelVolumesStoryMode(libNtve_ge_VolumeChannelMode_Speech);
     gf_StopAllTransmissionConversation();
-    TriggerDebugOutput(1, StringExternal("Param/Value/2B5E1F81"), true);
     gf_PlayFidget(lv_gossip, lp_actor, ge_ActorID_ActorNone);
     gf_SetAllSoundChannelVolumesStoryMode(libNtve_ge_VolumeChannelMode_Game);
     if ((gv_currentGossipActor == lp_actor)) {
