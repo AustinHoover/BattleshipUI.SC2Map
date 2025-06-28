@@ -8771,9 +8771,7 @@
         <AIRebuild Index="3" Value="0"/>
         <AIRebuild Index="4" Value="0"/>
     </ObjectUnit>
-    <ObjectUnit Id="430" Position="57.17,6.47,0" Scale="1,1,1" Section="Shared" UnitType="SMAdjutant">
-        <Flag Index="DeferModelLoad" Value="1"/>
-    </ObjectUnit>
+    <ObjectUnit Id="430" Position="57.17,6.47,0" Scale="1,1,1" Section="Shared" UnitType="SMAdjutant"/>
     <ObjectUnit Id="494" Position="114,100,0" Scale="1,1,1" Section="Cantina" UnitType="SMHyperionCantinaMercComputerHS">
         <Flag Index="DeferModelLoad" Value="1"/>
     </ObjectUnit>
@@ -9175,9 +9173,7 @@
     <ObjectUnit Id="113" Position="124,30,0" Scale="1,1,1" Section="Flagship" UnitType="SMValerianFlagshipCorridorsSet4">
         <Flag Index="DeferModelLoad" Value="1"/>
     </ObjectUnit>
-    <ObjectUnit Id="859" Position="61.3598,9.49,0" Rotation="6.2517" Scale="1,1,1" Section="Shared" UnitType="SMGenericMaleGreaseMonkey02">
-        <Flag Index="DeferModelLoad" Value="1"/>
-    </ObjectUnit>
+    <ObjectUnit Id="859" Position="61.3598,9.49,0" Rotation="6.2517" Scale="1,1,1" Section="Shared" UnitType="SMGenericMaleGreaseMonkey02"/>
     <ObjectUnit Id="497" Position="57.9165,7.7678,0" Rotation="2.841" Scale="1,1,1" Section="Shared" UnitType="SMAdjutantHologram">
         <Flag Index="DeferModelLoad" Value="1"/>
     </ObjectUnit>

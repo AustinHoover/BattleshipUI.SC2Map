@@ -7,6 +7,7 @@
 <Unit id="SMCivilian"/>
 <Unit id="SMHyperionArmorer"/>
 <Unit id="SMRaynorCommander"/>
+<Unit id="SMAdjutant"/>
 <Unit id="SMRaynorMarine"/>
 <Unit id="SMMarine01"/>
 <Unit id="SMCade"/>
@@ -16,6 +17,7 @@
 <Unit id="SMEarl"/>
 <Unit id="SMKachinsky"/>
 <Unit id="SMGenericMaleGreaseMonkey01"/>
+<Unit id="SMGenericMaleGreaseMonkey02"/>
 <Unit id="SMGenericMaleOfficer01"/>
 <Unit id="SMGenericMaleOfficer02"/>
 <Unit id="SMStetmann"/>

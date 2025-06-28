@@ -14968,7 +14968,7 @@ bool gt_RegisterMissions_Func (bool testConds, bool runActions) {
 
     lv_missionIndex = 0;
     gv_missionRegistry[lv_missionIndex].lv_name = "Name of my mission";
-    gv_missionRegistry[lv_missionIndex].lv_missionPath = "TestMap2.SC2Map";
+    gv_missionRegistry[lv_missionIndex].lv_missionPath = "Test/EditorTest.SC2Map";
     gv_missionRegistry[lv_missionIndex].lv_planetIcon = "PlanetMarSara";
     gv_missionRegistry[lv_missionIndex].lv_objective = "Some Objective";
     gv_missionRegistry[lv_missionIndex].lv_bonusObjective = "Some Bonus Objective";
@@ -15134,9 +15134,8 @@ bool gt_CustomPlanetLaunch_Func (bool testConds, bool runActions) {
         return true;
     }
 
-    TriggerDebugOutput(1, StringExternal("Param/Value/32D6FBF5"), true);
     GameSetNextMap(gv_missionRegistry[gv_customPlanetUISlottoMissionIndexMap[gv_missionSelectedIndex]].lv_missionPath);
-    libCamp_gf_EndCampaignMission(1, c_gameOverVictory);
+    GameOver(1, c_gameOverVictory, false, false);
     return true;
 }
 
