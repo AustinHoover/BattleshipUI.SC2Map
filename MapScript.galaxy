@@ -1568,6 +1568,7 @@ void gf_StartTipHint ();
 //--------------------------------------------------------------------------------------------------
 // Trigger Variables
 //--------------------------------------------------------------------------------------------------
+trigger gt_CustomInit;
 trigger gt_RegisterMissions;
 trigger gt_CustomPlanetInit;
 trigger gt_CustomPlanetIconClick;
@@ -14952,6 +14953,28 @@ void gf_StartTipHint () {
 }
 
 //--------------------------------------------------------------------------------------------------
+// Trigger: Custom Init
+//--------------------------------------------------------------------------------------------------
+bool gt_CustomInit_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    TriggerExecute(gt_HideBaseGameUI, true, false);
+    TriggerExecute(gt_RegisterMissions, true, false);
+    TriggerExecute(gt_CustomPlanetInit, true, false);
+    CameraApplyInfo(1, CameraInfoFromId(12), 0.0, -1, 10, true);
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void gt_CustomInit_Init () {
+    gt_CustomInit = TriggerCreate("gt_CustomInit_Func");
+}
+
+//--------------------------------------------------------------------------------------------------
 // Trigger: RegisterMissions
 //--------------------------------------------------------------------------------------------------
 bool gt_RegisterMissions_Func (bool testConds, bool runActions) {
@@ -16277,9 +16300,7 @@ bool gt_MapInit_Func (bool testConds, bool runActions) {
     TriggerExecute(gt_Init04Environment, true, false);
     TriggerExecute(gt_Init05Sounds, true, false);
     TriggerExecute(gt_Init06Intro, true, false);
-    TriggerExecute(gt_HideBaseGameUI, true, false);
-    TriggerExecute(gt_RegisterMissions, true, false);
-    TriggerExecute(gt_CustomPlanetInit, true, false);
+    TriggerExecute(gt_CustomInit, true, false);
     return true;
 }
 
@@ -41799,6 +41820,7 @@ void gt_TipAfterTValerian01_Init () {
 // Trigger Initialization
 //--------------------------------------------------------------------------------------------------
 void InitTriggers () {
+    gt_CustomInit_Init();
     gt_RegisterMissions_Init();
     gt_CustomPlanetInit_Init();
     gt_CustomPlanetIconClick_Init();
