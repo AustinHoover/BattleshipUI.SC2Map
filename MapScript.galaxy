@@ -389,6 +389,7 @@ int[gv_maxPlanetsAtOnce + 1] gv_customPlanetIconPanels;
 int gv_customPlanetButtonCycleBackward;
 int gv_customPlanetButtonCycleForward;
 int gv_customPlanetButtonClose;
+int gv_customPlanetButtonLaunch;
 int gv_customPlanetPanel;
 int gv_customPlanetMissionTitle;
 int gv_customPlanetMissionObjective;
@@ -887,6 +888,7 @@ void InitGlobals () {
     gv_customPlanetButtonCycleBackward = c_invalidDialogControlId;
     gv_customPlanetButtonCycleForward = c_invalidDialogControlId;
     gv_customPlanetButtonClose = c_invalidDialogControlId;
+    gv_customPlanetButtonLaunch = c_invalidDialogControlId;
     gv_customPlanetPanel = c_invalidDialogControlId;
     gv_customPlanetMissionTitle = c_invalidDialogControlId;
     gv_customPlanetMissionObjective = c_invalidDialogControlId;
@@ -1570,6 +1572,7 @@ trigger gt_RegisterMissions;
 trigger gt_CustomPlanetInit;
 trigger gt_CustomPlanetIconClick;
 trigger gt_CustomPlanetClose;
+trigger gt_CustomPlanetLaunch;
 trigger gt_CustomPlanetNextPlanet;
 trigger gt_CustomPlanetPrevPlanet;
 trigger gt_HideBaseGameUI;
@@ -2405,6 +2408,7 @@ bool gf_MissionIsAvailable (int lp_missionIndex) {
 void gf_CustomPlanetResetUI () {
     // Automatic Variable Declarations
     // Implementation
+    gv_missionSelectedIndex = gv_missionNoPlanetSelected;
     libNtve_gf_SetDialogItemText(gv_customPlanetMissionTitle, StringToText(""), PlayerGroupAll());
     libNtve_gf_SetDialogItemText(gv_customPlanetMissionObjective, StringToText(""), PlayerGroupAll());
     libNtve_gf_SetDialogItemText(gv_customPlanetMissionBonusObjective, StringToText(""), PlayerGroupAll());
@@ -2502,6 +2506,7 @@ void gf_CustomPlanetInjectPlanets () {
 void gf_CustomPlanetSelectPlanet (int lp_index) {
     // Automatic Variable Declarations
     // Implementation
+    gv_missionSelectedIndex = lp_index;
     libNtve_gf_SetDialogItemText(gv_customPlanetMissionTitle, StringToText(gv_missionRegistry[gv_customPlanetUISlottoMissionIndexMap[lp_index]].lv_name), PlayerGroupAll());
     libNtve_gf_SetDialogItemText(gv_customPlanetMissionObjective, StringToText(gv_missionRegistry[gv_customPlanetUISlottoMissionIndexMap[lp_index]].lv_objective), PlayerGroupAll());
     libNtve_gf_SetDialogItemText(gv_customPlanetMissionBonusObjective, StringToText(gv_missionRegistry[gv_customPlanetUISlottoMissionIndexMap[lp_index]].lv_bonusObjective), PlayerGroupAll());
@@ -14963,7 +14968,7 @@ bool gt_RegisterMissions_Func (bool testConds, bool runActions) {
 
     lv_missionIndex = 0;
     gv_missionRegistry[lv_missionIndex].lv_name = "Name of my mission";
-    gv_missionRegistry[lv_missionIndex].lv_missionPath = "Path/To/My/Mission";
+    gv_missionRegistry[lv_missionIndex].lv_missionPath = "TestMap2.SC2Map";
     gv_missionRegistry[lv_missionIndex].lv_planetIcon = "PlanetMarSara";
     gv_missionRegistry[lv_missionIndex].lv_objective = "Some Objective";
     gv_missionRegistry[lv_missionIndex].lv_bonusObjective = "Some Bonus Objective";
@@ -15010,6 +15015,8 @@ bool gt_CustomPlanetInit_Func (bool testConds, bool runActions) {
     gv_customPlanetMissionContactPortrait = DialogControlLastCreated();
     DialogControlHookupStandard(c_triggerControlTypeButton, "UIContainer/CustomPlanetPanel/CloseButton");
     gv_customPlanetButtonClose = DialogControlLastCreated();
+    DialogControlHookupStandard(c_triggerControlTypeButton, "UIContainer/CustomPlanetPanel/LaunchButton");
+    gv_customPlanetButtonLaunch = DialogControlLastCreated();
     DialogControlHookupStandard(c_triggerControlTypeButton, "UIContainer/CustomPlanetPanel/IncrementArrowButton");
     gv_customPlanetButtonCycleForward = DialogControlLastCreated();
     DialogControlHookupStandard(c_triggerControlTypeButton, "UIContainer/CustomPlanetPanel/DecrementArrowButton");
@@ -15099,6 +15106,44 @@ bool gt_CustomPlanetClose_Func (bool testConds, bool runActions) {
 void gt_CustomPlanetClose_Init () {
     gt_CustomPlanetClose = TriggerCreate("gt_CustomPlanetClose_Func");
     TriggerAddEventDialogControl(gt_CustomPlanetClose, c_playerAny, c_invalidDialogControlId, c_triggerControlEventTypeClick);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: CustomPlanet - Launch
+//--------------------------------------------------------------------------------------------------
+bool gt_CustomPlanetLaunch_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    int lv_planetIconIndex;
+
+    // Automatic Variable Declarations
+    // Variable Initialization
+
+    // Conditions
+    if (testConds) {
+        if (!((EventDialogControl() == gv_customPlanetButtonLaunch))) {
+            return false;
+        }
+
+        if (!((gv_missionSelectedIndex != gv_missionNoPlanetSelected))) {
+            return false;
+        }
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    TriggerDebugOutput(1, StringExternal("Param/Value/32D6FBF5"), true);
+    GameSetNextMap(gv_missionRegistry[gv_customPlanetUISlottoMissionIndexMap[gv_missionSelectedIndex]].lv_missionPath);
+    libCamp_gf_EndCampaignMission(1, c_gameOverVictory);
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void gt_CustomPlanetLaunch_Init () {
+    gt_CustomPlanetLaunch = TriggerCreate("gt_CustomPlanetLaunch_Func");
+    TriggerAddEventDialogControl(gt_CustomPlanetLaunch, c_playerAny, c_invalidDialogControlId, c_triggerControlEventTypeClick);
 }
 
 //--------------------------------------------------------------------------------------------------
@@ -34572,7 +34617,6 @@ bool gt_ABChoiceTHanson03_Func (bool testConds, bool runActions) {
 
         UISetCursorVisible(PlayerGroupAll(), true);
         UISetFrameVisible(PlayerGroupAll(), c_syncFrameTypeMenuBar, true);
-        UISetFrameVisible(PlayerGroupAll(), c_syncFrameTypeBattleUI, true);
         UISetFrameVisible(PlayerGroupAll(), c_syncFrameTypeHelpMenuButton, true);
         gv_aBChoiceOn = true;
         while (!(((gv_aBChoiceOn == false) || (gv_aBChoiceReplaying == true)))) {
@@ -34731,7 +34775,6 @@ bool gt_ABChoiceTHanson03Replay_Func (bool testConds, bool runActions) {
     UISetFrameVisible(PlayerGroupAll(), c_syncFrameTypeMenuBar, false);
     DialogSetVisible(gv_aBChoicePanel, PlayerGroupAll(), false);
     UISetCursorVisible(PlayerGroupAll(), false);
-    UISetFrameVisible(PlayerGroupAll(), c_syncFrameTypeBattleUI, false);
     CinematicFade(false, 0.5, c_fadeStyleNormal, Color(0.00, 0.00, 0.00), 0.0, true);
     UISetMode(PlayerGroupAll(), c_uiModeLetterboxed, c_transitionDurationImmediate);
     gv_aBChoiceReplaying = true;
@@ -34756,7 +34799,6 @@ bool gt_ABChoiceTHanson03A_Func (bool testConds, bool runActions) {
     UISetFrameVisible(PlayerGroupAll(), c_syncFrameTypeMenuBar, false);
     DialogSetVisible(gv_aBChoicePanel, PlayerGroupAll(), false);
     UISetCursorVisible(PlayerGroupAll(), false);
-    UISetFrameVisible(PlayerGroupAll(), c_syncFrameTypeBattleUI, false);
     CinematicFade(false, 0.5, c_fadeStyleNormal, Color(0.00, 0.00, 0.00), 0.0, true);
     UISetMode(PlayerGroupAll(), c_uiModeLetterboxed, c_transitionDurationImmediate);
     gf_RemoveVisibleUnit(true, gf_ActorUnit(ge_ActorID_ActorRaynor));
@@ -34829,7 +34871,6 @@ bool gt_ABChoiceTHanson03B_Func (bool testConds, bool runActions) {
     UISetFrameVisible(PlayerGroupAll(), c_syncFrameTypeMenuBar, false);
     DialogSetVisible(gv_aBChoicePanel, PlayerGroupAll(), false);
     UISetCursorVisible(PlayerGroupAll(), false);
-    UISetFrameVisible(PlayerGroupAll(), c_syncFrameTypeBattleUI, false);
     CinematicFade(false, 0.5, c_fadeStyleNormal, Color(0.00, 0.00, 0.00), 0.0, true);
     PortraitSetVisible(gv_aBChoicePortraitA, PlayerGroupAll(), false, false);
     PortraitSetVisible(gv_aBChoicePortraitB, PlayerGroupAll(), false, false);
@@ -35022,7 +35063,6 @@ bool gt_ABChoiceTTosh03_Func (bool testConds, bool runActions) {
 
         UISetCursorVisible(PlayerGroupAll(), true);
         UISetFrameVisible(PlayerGroupAll(), c_syncFrameTypeMenuBar, true);
-        UISetFrameVisible(PlayerGroupAll(), c_syncFrameTypeBattleUI, true);
         UISetFrameVisible(PlayerGroupAll(), c_syncFrameTypeHelpMenuButton, true);
         gv_aBChoiceOn = true;
         while (!(((gv_aBChoiceOn == false) || (gv_aBChoiceReplaying == true)))) {
@@ -35226,7 +35266,6 @@ bool gt_ABChoiceTTosh03Replay_Func (bool testConds, bool runActions) {
     UISetFrameVisible(PlayerGroupAll(), c_syncFrameTypeMenuBar, false);
     DialogSetVisible(gv_aBChoicePanel, PlayerGroupAll(), false);
     UISetCursorVisible(PlayerGroupAll(), false);
-    UISetFrameVisible(PlayerGroupAll(), c_syncFrameTypeBattleUI, false);
     CinematicFade(false, 0.5, c_fadeStyleNormal, Color(0.00, 0.00, 0.00), 0.0, true);
     UISetMode(PlayerGroupAll(), c_uiModeLetterboxed, c_transitionDurationImmediate);
     gv_aBChoiceReplaying = true;
@@ -35251,7 +35290,6 @@ bool gt_ABChoiceTTosh03A_Func (bool testConds, bool runActions) {
     UISetFrameVisible(PlayerGroupAll(), c_syncFrameTypeMenuBar, false);
     DialogSetVisible(gv_aBChoicePanel, PlayerGroupAll(), false);
     UISetCursorVisible(PlayerGroupAll(), false);
-    UISetFrameVisible(PlayerGroupAll(), c_syncFrameTypeBattleUI, false);
     CinematicFade(false, 0.5, c_fadeStyleNormal, Color(0.00, 0.00, 0.00), 0.0, true);
     UISetMode(PlayerGroupAll(), c_uiModeLetterboxed, c_transitionDurationImmediate);
     TriggerExecute(gt_ABChoiceTTosh03ASkippable, true, true);
@@ -35318,7 +35356,6 @@ bool gt_ABChoiceTTosh03B_Func (bool testConds, bool runActions) {
     UISetFrameVisible(PlayerGroupAll(), c_syncFrameTypeMenuBar, false);
     DialogSetVisible(gv_aBChoicePanel, PlayerGroupAll(), false);
     UISetCursorVisible(PlayerGroupAll(), false);
-    UISetFrameVisible(PlayerGroupAll(), c_syncFrameTypeBattleUI, false);
     CinematicFade(false, 0.5, c_fadeStyleNormal, Color(0.00, 0.00, 0.00), 0.0, true);
     UISetMode(PlayerGroupAll(), c_uiModeLetterboxed, c_transitionDurationImmediate);
     TriggerExecute(gt_ABChoiceTTosh03BSkippable, true, true);
@@ -35480,7 +35517,6 @@ bool gt_ABChoiceTValerian02_Func (bool testConds, bool runActions) {
 
         UISetCursorVisible(PlayerGroupAll(), true);
         UISetFrameVisible(PlayerGroupAll(), c_syncFrameTypeMenuBar, true);
-        UISetFrameVisible(PlayerGroupAll(), c_syncFrameTypeBattleUI, true);
         UISetFrameVisible(PlayerGroupAll(), c_syncFrameTypeHelpMenuButton, true);
         gv_aBChoiceOn = true;
         while (!(((gv_aBChoiceOn == false) || (gv_aBChoiceReplaying == true)))) {
@@ -35617,7 +35653,6 @@ bool gt_ABChoiceTValerian02Replay_Func (bool testConds, bool runActions) {
     UISetFrameVisible(PlayerGroupAll(), c_syncFrameTypeMenuBar, false);
     DialogSetVisible(gv_aBChoicePanel, PlayerGroupAll(), false);
     UISetCursorVisible(PlayerGroupAll(), false);
-    UISetFrameVisible(PlayerGroupAll(), c_syncFrameTypeBattleUI, false);
     CinematicFade(false, 0.5, c_fadeStyleNormal, Color(0.00, 0.00, 0.00), 0.0, true);
     UISetMode(PlayerGroupAll(), c_uiModeLetterboxed, c_transitionDurationImmediate);
     gv_aBChoiceReplaying = true;
@@ -35642,7 +35677,6 @@ bool gt_ABChoiceTValerian02A_Func (bool testConds, bool runActions) {
     UISetFrameVisible(PlayerGroupAll(), c_syncFrameTypeMenuBar, false);
     DialogSetVisible(gv_aBChoicePanel, PlayerGroupAll(), false);
     UISetCursorVisible(PlayerGroupAll(), false);
-    UISetFrameVisible(PlayerGroupAll(), c_syncFrameTypeBattleUI, false);
     CinematicFade(false, 0.5, c_fadeStyleNormal, Color(0.00, 0.00, 0.00), 0.0, true);
     UISetMode(PlayerGroupAll(), c_uiModeLetterboxed, c_transitionDurationImmediate);
     TriggerExecute(gt_ABChoiceTValerian02ASkippable, true, true);
@@ -35708,7 +35742,6 @@ bool gt_ABChoiceTValerian02B_Func (bool testConds, bool runActions) {
     UISetFrameVisible(PlayerGroupAll(), c_syncFrameTypeMenuBar, false);
     DialogSetVisible(gv_aBChoicePanel, PlayerGroupAll(), false);
     UISetCursorVisible(PlayerGroupAll(), false);
-    UISetFrameVisible(PlayerGroupAll(), c_syncFrameTypeBattleUI, false);
     CinematicFade(false, 0.5, c_fadeStyleNormal, Color(0.00, 0.00, 0.00), 0.0, true);
     UISetMode(PlayerGroupAll(), c_uiModeLetterboxed, c_transitionDurationImmediate);
     TriggerExecute(gt_ABChoiceTValerian02BSkippable, true, true);
@@ -41778,6 +41811,7 @@ void InitTriggers () {
     gt_CustomPlanetInit_Init();
     gt_CustomPlanetIconClick_Init();
     gt_CustomPlanetClose_Init();
+    gt_CustomPlanetLaunch_Init();
     gt_CustomPlanetNextPlanet_Init();
     gt_CustomPlanetPrevPlanet_Init();
     gt_HideBaseGameUI_Init();
