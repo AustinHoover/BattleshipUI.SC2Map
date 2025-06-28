@@ -2443,7 +2443,7 @@ void gf_CustomPlanetInjectPlanet (int lp_uISlot, int lp_missionIndex) {
     DialogControlCreate(DialogControlGetDialog(gv_customPlanetButtonClose), c_triggerControlTypePanel);
     lv_panel = DialogControlLastCreated();
     DialogControlSetSize(lv_panel, PlayerGroupAll(), 150, 150);
-    libCamp_gf_MoveDialogItemInGridRelative(lv_panel, PlayerGroupAll(), c_anchorTop, gv_customPlanetPanel, c_anchorCenter, 0.0, 0.0);
+    libCamp_gf_MoveDialogItemInGridRelative(lv_panel, PlayerGroupAll(), c_anchorTop, gv_customPlanetPanel, c_anchorCenter, 0.0, 50.0);
     DialogControlSetVisible(lv_panel, PlayerGroupAll(), true);
     gv_customPlanetIconPanels[lp_uISlot] = lv_panel;
     DialogControlCreateInPanelFromTemplate(lv_panel, c_triggerControlTypeUnitModel, "PlanetIcon/UnitModelFrame");
