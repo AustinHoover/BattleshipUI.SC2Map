@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Catalog>
+    <CActorSelection id="FlyerHelperSplat2">
+        <Flags index="SuppressSaveLoad" value="0"/>
+        <Inherits index="CloakEffect" value="1"/>
+        <On Terms="ActorCreation" Send="Create FlyerHelperBeam"/>
+        <On Terms="ActorDestruction" Target="FlyerHelperBeam" Send="Destroy"/>
+        <On Terms="ActorOrphan" Send="Destroy"/>
+        <On Terms="PreTargetingUpdate.*.Start" Send="SetTintColorBlendPair 255,64,0 255,0,0 0.150000 Bounce Pretarget 175.000000"/>
+        <On Terms="PreTargetingUpdate.*.Stop" Send="ClearTintColor 0.100000 Pretarget"/>
+        <On Terms="StatusOn.*.PreTargetingTint" Send="PreTargetingUpdate Start"/>
+        <On Terms="StatusOff.*.PreTargetingTint" Send="PreTargetingUpdate Stop"/>
+        <On Terms="Behavior.VortexEventHorizon.On" Send="SetVisibility"/>
+        <On Terms="Behavior.VortexEventHorizon.Off" Send="SetVisibility 1"/>
+        <Host Subject="_Unit"/>
+        <HostSiteOps Ops="SOpAttachOrigin SOpShadowRespectsBaseHeight"/>
+        <Layer value="MaterialUILayer"/>
+        <Model value="AOEPreTargetAirUnitProtossSplat"/>
+    </CActorSelection>
+    <CActorSelection id="FlyerHelperSplat3">
+        <Flags index="SuppressSaveLoad" value="0"/>
+        <Inherits index="CloakEffect" value="1"/>
+        <On Terms="ActorCreation" Send="Create FlyerHelperBeam"/>
+        <On Terms="ActorDestruction" Target="FlyerHelperBeam" Send="Destroy"/>
+        <On Terms="ActorOrphan" Send="Destroy"/>
+        <On Terms="PreTargetingUpdate.*.Start" Send="SetTintColorBlendPair 255,64,0 255,0,0 0.150000 Bounce Pretarget 175.000000"/>
+        <On Terms="PreTargetingUpdate.*.Stop" Send="ClearTintColor 0.100000 Pretarget"/>
+        <On Terms="StatusOn.*.PreTargetingTint" Send="PreTargetingUpdate Start"/>
+        <On Terms="StatusOff.*.PreTargetingTint" Send="PreTargetingUpdate Stop"/>
+        <On Terms="Behavior.VortexEventHorizon.On" Send="SetVisibility"/>
+        <On Terms="Behavior.VortexEventHorizon.Off" Send="SetVisibility 1"/>
+        <Host Subject="_Unit"/>
+        <HostSiteOps Ops="SOpAttachOrigin SOpShadowRespectsBaseHeight"/>
+        <Layer value="MaterialUILayer"/>
+        <Model value="AOEPreTargetAirUnitProtossSplat"/>
+    </CActorSelection>
+    <CActorShadow id="FlyerShadow2">
+        <Inherits index="CloakEffect" value="1"/>
+        <Inherits index="Visibility" value="1"/>
+        <On Terms="AbilMorph.*.Finish; ValidateUnit IsFlying; Option Shadow Low; $AllowBlobShadow" Send="Create"/>
+        <On Terms="AbilMorph.*.Finish; ValidateUnit IsNotFlying" Send="Destroy"/>
+        <On Terms="OptionsChange; Option Shadow Low; Scope Unit; ValidateUnit IsFlying; $AllowBlobShadow" Send="Create"/>
+        <On Terms="OptionsChange; Option Shadow Medium" Send="Destroy"/>
+        <On Terms="OptionsChange; Option Shadow High" Send="Destroy"/>
+        <On Terms="OptionsChange; Option Shadow Ultra" Send="Destroy"/>
+        <Color value="120,0,0,0"/>
+        <FallOff value="0.600000"/>
+        <HalfHeight value="1.500000"/>
+        <Attenuation value="0.500000"/>
+        <HostRadiusPercent value="0.300000"/>
+    </CActorShadow>
+    <CActorShadow id="FlyerShadow3">
+        <Inherits index="CloakEffect" value="1"/>
+        <Inherits index="Visibility" value="1"/>
+        <On Terms="AbilMorph.*.Finish; ValidateUnit IsFlying; Option Shadow Low; $AllowBlobShadow" Send="Create"/>
+        <On Terms="AbilMorph.*.Finish; ValidateUnit IsNotFlying" Send="Destroy"/>
+        <On Terms="OptionsChange; Option Shadow Low; Scope Unit; ValidateUnit IsFlying; $AllowBlobShadow" Send="Create"/>
+        <On Terms="OptionsChange; Option Shadow Medium" Send="Destroy"/>
+        <On Terms="OptionsChange; Option Shadow High" Send="Destroy"/>
+        <On Terms="OptionsChange; Option Shadow Ultra" Send="Destroy"/>
+        <Color value="120,0,0,0"/>
+        <FallOff value="0.600000"/>
+        <HalfHeight value="1.500000"/>
+        <Attenuation value="0.500000"/>
+        <HostRadiusPercent value="0.300000"/>
+    </CActorShadow>
+    <CActorSelection id="GroundPreSelection2" parent="PreSelection">
+        <On Terms="PreSelectionUpdate.*.Start; !ValidateUnit UseCliffSelection; IsLocalParticipantType" Send="Create"/>
+        <On Terms="PreSelectionUpdate.*.Stop" Send="Destroy"/>
+        <On Terms="AbilMorph.*.Finish; ValidateUnit UseCliffSelection" Send="CreateCopy CliffPreSelection"/>
+        <On Terms="AbilMorph.*.Finish; ValidateUnit UseCliffSelection" Send="Destroy"/>
+        <HalfHeight value="1.000000"/>
+        <Attenuation value="0.500000"/>
+    </CActorSelection>
+    <CActorSelection id="GroundPreSelection3" parent="PreSelection">
+        <On Terms="PreSelectionUpdate.*.Start; !ValidateUnit UseCliffSelection; IsLocalParticipantType" Send="Create"/>
+        <On Terms="PreSelectionUpdate.*.Stop" Send="Destroy"/>
+        <On Terms="AbilMorph.*.Finish; ValidateUnit UseCliffSelection" Send="CreateCopy CliffPreSelection"/>
+        <On Terms="AbilMorph.*.Finish; ValidateUnit UseCliffSelection" Send="Destroy"/>
+        <HalfHeight value="1.000000"/>
+        <Attenuation value="0.500000"/>
+    </CActorSelection>
+    <CActorShadow id="GroundShadow2">
+        <Inherits index="CloakEffect" value="1"/>
+        <Inherits index="Visibility" value="1"/>
+        <On Terms="AbilMorph.*.Finish; ValidateUnit IsNotFlying; Option Shadow Low; $AllowBlobShadow" Send="Create"/>
+        <On Terms="AbilMorph.*.Finish; ValidateUnit IsFlying" Send="Destroy"/>
+        <On Terms="OptionsChange; Option Shadow Low; Scope Unit; ValidateUnit IsNotFlying; $AllowBlobShadow" Send="Create"/>
+        <On Terms="OptionsChange; Option Shadow Medium" Send="Destroy"/>
+        <On Terms="OptionsChange; Option Shadow High" Send="Destroy"/>
+        <On Terms="OptionsChange; Option Shadow Ultra" Send="Destroy"/>
+        <Color value="140,0,0,0"/>
+        <FallOff value="0.500000"/>
+        <HalfHeight value="1.500000"/>
+        <Attenuation value="0.500000"/>
+        <HostRadiusPercent value="0.300000"/>
+    </CActorShadow>
+    <CActorShadow id="GroundShadow3">
+        <Inherits index="CloakEffect" value="1"/>
+        <Inherits index="Visibility" value="1"/>
+        <On Terms="AbilMorph.*.Finish; ValidateUnit IsNotFlying; Option Shadow Low; $AllowBlobShadow" Send="Create"/>
+        <On Terms="AbilMorph.*.Finish; ValidateUnit IsFlying" Send="Destroy"/>
+        <On Terms="OptionsChange; Option Shadow Low; Scope Unit; ValidateUnit IsNotFlying; $AllowBlobShadow" Send="Create"/>
+        <On Terms="OptionsChange; Option Shadow Medium" Send="Destroy"/>
+        <On Terms="OptionsChange; Option Shadow High" Send="Destroy"/>
+        <On Terms="OptionsChange; Option Shadow Ultra" Send="Destroy"/>
+        <Color value="140,0,0,0"/>
+        <FallOff value="0.500000"/>
+        <HalfHeight value="1.500000"/>
+        <Attenuation value="0.500000"/>
+        <HostRadiusPercent value="0.300000"/>
+    </CActorShadow>
+    <CActorModel id="ModelPretargetGround2" parent="ModelPretarget">
+        <Model value="AOEPreTargetGroundUnitProtoss"/>
+    </CActorModel>
+    <CActorModel id="ModelPretargetGround3" parent="ModelPretarget">
+        <Model value="AOEPreTargetGroundUnitProtoss"/>
+    </CActorModel>
+    <CActorUnit id="SMMarSaraPlanet2" parent="GenericUnitSM" unitName="PlanetMarSara">
+        <On index="7" Terms="ActorCreation; ValidateUnit IsFlying2; Option Shadow Low; $AllowBlobShadow"/>
+        <On index="8" Terms="ActorCreation; ValidateUnit IsNotFlying2; Option Shadow Low; $AllowBlobShadow"/>
+        <On index="11" Terms="StatusOn.*.PreTargetingModel; ValidateUnit IsFlying2"/>
+        <On index="19" Terms="CursorUpdate.*.Start; ValidateUnit IsFlying2"/>
+        <On index="20" Terms="CursorUpdate.*.Stop; ValidateUnit IsFlying2; HasStatus FlyerHelper"/>
+        <On index="24" Terms="StatusOn.*.Selected; ValidateUnit IsFlying2"/>
+        <On index="25" Terms="StatusOff.*.Selected; ValidateUnit IsFlying2; HasStatus FlyerHelper"/>
+        <On index="29" Terms="ActorCreation; FlyerHelper All; ValidateUnit IsFlying2"/>
+        <On index="34" Terms="FlyerHelperChange; FlyerHelper All; ValidateUnit IsFlying2; !ScopeContains FlyerHelperSplat"/>
+        <On index="38" Terms="UnitDetectedByViewer.*.On; ValidateUnit IsHallucination2"/>
+        <On index="39" Terms="UnitDetectedByViewer.*.Off; ValidateUnit IsHallucination2"/>
+        <On index="40" Terms="UnitDeathCustomize; ValidateUnit NotStructure2; IsStatus InAir 1"/>
+        <On index="41" Terms="UnitDeathCustomize; ValidateUnit IsProtossUnit2; IsStatus InAir 1"/>
+        <On index="42" Terms="UnitDeathCustomize; ValidateUnit IsTerranUnit2; IsStatus InAir 1"/>
+        <On index="43" Terms="UnitDeathCustomize; ValidateUnit IsZergUnit2; IsStatus InAir 1"/>
+        <On index="44" Terms="UnitDeathCustomize; ValidateUnit IsVortexed2"/>
+        <On index="45" Terms="UnitDeathCustomize; ValidateUnit HasForceLowDeathProtoss2"/>
+        <On index="46" Terms="UnitDeathCustomize; ValidateUnit HasForceLowDeathZerg2"/>
+        <On index="47" Terms="UnitDeathCustomize; ValidateUnit HasForceLowDeathTerran2"/>
+        <On index="50" Terms="Behavior.ForceLowDeath2.On"/>
+        <On index="64" Terms="Abil.attack2.ReadyStart" Send="AnimGroupApply Ready"/>
+        <On index="68" Terms="Abil.attack2.ReadyStop" Send="AnimGroupRemove Ready"/>
+        <Model value="PlanetIconMarSara"/>
+        <BuildModel value="SMMarSaraPlanet2"/>
+        <DeathArray index="Normal" ModelLink="SMMarSaraPlanet2"/>
+        <DeathCustoms index="0" ModelLink="ZergSmallUnitDeathLow2"/>
+        <DeathCustoms index="1" ModelLink="ProtossSmallUnitDeathLow2"/>
+        <DeathCustoms index="2" ModelLink="TerranSmallUnitDeathLow2"/>
+        <DeathCustoms index="3" ModelLink="ZergSmallUnitDeathLow2"/>
+        <DeathCustoms index="4" ModelLink="Invisible2"/>
+        <PlacementModel value="SMMarSaraPlanet2"/>
+        <PortraitModel value="StaticPortrait2"/>
+        <HighlightTooltip value="Unit/Name/SMMarSaraPlanet2"/>
+    </CActorUnit>
+    <CActorUnit id="SMMarSaraPlanet22" parent="GenericUnitSM" unitName="PlanetMarSara2">
+        <On index="7" Terms="ActorCreation; ValidateUnit IsFlying22; Option Shadow Low; $AllowBlobShadow"/>
+        <On index="8" Terms="ActorCreation; ValidateUnit IsNotFlying22; Option Shadow Low; $AllowBlobShadow"/>
+        <On index="11" Terms="StatusOn.*.PreTargetingModel; ValidateUnit IsFlying22"/>
+        <On index="19" Terms="CursorUpdate.*.Start; ValidateUnit IsFlying22"/>
+        <On index="20" Terms="CursorUpdate.*.Stop; ValidateUnit IsFlying22; HasStatus FlyerHelper"/>
+        <On index="24" Terms="StatusOn.*.Selected; ValidateUnit IsFlying22"/>
+        <On index="25" Terms="StatusOff.*.Selected; ValidateUnit IsFlying22; HasStatus FlyerHelper"/>
+        <On index="29" Terms="ActorCreation; FlyerHelper All; ValidateUnit IsFlying22"/>
+        <On index="34" Terms="FlyerHelperChange; FlyerHelper All; ValidateUnit IsFlying22; !ScopeContains FlyerHelperSplat"/>
+        <On index="38" Terms="UnitDetectedByViewer.*.On; ValidateUnit IsHallucination22"/>
+        <On index="39" Terms="UnitDetectedByViewer.*.Off; ValidateUnit IsHallucination22"/>
+        <On index="40" Terms="UnitDeathCustomize; ValidateUnit NotStructure22; IsStatus InAir 1"/>
+        <On index="41" Terms="UnitDeathCustomize; ValidateUnit IsProtossUnit22; IsStatus InAir 1"/>
+        <On index="42" Terms="UnitDeathCustomize; ValidateUnit IsTerranUnit22; IsStatus InAir 1"/>
+        <On index="43" Terms="UnitDeathCustomize; ValidateUnit IsZergUnit22; IsStatus InAir 1"/>
+        <On index="44" Terms="UnitDeathCustomize; ValidateUnit IsVortexed22"/>
+        <On index="45" Terms="UnitDeathCustomize; ValidateUnit HasForceLowDeathProtoss22"/>
+        <On index="46" Terms="UnitDeathCustomize; ValidateUnit HasForceLowDeathZerg22"/>
+        <On index="47" Terms="UnitDeathCustomize; ValidateUnit HasForceLowDeathTerran22"/>
+        <On index="50" Terms="Behavior.ForceLowDeath22.On"/>
+        <On index="64" Terms="Abil.attack22.ReadyStart" Send="AnimGroupApply Ready"/>
+        <On index="68" Terms="Abil.attack22.ReadyStop" Send="AnimGroupRemove Ready"/>
+        <Model value="PlanetIconAgria"/>
+        <BuildModel value="SMMarSaraPlanet22"/>
+        <DeathArray index="Normal" ModelLink="SMMarSaraPlanet22"/>
+        <DeathCustoms index="0" ModelLink="ZergSmallUnitDeathLow22"/>
+        <DeathCustoms index="1" ModelLink="ProtossSmallUnitDeathLow22"/>
+        <DeathCustoms index="2" ModelLink="TerranSmallUnitDeathLow22"/>
+        <DeathCustoms index="3" ModelLink="ZergSmallUnitDeathLow22"/>
+        <DeathCustoms index="4" ModelLink="Invisible22"/>
+        <PlacementModel value="SMMarSaraPlanet22"/>
+        <PortraitModel value="StaticPortrait22"/>
+        <HighlightTooltip value="Unit/Name/SMMarSaraPlanet22"/>
+    </CActorUnit>
+    <CActorSound id="SoundEmitter2" parent="SoundContinuous">
+        <Terms value="!HasScopeFlag DisableSoundEmitters"/>
+        <Flags index="SuppressCreationErrors" value="1"/>
+        <Host Subject="::Creator"/>
+    </CActorSound>
+    <CActorSound id="SoundEmitter3" parent="SoundContinuous">
+        <Terms value="!HasScopeFlag DisableSoundEmitters"/>
+        <Flags index="SuppressCreationErrors" value="1"/>
+        <Host Subject="::Creator"/>
+    </CActorSound>
+</Catalog>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Catalog>
+    <CUnit id="PlanetMarSara">
+        <EditorCategories value="ObjectType:Set,ObjectFamily:Storymode"/>
+    </CUnit>
+    <CUnit id="PlanetMarSara2">
+        <EditorCategories value="ObjectType:Set,ObjectFamily:Storymode"/>
+    </CUnit>
+</Catalog>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Desc>
+    <Include path="UI/Layout/MapSelect.SC2Layout"/>
+    <Include path="UI/Layout/PlanetSelectLayout.SC2Layout"/>
+    <Include path="UI/Layout/PlanetIcon.SC2Layout"/>
+    <Include path="UI/Layout/PlanetIconHiddenButton.SC2Layout"/>
+</Desc>

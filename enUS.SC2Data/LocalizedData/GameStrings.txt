@@ -1,4 +1,8 @@
-﻿Conversation/LabFidgetsArtifact/Group00001=1st Artifact conversation without Hanson
+﻿Abil/Name/attack2=Attack
+Abil/Name/attack22=Attack
+Abil/TargetMessage/attack2=<IMG path="Assets\Textures\tutorialmouseleftbuttondown.dds" alignment="absolutemiddle"/>   Ground to Auto-attack<n/><IMG path="Assets\Textures\tutorialmouserightbuttondown.dds" alignment="absolutemiddle"/>   Cancel
+Abil/TargetMessage/attack22=<IMG path="Assets\Textures\tutorialmouseleftbuttondown.dds" alignment="absolutemiddle"/>   Ground to Auto-attack<n/><IMG path="Assets\Textures\tutorialmouserightbuttondown.dds" alignment="absolutemiddle"/>   Cancel
+Conversation/LabFidgetsArtifact/Group00001=1st Artifact conversation without Hanson
 DocInfo/Author=Blizzard Entertainment
 DocInfo/DescLong=
 DocInfo/DescShort=Storymode map
@@ -204,6 +208,7 @@ Param/Value/810626A2=
 Param/Value/82FE4BD6=Init Data Ends
 Param/Value/8301407C=Terran12
 Param/Value/831DBE26=<n/><n/>
+Param/Value/8571EC15=prev planet
 Param/Value/861C0605=The Char Decision
 Param/Value/86EA9124=Don Cowin
 Param/Value/883DC614=Room: Char
@@ -264,6 +269,7 @@ Param/Value/A9E7CA0C=Cancel
 Param/Value/AA4A30A8=Tosh End B
 Param/Value/AB1AB48C=Auto Stop Music
 Param/Value/AB683C7D=The Fate of Haven
+Param/Value/AB9BA6FC=clicked planet
 Param/Value/ABC761A1=Mute Jukebox
 Param/Value/AC01C1E2=Bourbon Cowboys
 Param/Value/ACD29889=Raw Power
@@ -350,6 +356,7 @@ Param/Value/E08A5DE1=Void
 Param/Value/E156CE66=
 Param/Value/E16789E0=Hotspot Leave
 Param/Value/E3037797=Terran Up The Night
+Param/Value/E30FA0B5=next planet
 Param/Value/E36577BB=Big Tuna
 Param/Value/E4C128DC=Enable actor 
 Param/Value/E532DC8C=
@@ -393,3 +400,7 @@ Param/Value/FDEB51AC=Cantina
 Param/Value/FEDA652A=Big Tuna
 Param/Value/FEDED7E3=Protoss Research Points = 
 Param/Value/FFFD0315=Bridge
+Unit/Name/PlanetMarSara=Mar Sara
+Unit/Name/PlanetMarSara2=Agria
+Unit/Name/SMMarSaraPlanet2=Mar Sara Planet
+Unit/Name/SMMarSaraPlanet22=Agria Planet

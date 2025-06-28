@@ -364,6 +364,13 @@ const int ge_ABChoiceAB_B = 1;
 //--------------------------------------------------------------------------------------------------
 // Global Variables
 //--------------------------------------------------------------------------------------------------
+int gv_maxPlanetsAtOnce;
+int[6] gv_customPlanetIconButtons;
+int[6] gv_customPlanetIconPanels;
+int gv_customPlanetButtonCycleBackward;
+int gv_customPlanetButtonCycleForward;
+int gv_customPlanetButtonClose;
+int gv_customPlanetPanel;
 fixed gv_talkBlendTime;
 fixed gv_standBlendTime;
 fixed gv_idleFidgetStartTime;
@@ -828,6 +835,17 @@ void InitGlobals () {
     int init_i1;
     int init_i2;
 
+    gv_maxPlanetsAtOnce = 5;
+    for (init_i = 0; init_i <= 5; init_i += 1) {
+        gv_customPlanetIconButtons[init_i] = c_invalidDialogControlId;
+    }
+    for (init_i = 0; init_i <= 5; init_i += 1) {
+        gv_customPlanetIconPanels[init_i] = c_invalidDialogControlId;
+    }
+    gv_customPlanetButtonCycleBackward = c_invalidDialogControlId;
+    gv_customPlanetButtonCycleForward = c_invalidDialogControlId;
+    gv_customPlanetButtonClose = c_invalidDialogControlId;
+    gv_customPlanetPanel = c_invalidDialogControlId;
     gv_talkBlendTime = 0.75;
     gv_standBlendTime = 0.75;
     gv_idleFidgetStartTime = 40.0;
@@ -1056,6 +1074,8 @@ void InitGlobals () {
 //--------------------------------------------------------------------------------------------------
 // Global Function Declarations
 //--------------------------------------------------------------------------------------------------
+void gf_CustomPlanetInjectPlanets (int lp_index);
+void gf_CustomPlanetShow ();
 void gf_CustomFadeInOut (bool lp_fadeIn, fixed lp_duration, bool lp_waitUntilDone);
 void gf_TurnClickableOnOff (unit lp_unit, bool lp_desiredState);
 void gf_TurnClickablesOnOff (unitgroup lp_whichClickables, bool lp_desiredState);
@@ -1492,6 +1512,12 @@ void gf_StartTipHint ();
 //--------------------------------------------------------------------------------------------------
 // Trigger Variables
 //--------------------------------------------------------------------------------------------------
+trigger gt_CustomPlanetInit;
+trigger gt_CustomPlanetIconClick;
+trigger gt_CustomPlanetClose;
+trigger gt_CustomPlanetNextPlanet;
+trigger gt_CustomPlanetPrevPlanet;
+trigger gt_HideBaseGameUI;
 trigger gt_WaitForSkipTrig;
 trigger gt_BackButtonClicked;
 trigger gt_BackButtonEscape;
@@ -1548,7 +1574,6 @@ trigger gt_Init03UI;
 trigger gt_Init04Environment;
 trigger gt_Init05Sounds;
 trigger gt_Init06Intro;
-trigger gt_InitCUSTOMADDITIONS;
 trigger gt_ReturnToArmory;
 trigger gt_ReturnToBridge;
 trigger gt_ReturnToCantina;
@@ -2316,6 +2341,45 @@ trigger gt_TipAfterTValerian01;
 //--------------------------------------------------------------------------------------------------
 // Global Functions
 //--------------------------------------------------------------------------------------------------
+void gf_CustomPlanetInjectPlanets (int lp_index) {
+    // Variable Declarations
+    int lv_unitModelItem;
+    int lv_panel;
+    int lv_button;
+
+    // Automatic Variable Declarations
+    // Variable Initialization
+    lv_unitModelItem = c_invalidDialogControlId;
+    lv_panel = c_invalidDialogControlId;
+    lv_button = c_invalidDialogControlId;
+
+    // Implementation
+    DialogControlCreate(DialogControlGetDialog(gv_customPlanetButtonClose), c_triggerControlTypePanel);
+    lv_panel = DialogControlLastCreated();
+    DialogControlSetSize(lv_panel, PlayerGroupAll(), 150, 150);
+    libCamp_gf_MoveDialogItemInGridRelative(lv_panel, PlayerGroupAll(), c_anchorTop, gv_customPlanetPanel, c_anchorCenter, 0.0, 0.0);
+    DialogControlSetVisible(lv_panel, PlayerGroupAll(), true);
+    gv_customPlanetIconPanels[lp_index] = lv_panel;
+    DialogControlCreateInPanelFromTemplate(lv_panel, c_triggerControlTypeUnitModel, "PlanetIcon/UnitModelFrame");
+    lv_unitModelItem = DialogControlLastCreated();
+    libNtve_gf_SetDialogItemUnitLink(lv_unitModelItem, "PlanetMarSara2", PlayerGroupAll());
+    libCamp_gf_MoveDialogItemInGridRelative(lv_unitModelItem, PlayerGroupAll(), c_anchorCenter, lv_panel, c_anchorCenter, 0.0, 0.0);
+    DialogControlSetVisible(lv_unitModelItem, PlayerGroupAll(), true);
+    DialogControlCreateInPanelFromTemplate(lv_panel, c_triggerControlTypeButton, "PlanetIconHiddenButton/DecrementArrowButton");
+    lv_button = DialogControlLastCreated();
+    DialogControlSetSize(lv_button, PlayerGroupAll(), 150, 150);
+    libCamp_gf_MoveDialogItemInGridRelative(lv_button, PlayerGroupAll(), c_anchorTop, gv_customPlanetPanel, c_anchorCenter, 0.0, 0.0);
+    DialogControlSetVisible(lv_button, PlayerGroupAll(), true);
+    gv_customPlanetIconButtons[lp_index] = lv_button;
+}
+
+void gf_CustomPlanetShow () {
+    // Automatic Variable Declarations
+    // Implementation
+    DialogControlSetVisible(gv_customPlanetPanel, PlayerGroupAll(), true);
+    gf_CustomPlanetInjectPlanets(0);
+}
+
 void gf_CustomFadeInOut (bool lp_fadeIn, fixed lp_duration, bool lp_waitUntilDone) {
     // Automatic Variable Declarations
     // Implementation
@@ -10533,7 +10597,7 @@ void gf_PlanetPanelDisplay (int lp_planetID, trigger lp_leaveCallback) {
         }
 
     }
-    UISetFrameVisible(PlayerGroupAll(), c_syncFrameTypePlanetPanel, true);
+    gf_CustomPlanetShow();
 }
 
 void gf_PlanetPanelClose () {
@@ -10596,6 +10660,7 @@ void gf_PlanetPanelPreload () {
     lv_missionID = libCamp_ge_MapID_MapNone;
 
     // Implementation
+    gf_CustomPlanetShow();
     autoD34D02C8_i = libCamp_gv_tSC_PLANET_FIRST;
     while (autoD34D02C8_i <= libCamp_gv_tSC_PLANET_LAST) {
         lv_indexPlanet = libCamp_gv_tS_PlanetID[autoD34D02C8_i];
@@ -14750,6 +14815,200 @@ void gf_StartTipHint () {
 }
 
 //--------------------------------------------------------------------------------------------------
+// Trigger: CustomPlanet - Init
+//--------------------------------------------------------------------------------------------------
+bool gt_CustomPlanetInit_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    DialogControlHookupStandard(c_triggerControlTypePanel, "UIContainer/CustomPlanetPanel");
+    gv_customPlanetPanel = DialogControlLastCreated();
+    DialogControlHookupStandard(c_triggerControlTypeButton, "UIContainer/CustomPlanetPanel/CloseButton");
+    gv_customPlanetButtonClose = DialogControlLastCreated();
+    DialogControlHookupStandard(c_triggerControlTypeButton, "UIContainer/CustomPlanetPanel/IncrementArrowButton");
+    gv_customPlanetButtonCycleForward = DialogControlLastCreated();
+    DialogControlHookupStandard(c_triggerControlTypeButton, "UIContainer/CustomPlanetPanel/DecrementArrowButton");
+    gv_customPlanetButtonCycleBackward = DialogControlLastCreated();
+    DialogControlSetVisible(gv_customPlanetPanel, PlayerGroupAll(), false);
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void gt_CustomPlanetInit_Init () {
+    gt_CustomPlanetInit = TriggerCreate("gt_CustomPlanetInit_Func");
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: CustomPlanet - IconClick
+//--------------------------------------------------------------------------------------------------
+bool gt_CustomPlanetIconClick_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    int lv_planetIconIndex;
+
+    // Automatic Variable Declarations
+    int auto32FEF863_ae;
+    const int auto32FEF863_ai = 1;
+
+    // Variable Initialization
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    auto32FEF863_ae = (gv_maxPlanetsAtOnce - 1);
+    lv_planetIconIndex = 0;
+    for ( ; ( (auto32FEF863_ai >= 0 && lv_planetIconIndex <= auto32FEF863_ae) || (auto32FEF863_ai < 0 && lv_planetIconIndex >= auto32FEF863_ae) ) ; lv_planetIconIndex += auto32FEF863_ai ) {
+        if ((gv_customPlanetIconButtons[lv_planetIconIndex] == EventDialogControl())) {
+            TriggerDebugOutput(1, StringExternal("Param/Value/AB9BA6FC"), true);
+        }
+
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void gt_CustomPlanetIconClick_Init () {
+    gt_CustomPlanetIconClick = TriggerCreate("gt_CustomPlanetIconClick_Func");
+    TriggerAddEventDialogControl(gt_CustomPlanetIconClick, c_playerAny, c_invalidDialogControlId, c_triggerControlEventTypeClick);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: CustomPlanet - Close
+//--------------------------------------------------------------------------------------------------
+bool gt_CustomPlanetClose_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    int lv_planetIconIndex;
+
+    // Automatic Variable Declarations
+    int auto388974FA_ae;
+    const int auto388974FA_ai = 1;
+
+    // Variable Initialization
+
+    // Conditions
+    if (testConds) {
+        if (!((EventDialogControl() == gv_customPlanetButtonClose))) {
+            return false;
+        }
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    DialogControlSetVisible(gv_customPlanetPanel, PlayerGroupAll(), false);
+    TriggerExecute(gt_BridgeStarmapLeave, true, false);
+    auto388974FA_ae = gv_maxPlanetsAtOnce;
+    lv_planetIconIndex = 0;
+    for ( ; ( (auto388974FA_ai >= 0 && lv_planetIconIndex <= auto388974FA_ae) || (auto388974FA_ai < 0 && lv_planetIconIndex >= auto388974FA_ae) ) ; lv_planetIconIndex += auto388974FA_ai ) {
+        DialogControlDestroy(gv_customPlanetIconButtons[lv_planetIconIndex]);
+        gv_customPlanetIconButtons[lv_planetIconIndex] = c_invalidDialogControlId;
+        DialogControlDestroy(gv_customPlanetIconPanels[lv_planetIconIndex]);
+        gv_customPlanetIconPanels[lv_planetIconIndex] = c_invalidDialogControlId;
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void gt_CustomPlanetClose_Init () {
+    gt_CustomPlanetClose = TriggerCreate("gt_CustomPlanetClose_Func");
+    TriggerAddEventDialogControl(gt_CustomPlanetClose, c_playerAny, c_invalidDialogControlId, c_triggerControlEventTypeClick);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: CustomPlanet - Next Planet
+//--------------------------------------------------------------------------------------------------
+bool gt_CustomPlanetNextPlanet_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Conditions
+    if (testConds) {
+        if (!((EventDialogControl() == gv_customPlanetButtonCycleForward))) {
+            return false;
+        }
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    TriggerDebugOutput(1, StringExternal("Param/Value/E30FA0B5"), true);
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void gt_CustomPlanetNextPlanet_Init () {
+    gt_CustomPlanetNextPlanet = TriggerCreate("gt_CustomPlanetNextPlanet_Func");
+    TriggerAddEventDialogControl(gt_CustomPlanetNextPlanet, c_playerAny, c_invalidDialogControlId, c_triggerControlEventTypeClick);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: CustomPlanet - Prev Planet
+//--------------------------------------------------------------------------------------------------
+bool gt_CustomPlanetPrevPlanet_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Conditions
+    if (testConds) {
+        if (!((EventDialogControl() == gv_customPlanetButtonCycleBackward))) {
+            return false;
+        }
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    TriggerDebugOutput(1, StringExternal("Param/Value/8571EC15"), true);
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void gt_CustomPlanetPrevPlanet_Init () {
+    gt_CustomPlanetPrevPlanet = TriggerCreate("gt_CustomPlanetPrevPlanet_Func");
+    TriggerAddEventDialogControl(gt_CustomPlanetPrevPlanet, c_playerAny, c_invalidDialogControlId, c_triggerControlEventTypeClick);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Hide Base Game UI
+//--------------------------------------------------------------------------------------------------
+bool gt_HideBaseGameUI_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    UISetFrameVisible(PlayerGroupAll(), c_syncFrameTypeUpkeep, false);
+    UISetFrameVisible(PlayerGroupAll(), c_syncFrameTypeSupply, false);
+    UISetFrameVisible(PlayerGroupAll(), c_syncFrameTypeCashPanel, false);
+    UISetFrameVisible(PlayerGroupAll(), c_syncFrameTypeCharacterSheetButton, false);
+    UISetFrameVisible(PlayerGroupAll(), c_syncFrameTypeCommandPanel, false);
+    UISetFrameVisible(PlayerGroupAll(), c_syncFrameTypeConsolePanel, false);
+    UISetFrameVisible(PlayerGroupAll(), c_syncFrameTypeControlGroupPanel, false);
+    UISetFrameVisible(PlayerGroupAll(), c_syncFrameTypeMinimapPanel, false);
+    UISetFrameVisible(PlayerGroupAll(), c_syncFrameTypeStatusUI, false);
+    UISetFrameVisible(PlayerGroupAll(), c_syncFrameTypeMenuBar, false);
+    UISetFrameVisible(PlayerGroupAll(), c_syncFrameTypeTeamResourceButton, false);
+    UISetFrameVisible(PlayerGroupAll(), c_syncFrameTypeArmyButton, false);
+    UISetFrameVisible(PlayerGroupAll(), c_syncFrameTypeResourcePanel, false);
+    UISetFrameVisible(PlayerGroupAll(), c_syncFrameTypePingPanel, false);
+    UISetFrameVisible(PlayerGroupAll(), c_syncFrameTypeIdleWorkerButton, false);
+    UISetFrameVisible(PlayerGroupAll(), c_syncFrameTypeMissionTimePanel, false);
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void gt_HideBaseGameUI_Init () {
+    gt_HideBaseGameUI = TriggerCreate("gt_HideBaseGameUI_Func");
+}
+
+//--------------------------------------------------------------------------------------------------
 // Trigger: Wait For Skip Trig
 //--------------------------------------------------------------------------------------------------
 bool gt_WaitForSkipTrig_Func (bool testConds, bool runActions) {
@@ -15793,7 +16052,8 @@ bool gt_MapInit_Func (bool testConds, bool runActions) {
     TriggerExecute(gt_Init04Environment, true, false);
     TriggerExecute(gt_Init05Sounds, true, false);
     TriggerExecute(gt_Init06Intro, true, false);
-    TriggerExecute(gt_InitCUSTOMADDITIONS, true, false);
+    TriggerExecute(gt_HideBaseGameUI, true, false);
+    TriggerExecute(gt_CustomPlanetInit, true, false);
     return true;
 }
 
@@ -17137,40 +17397,6 @@ bool gt_Init06Intro_Func (bool testConds, bool runActions) {
 //--------------------------------------------------------------------------------------------------
 void gt_Init06Intro_Init () {
     gt_Init06Intro = TriggerCreate("gt_Init06Intro_Func");
-}
-
-//--------------------------------------------------------------------------------------------------
-// Trigger: Init CUSTOM ADDITIONS
-//--------------------------------------------------------------------------------------------------
-bool gt_InitCUSTOMADDITIONS_Func (bool testConds, bool runActions) {
-    // Automatic Variable Declarations
-    // Actions
-    if (!runActions) {
-        return true;
-    }
-
-    UISetFrameVisible(PlayerGroupAll(), c_syncFrameTypeUpkeep, false);
-    UISetFrameVisible(PlayerGroupAll(), c_syncFrameTypeSupply, false);
-    UISetFrameVisible(PlayerGroupAll(), c_syncFrameTypeCashPanel, false);
-    UISetFrameVisible(PlayerGroupAll(), c_syncFrameTypeCharacterSheetButton, false);
-    UISetFrameVisible(PlayerGroupAll(), c_syncFrameTypeCommandPanel, false);
-    UISetFrameVisible(PlayerGroupAll(), c_syncFrameTypeConsolePanel, false);
-    UISetFrameVisible(PlayerGroupAll(), c_syncFrameTypeControlGroupPanel, false);
-    UISetFrameVisible(PlayerGroupAll(), c_syncFrameTypeMinimapPanel, false);
-    UISetFrameVisible(PlayerGroupAll(), c_syncFrameTypeStatusUI, false);
-    UISetFrameVisible(PlayerGroupAll(), c_syncFrameTypeMenuBar, false);
-    UISetFrameVisible(PlayerGroupAll(), c_syncFrameTypeTeamResourceButton, false);
-    UISetFrameVisible(PlayerGroupAll(), c_syncFrameTypeArmyButton, false);
-    UISetFrameVisible(PlayerGroupAll(), c_syncFrameTypeResourcePanel, false);
-    UISetFrameVisible(PlayerGroupAll(), c_syncFrameTypePingPanel, false);
-    UISetFrameVisible(PlayerGroupAll(), c_syncFrameTypeIdleWorkerButton, false);
-    UISetFrameVisible(PlayerGroupAll(), c_syncFrameTypeMissionTimePanel, false);
-    return true;
-}
-
-//--------------------------------------------------------------------------------------------------
-void gt_InitCUSTOMADDITIONS_Init () {
-    gt_InitCUSTOMADDITIONS = TriggerCreate("gt_InitCUSTOMADDITIONS_Func");
 }
 
 //--------------------------------------------------------------------------------------------------
@@ -41366,6 +41592,12 @@ void gt_TipAfterTValerian01_Init () {
 // Trigger Initialization
 //--------------------------------------------------------------------------------------------------
 void InitTriggers () {
+    gt_CustomPlanetInit_Init();
+    gt_CustomPlanetIconClick_Init();
+    gt_CustomPlanetClose_Init();
+    gt_CustomPlanetNextPlanet_Init();
+    gt_CustomPlanetPrevPlanet_Init();
+    gt_HideBaseGameUI_Init();
     gt_WaitForSkipTrig_Init();
     gt_BackButtonClicked_Init();
     gt_BackButtonEscape_Init();
@@ -41422,7 +41654,6 @@ void InitTriggers () {
     gt_Init04Environment_Init();
     gt_Init05Sounds_Init();
     gt_Init06Intro_Init();
-    gt_InitCUSTOMADDITIONS_Init();
     gt_ReturnToArmory_Init();
     gt_ReturnToBridge_Init();
     gt_ReturnToCantina_Init();

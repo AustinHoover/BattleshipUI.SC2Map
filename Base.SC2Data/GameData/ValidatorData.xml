@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Catalog>
+    <CValidatorCombine id="HasForceLowDeathProtoss2">
+        <Type value="And"/>
+        <CombineArray value="IsProtoss"/>
+        <CombineArray value="HasForceLowDeath"/>
+    </CValidatorCombine>
+    <CValidatorCombine id="HasForceLowDeathProtoss22">
+        <Type value="And"/>
+        <CombineArray value="IsProtoss"/>
+        <CombineArray value="HasForceLowDeath"/>
+    </CValidatorCombine>
+    <CValidatorCombine id="HasForceLowDeathTerran2">
+        <Type value="And"/>
+        <CombineArray value="IsTerran"/>
+        <CombineArray value="HasForceLowDeath"/>
+    </CValidatorCombine>
+    <CValidatorCombine id="HasForceLowDeathTerran22">
+        <Type value="And"/>
+        <CombineArray value="IsTerran"/>
+        <CombineArray value="HasForceLowDeath"/>
+    </CValidatorCombine>
+    <CValidatorCombine id="HasForceLowDeathZerg2">
+        <Type value="And"/>
+        <CombineArray value="IsZerg"/>
+        <CombineArray value="HasForceLowDeath"/>
+    </CValidatorCombine>
+    <CValidatorCombine id="HasForceLowDeathZerg22">
+        <Type value="And"/>
+        <CombineArray value="IsZerg"/>
+        <CombineArray value="HasForceLowDeath"/>
+    </CValidatorCombine>
+    <CValidatorUnitCompareField id="IsFlying2">
+        <Compare value="GE"/>
+        <Field value="Height"/>
+        <Value value="1"/>
+    </CValidatorUnitCompareField>
+    <CValidatorUnitCompareField id="IsFlying22">
+        <Compare value="GE"/>
+        <Field value="Height"/>
+        <Value value="1"/>
+    </CValidatorUnitCompareField>
+    <CValidatorUnitCompareBehaviorCount id="IsHallucination2">
+        <Value value="1"/>
+        <Behavior value="Hallucination"/>
+    </CValidatorUnitCompareBehaviorCount>
+    <CValidatorUnitCompareBehaviorCount id="IsHallucination22">
+        <Value value="1"/>
+        <Behavior value="Hallucination"/>
+    </CValidatorUnitCompareBehaviorCount>
+    <CValidatorUnitCompareField id="IsNotFlying2">
+        <Compare value="LT"/>
+        <Field value="Height"/>
+        <Value value="1"/>
+    </CValidatorUnitCompareField>
+    <CValidatorUnitCompareField id="IsNotFlying22">
+        <Compare value="LT"/>
+        <Field value="Height"/>
+        <Value value="1"/>
+    </CValidatorUnitCompareField>
+    <CValidatorCombine id="IsProtossUnit2">
+        <Type value="And"/>
+        <CombineArray value="NotStructure"/>
+        <CombineArray value="IsProtoss"/>
+    </CValidatorCombine>
+    <CValidatorCombine id="IsProtossUnit22">
+        <Type value="And"/>
+        <CombineArray value="NotStructure"/>
+        <CombineArray value="IsProtoss"/>
+    </CValidatorCombine>
+    <CValidatorCombine id="IsTerranUnit2">
+        <Type value="And"/>
+        <CombineArray value="NotStructure"/>
+        <CombineArray value="IsTerran"/>
+    </CValidatorCombine>
+    <CValidatorCombine id="IsTerranUnit22">
+        <Type value="And"/>
+        <CombineArray value="NotStructure"/>
+        <CombineArray value="IsTerran"/>
+    </CValidatorCombine>
+    <CValidatorCombine id="IsVortexed2">
+        <CombineArray value="IsVortexdFriendly"/>
+        <CombineArray value="IsVortexdEnemy"/>
+    </CValidatorCombine>
+    <CValidatorCombine id="IsVortexed22">
+        <CombineArray value="IsVortexdFriendly"/>
+        <CombineArray value="IsVortexdEnemy"/>
+    </CValidatorCombine>
+    <CValidatorCombine id="IsZergUnit2">
+        <Type value="And"/>
+        <CombineArray value="NotStructure"/>
+        <CombineArray value="IsZerg"/>
+    </CValidatorCombine>
+    <CValidatorCombine id="IsZergUnit22">
+        <Type value="And"/>
+        <CombineArray value="NotStructure"/>
+        <CombineArray value="IsZerg"/>
+    </CValidatorCombine>
+    <CValidatorUnitFilters id="NotStructure2">
+        <Filters value="-;Structure"/>
+    </CValidatorUnitFilters>
+    <CValidatorUnitFilters id="NotStructure22">
+        <Filters value="-;Structure"/>
+    </CValidatorUnitFilters>
+</Catalog>

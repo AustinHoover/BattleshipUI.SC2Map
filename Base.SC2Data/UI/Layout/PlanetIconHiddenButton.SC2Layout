@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Desc>
+    <Frame type="Button" name="DecrementArrowButton">
+		<Width val="150"/>
+		<Height val="150"/>
+		<ClickSound val="@UI_ActionButtonSelect"/>
+        <Alpha val="255"/>
+	</Frame>
+</Desc>
