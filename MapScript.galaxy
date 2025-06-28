@@ -22756,6 +22756,7 @@ bool gt_BridgeStarmapLeave_Func (bool testConds, bool runActions) {
     gf_SetAllSoundChannelVolumesStoryMode(libNtve_ge_VolumeChannelMode_Game);
     gf_SetWorldMode(ge_WorldMode_WorldModeGlobal);
     gf_SetIdleState(ge_IdleState_Idle);
+    gf_PlanetPanelClose();
     return true;
 }
 
