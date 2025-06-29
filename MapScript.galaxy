@@ -15004,7 +15004,7 @@ bool gt_RegisterMissions_Func (bool testConds, bool runActions) {
     lv_missionIndex = 0;
     gv_missionRegistry[lv_missionIndex].lv_name = "Name of my mission";
     gv_missionRegistry[lv_missionIndex].lv_missionPath = "Test/EditorTest.SC2Map";
-    gv_missionRegistry[lv_missionIndex].lv_planetIcon = "PlanetMarSara";
+    gv_missionRegistry[lv_missionIndex].lv_planetIcon = "PlanetMarSara3";
     gv_missionRegistry[lv_missionIndex].lv_objective = "Some Objective";
     gv_missionRegistry[lv_missionIndex].lv_bonusObjective = "Some Bonus Objective";
     gv_missionRegistry[lv_missionIndex].lv_reward = "Some Reward";
@@ -15015,7 +15015,7 @@ bool gt_RegisterMissions_Func (bool testConds, bool runActions) {
     lv_missionIndex = 1;
     gv_missionRegistry[lv_missionIndex].lv_name = "Name of my mission 2";
     gv_missionRegistry[lv_missionIndex].lv_missionPath = "Test/EditorTest.SC2Map";
-    gv_missionRegistry[lv_missionIndex].lv_planetIcon = "PlanetMarSara2";
+    gv_missionRegistry[lv_missionIndex].lv_planetIcon = "PlanetMarSara22";
     gv_missionRegistry[lv_missionIndex].lv_objective = "Some Objective";
     gv_missionRegistry[lv_missionIndex].lv_bonusObjective = "Some Bonus Objective";
     gv_missionRegistry[lv_missionIndex].lv_reward = "Some Reward";
@@ -15026,7 +15026,7 @@ bool gt_RegisterMissions_Func (bool testConds, bool runActions) {
     lv_missionIndex = 2;
     gv_missionRegistry[lv_missionIndex].lv_name = "Name of my mission 3";
     gv_missionRegistry[lv_missionIndex].lv_missionPath = "Test/EditorTest.SC2Map";
-    gv_missionRegistry[lv_missionIndex].lv_planetIcon = "PlanetMarSara2";
+    gv_missionRegistry[lv_missionIndex].lv_planetIcon = "PlanetMarSara4222222222";
     gv_missionRegistry[lv_missionIndex].lv_objective = "Some Objective";
     gv_missionRegistry[lv_missionIndex].lv_bonusObjective = "Some Bonus Objective";
     gv_missionRegistry[lv_missionIndex].lv_reward = "Some Reward";
