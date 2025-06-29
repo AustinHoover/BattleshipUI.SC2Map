@@ -15212,6 +15212,10 @@ bool gt_CustomPlanetNextPlanet_Func (bool testConds, bool runActions) {
         if (!((EventDialogControl() == gv_customPlanetButtonCycleForward))) {
             return false;
         }
+
+        if (!((gv_missionSelectedIndex != gv_missionNoPlanetSelected))) {
+            return false;
+        }
     }
 
     // Actions
@@ -15219,7 +15223,13 @@ bool gt_CustomPlanetNextPlanet_Func (bool testConds, bool runActions) {
         return true;
     }
 
-    TriggerDebugOutput(1, StringExternal("Param/Value/E30FA0B5"), true);
+    if ((gv_missionSelectedIndex < (gv_customPlanetAvailablePlanetCount - 1))) {
+        gv_missionSelectedIndex = (gv_missionSelectedIndex + 1);
+    }
+    else {
+        gv_missionSelectedIndex = 0;
+    }
+    gf_CustomPlanetSelectPlanet(gv_missionSelectedIndex);
     return true;
 }
 
@@ -15239,6 +15249,10 @@ bool gt_CustomPlanetPrevPlanet_Func (bool testConds, bool runActions) {
         if (!((EventDialogControl() == gv_customPlanetButtonCycleBackward))) {
             return false;
         }
+
+        if (!((gv_missionSelectedIndex != gv_missionNoPlanetSelected))) {
+            return false;
+        }
     }
 
     // Actions
@@ -15246,7 +15260,13 @@ bool gt_CustomPlanetPrevPlanet_Func (bool testConds, bool runActions) {
         return true;
     }
 
-    TriggerDebugOutput(1, StringExternal("Param/Value/8571EC15"), true);
+    if ((gv_missionSelectedIndex > 0)) {
+        gv_missionSelectedIndex = (gv_missionSelectedIndex - 1);
+    }
+    else {
+        gv_missionSelectedIndex = (gv_customPlanetAvailablePlanetCount - 1);
+    }
+    gf_CustomPlanetSelectPlanet(gv_missionSelectedIndex);
     return true;
 }
 
