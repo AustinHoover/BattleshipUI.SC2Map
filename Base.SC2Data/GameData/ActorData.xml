@@ -139,7 +139,7 @@
         <On index="50" Terms="Behavior.ForceLowDeath2.On"/>
         <On index="64" Terms="Abil.attack2.ReadyStart" Send="AnimGroupApply Ready"/>
         <On index="68" Terms="Abil.attack2.ReadyStop" Send="AnimGroupRemove Ready"/>
-        <Model value="PlanetIconMarSara"/>
+        <Model value="PlanetIconMeinhoff"/>
         <BuildModel value="SMMarSaraPlanet2"/>
         <DeathArray index="Normal" ModelLink="SMMarSaraPlanet2"/>
         <DeathCustoms index="0" ModelLink="ZergSmallUnitDeathLow2"/>
@@ -174,7 +174,7 @@
         <On index="50" Terms="Behavior.ForceLowDeath22.On"/>
         <On index="64" Terms="Abil.attack22.ReadyStart" Send="AnimGroupApply Ready"/>
         <On index="68" Terms="Abil.attack22.ReadyStop" Send="AnimGroupRemove Ready"/>
-        <Model value="PlanetIconAgria"/>
+        <Model value="PlanetIconAiur"/>
         <BuildModel value="SMMarSaraPlanet22"/>
         <DeathArray index="Normal" ModelLink="SMMarSaraPlanet22"/>
         <DeathCustoms index="0" ModelLink="ZergSmallUnitDeathLow22"/>
@@ -185,6 +185,776 @@
         <PlacementModel value="SMMarSaraPlanet22"/>
         <PortraitModel value="StaticPortrait22"/>
         <HighlightTooltip value="Unit/Name/SMMarSaraPlanet22"/>
+    </CActorUnit>
+    <CActorUnit id="SMMarSaraPlanet222" parent="GenericUnitSM" unitName="PlanetMarSara22">
+        <On index="7" Terms="ActorCreation; ValidateUnit IsFlying22; Option Shadow Low; $AllowBlobShadow"/>
+        <On index="8" Terms="ActorCreation; ValidateUnit IsNotFlying22; Option Shadow Low; $AllowBlobShadow"/>
+        <On index="11" Terms="StatusOn.*.PreTargetingModel; ValidateUnit IsFlying22"/>
+        <On index="19" Terms="CursorUpdate.*.Start; ValidateUnit IsFlying22"/>
+        <On index="20" Terms="CursorUpdate.*.Stop; ValidateUnit IsFlying22; HasStatus FlyerHelper"/>
+        <On index="24" Terms="StatusOn.*.Selected; ValidateUnit IsFlying22"/>
+        <On index="25" Terms="StatusOff.*.Selected; ValidateUnit IsFlying22; HasStatus FlyerHelper"/>
+        <On index="29" Terms="ActorCreation; FlyerHelper All; ValidateUnit IsFlying22"/>
+        <On index="34" Terms="FlyerHelperChange; FlyerHelper All; ValidateUnit IsFlying22; !ScopeContains FlyerHelperSplat"/>
+        <On index="38" Terms="UnitDetectedByViewer.*.On; ValidateUnit IsHallucination22"/>
+        <On index="39" Terms="UnitDetectedByViewer.*.Off; ValidateUnit IsHallucination22"/>
+        <On index="40" Terms="UnitDeathCustomize; ValidateUnit NotStructure22; IsStatus InAir 1"/>
+        <On index="41" Terms="UnitDeathCustomize; ValidateUnit IsProtossUnit22; IsStatus InAir 1"/>
+        <On index="42" Terms="UnitDeathCustomize; ValidateUnit IsTerranUnit22; IsStatus InAir 1"/>
+        <On index="43" Terms="UnitDeathCustomize; ValidateUnit IsZergUnit22; IsStatus InAir 1"/>
+        <On index="44" Terms="UnitDeathCustomize; ValidateUnit IsVortexed22"/>
+        <On index="45" Terms="UnitDeathCustomize; ValidateUnit HasForceLowDeathProtoss22"/>
+        <On index="46" Terms="UnitDeathCustomize; ValidateUnit HasForceLowDeathZerg22"/>
+        <On index="47" Terms="UnitDeathCustomize; ValidateUnit HasForceLowDeathTerran22"/>
+        <On index="50" Terms="Behavior.ForceLowDeath22.On"/>
+        <On index="64" Terms="Abil.attack22.ReadyStart" Send="AnimGroupApply Ready"/>
+        <On index="68" Terms="Abil.attack22.ReadyStop" Send="AnimGroupRemove Ready"/>
+        <Model value="PlanetIconAgria2"/>
+        <BuildModel value="SMMarSaraPlanet222"/>
+        <DeathArray index="Normal" ModelLink="SMMarSaraPlanet222"/>
+        <DeathCustoms index="0" ModelLink="ZergSmallUnitDeathLow222"/>
+        <DeathCustoms index="1" ModelLink="ProtossSmallUnitDeathLow222"/>
+        <DeathCustoms index="2" ModelLink="TerranSmallUnitDeathLow222"/>
+        <DeathCustoms index="3" ModelLink="ZergSmallUnitDeathLow222"/>
+        <DeathCustoms index="4" ModelLink="Invisible222"/>
+        <PlacementModel value="SMMarSaraPlanet222"/>
+        <PortraitModel value="StaticPortrait222"/>
+        <HighlightTooltip value="Unit/Name/SMMarSaraPlanet222"/>
+    </CActorUnit>
+    <CActorUnit id="SMMarSaraPlanet223" parent="GenericUnitSM" unitName="PlanetMarSara23">
+        <On index="7" Terms="ActorCreation; ValidateUnit IsFlying22; Option Shadow Low; $AllowBlobShadow"/>
+        <On index="8" Terms="ActorCreation; ValidateUnit IsNotFlying22; Option Shadow Low; $AllowBlobShadow"/>
+        <On index="11" Terms="StatusOn.*.PreTargetingModel; ValidateUnit IsFlying22"/>
+        <On index="19" Terms="CursorUpdate.*.Start; ValidateUnit IsFlying22"/>
+        <On index="20" Terms="CursorUpdate.*.Stop; ValidateUnit IsFlying22; HasStatus FlyerHelper"/>
+        <On index="24" Terms="StatusOn.*.Selected; ValidateUnit IsFlying22"/>
+        <On index="25" Terms="StatusOff.*.Selected; ValidateUnit IsFlying22; HasStatus FlyerHelper"/>
+        <On index="29" Terms="ActorCreation; FlyerHelper All; ValidateUnit IsFlying22"/>
+        <On index="34" Terms="FlyerHelperChange; FlyerHelper All; ValidateUnit IsFlying22; !ScopeContains FlyerHelperSplat"/>
+        <On index="38" Terms="UnitDetectedByViewer.*.On; ValidateUnit IsHallucination22"/>
+        <On index="39" Terms="UnitDetectedByViewer.*.Off; ValidateUnit IsHallucination22"/>
+        <On index="40" Terms="UnitDeathCustomize; ValidateUnit NotStructure22; IsStatus InAir 1"/>
+        <On index="41" Terms="UnitDeathCustomize; ValidateUnit IsProtossUnit22; IsStatus InAir 1"/>
+        <On index="42" Terms="UnitDeathCustomize; ValidateUnit IsTerranUnit22; IsStatus InAir 1"/>
+        <On index="43" Terms="UnitDeathCustomize; ValidateUnit IsZergUnit22; IsStatus InAir 1"/>
+        <On index="44" Terms="UnitDeathCustomize; ValidateUnit IsVortexed22"/>
+        <On index="45" Terms="UnitDeathCustomize; ValidateUnit HasForceLowDeathProtoss22"/>
+        <On index="46" Terms="UnitDeathCustomize; ValidateUnit HasForceLowDeathZerg22"/>
+        <On index="47" Terms="UnitDeathCustomize; ValidateUnit HasForceLowDeathTerran22"/>
+        <On index="50" Terms="Behavior.ForceLowDeath22.On"/>
+        <On index="64" Terms="Abil.attack22.ReadyStart" Send="AnimGroupApply Ready"/>
+        <On index="68" Terms="Abil.attack22.ReadyStop" Send="AnimGroupRemove Ready"/>
+        <Model value="PlanetIconAvernus"/>
+        <BuildModel value="SMMarSaraPlanet223"/>
+        <DeathArray index="Normal" ModelLink="SMMarSaraPlanet223"/>
+        <DeathCustoms index="0" ModelLink="ZergSmallUnitDeathLow223"/>
+        <DeathCustoms index="1" ModelLink="ProtossSmallUnitDeathLow223"/>
+        <DeathCustoms index="2" ModelLink="TerranSmallUnitDeathLow223"/>
+        <DeathCustoms index="3" ModelLink="ZergSmallUnitDeathLow223"/>
+        <DeathCustoms index="4" ModelLink="Invisible223"/>
+        <PlacementModel value="SMMarSaraPlanet223"/>
+        <PortraitModel value="StaticPortrait223"/>
+        <HighlightTooltip value="Unit/Name/SMMarSaraPlanet223"/>
+    </CActorUnit>
+    <CActorUnit id="SMMarSaraPlanet2232" parent="GenericUnitSM" unitName="PlanetMarSara232">
+        <On index="7" Terms="ActorCreation; ValidateUnit IsFlying22; Option Shadow Low; $AllowBlobShadow"/>
+        <On index="8" Terms="ActorCreation; ValidateUnit IsNotFlying22; Option Shadow Low; $AllowBlobShadow"/>
+        <On index="11" Terms="StatusOn.*.PreTargetingModel; ValidateUnit IsFlying22"/>
+        <On index="19" Terms="CursorUpdate.*.Start; ValidateUnit IsFlying22"/>
+        <On index="20" Terms="CursorUpdate.*.Stop; ValidateUnit IsFlying22; HasStatus FlyerHelper"/>
+        <On index="24" Terms="StatusOn.*.Selected; ValidateUnit IsFlying22"/>
+        <On index="25" Terms="StatusOff.*.Selected; ValidateUnit IsFlying22; HasStatus FlyerHelper"/>
+        <On index="29" Terms="ActorCreation; FlyerHelper All; ValidateUnit IsFlying22"/>
+        <On index="34" Terms="FlyerHelperChange; FlyerHelper All; ValidateUnit IsFlying22; !ScopeContains FlyerHelperSplat"/>
+        <On index="38" Terms="UnitDetectedByViewer.*.On; ValidateUnit IsHallucination22"/>
+        <On index="39" Terms="UnitDetectedByViewer.*.Off; ValidateUnit IsHallucination22"/>
+        <On index="40" Terms="UnitDeathCustomize; ValidateUnit NotStructure22; IsStatus InAir 1"/>
+        <On index="41" Terms="UnitDeathCustomize; ValidateUnit IsProtossUnit22; IsStatus InAir 1"/>
+        <On index="42" Terms="UnitDeathCustomize; ValidateUnit IsTerranUnit22; IsStatus InAir 1"/>
+        <On index="43" Terms="UnitDeathCustomize; ValidateUnit IsZergUnit22; IsStatus InAir 1"/>
+        <On index="44" Terms="UnitDeathCustomize; ValidateUnit IsVortexed22"/>
+        <On index="45" Terms="UnitDeathCustomize; ValidateUnit HasForceLowDeathProtoss22"/>
+        <On index="46" Terms="UnitDeathCustomize; ValidateUnit HasForceLowDeathZerg22"/>
+        <On index="47" Terms="UnitDeathCustomize; ValidateUnit HasForceLowDeathTerran22"/>
+        <On index="50" Terms="Behavior.ForceLowDeath22.On"/>
+        <On index="64" Terms="Abil.attack22.ReadyStart" Send="AnimGroupApply Ready"/>
+        <On index="68" Terms="Abil.attack22.ReadyStop" Send="AnimGroupRemove Ready"/>
+        <Model value="PlanetIconBelShir"/>
+        <BuildModel value="SMMarSaraPlanet2232"/>
+        <DeathArray index="Normal" ModelLink="SMMarSaraPlanet2232"/>
+        <DeathCustoms index="0" ModelLink="ZergSmallUnitDeathLow2232"/>
+        <DeathCustoms index="1" ModelLink="ProtossSmallUnitDeathLow2232"/>
+        <DeathCustoms index="2" ModelLink="TerranSmallUnitDeathLow2232"/>
+        <DeathCustoms index="3" ModelLink="ZergSmallUnitDeathLow2232"/>
+        <DeathCustoms index="4" ModelLink="Invisible2232"/>
+        <PlacementModel value="SMMarSaraPlanet2232"/>
+        <PortraitModel value="StaticPortrait2232"/>
+        <HighlightTooltip value="Unit/Name/SMMarSaraPlanet2232"/>
+    </CActorUnit>
+    <CActorUnit id="SMMarSaraPlanet22322" parent="GenericUnitSM" unitName="PlanetMarSara2322">
+        <On index="7" Terms="ActorCreation; ValidateUnit IsFlying22; Option Shadow Low; $AllowBlobShadow"/>
+        <On index="8" Terms="ActorCreation; ValidateUnit IsNotFlying22; Option Shadow Low; $AllowBlobShadow"/>
+        <On index="11" Terms="StatusOn.*.PreTargetingModel; ValidateUnit IsFlying22"/>
+        <On index="19" Terms="CursorUpdate.*.Start; ValidateUnit IsFlying22"/>
+        <On index="20" Terms="CursorUpdate.*.Stop; ValidateUnit IsFlying22; HasStatus FlyerHelper"/>
+        <On index="24" Terms="StatusOn.*.Selected; ValidateUnit IsFlying22"/>
+        <On index="25" Terms="StatusOff.*.Selected; ValidateUnit IsFlying22; HasStatus FlyerHelper"/>
+        <On index="29" Terms="ActorCreation; FlyerHelper All; ValidateUnit IsFlying22"/>
+        <On index="34" Terms="FlyerHelperChange; FlyerHelper All; ValidateUnit IsFlying22; !ScopeContains FlyerHelperSplat"/>
+        <On index="38" Terms="UnitDetectedByViewer.*.On; ValidateUnit IsHallucination22"/>
+        <On index="39" Terms="UnitDetectedByViewer.*.Off; ValidateUnit IsHallucination22"/>
+        <On index="40" Terms="UnitDeathCustomize; ValidateUnit NotStructure22; IsStatus InAir 1"/>
+        <On index="41" Terms="UnitDeathCustomize; ValidateUnit IsProtossUnit22; IsStatus InAir 1"/>
+        <On index="42" Terms="UnitDeathCustomize; ValidateUnit IsTerranUnit22; IsStatus InAir 1"/>
+        <On index="43" Terms="UnitDeathCustomize; ValidateUnit IsZergUnit22; IsStatus InAir 1"/>
+        <On index="44" Terms="UnitDeathCustomize; ValidateUnit IsVortexed22"/>
+        <On index="45" Terms="UnitDeathCustomize; ValidateUnit HasForceLowDeathProtoss22"/>
+        <On index="46" Terms="UnitDeathCustomize; ValidateUnit HasForceLowDeathZerg22"/>
+        <On index="47" Terms="UnitDeathCustomize; ValidateUnit HasForceLowDeathTerran22"/>
+        <On index="50" Terms="Behavior.ForceLowDeath22.On"/>
+        <On index="64" Terms="Abil.attack22.ReadyStart" Send="AnimGroupApply Ready"/>
+        <On index="68" Terms="Abil.attack22.ReadyStop" Send="AnimGroupRemove Ready"/>
+        <Model value="PlanetIconChar"/>
+        <BuildModel value="SMMarSaraPlanet22322"/>
+        <DeathArray index="Normal" ModelLink="SMMarSaraPlanet22322"/>
+        <DeathCustoms index="0" ModelLink="ZergSmallUnitDeathLow22322"/>
+        <DeathCustoms index="1" ModelLink="ProtossSmallUnitDeathLow22322"/>
+        <DeathCustoms index="2" ModelLink="TerranSmallUnitDeathLow22322"/>
+        <DeathCustoms index="3" ModelLink="ZergSmallUnitDeathLow22322"/>
+        <DeathCustoms index="4" ModelLink="Invisible22322"/>
+        <PlacementModel value="SMMarSaraPlanet22322"/>
+        <PortraitModel value="StaticPortrait22322"/>
+        <HighlightTooltip value="Unit/Name/SMMarSaraPlanet22322"/>
+    </CActorUnit>
+    <CActorUnit id="SMMarSaraPlanet223222" parent="GenericUnitSM" unitName="PlanetMarSara23222">
+        <On index="7" Terms="ActorCreation; ValidateUnit IsFlying22; Option Shadow Low; $AllowBlobShadow"/>
+        <On index="8" Terms="ActorCreation; ValidateUnit IsNotFlying22; Option Shadow Low; $AllowBlobShadow"/>
+        <On index="11" Terms="StatusOn.*.PreTargetingModel; ValidateUnit IsFlying22"/>
+        <On index="19" Terms="CursorUpdate.*.Start; ValidateUnit IsFlying22"/>
+        <On index="20" Terms="CursorUpdate.*.Stop; ValidateUnit IsFlying22; HasStatus FlyerHelper"/>
+        <On index="24" Terms="StatusOn.*.Selected; ValidateUnit IsFlying22"/>
+        <On index="25" Terms="StatusOff.*.Selected; ValidateUnit IsFlying22; HasStatus FlyerHelper"/>
+        <On index="29" Terms="ActorCreation; FlyerHelper All; ValidateUnit IsFlying22"/>
+        <On index="34" Terms="FlyerHelperChange; FlyerHelper All; ValidateUnit IsFlying22; !ScopeContains FlyerHelperSplat"/>
+        <On index="38" Terms="UnitDetectedByViewer.*.On; ValidateUnit IsHallucination22"/>
+        <On index="39" Terms="UnitDetectedByViewer.*.Off; ValidateUnit IsHallucination22"/>
+        <On index="40" Terms="UnitDeathCustomize; ValidateUnit NotStructure22; IsStatus InAir 1"/>
+        <On index="41" Terms="UnitDeathCustomize; ValidateUnit IsProtossUnit22; IsStatus InAir 1"/>
+        <On index="42" Terms="UnitDeathCustomize; ValidateUnit IsTerranUnit22; IsStatus InAir 1"/>
+        <On index="43" Terms="UnitDeathCustomize; ValidateUnit IsZergUnit22; IsStatus InAir 1"/>
+        <On index="44" Terms="UnitDeathCustomize; ValidateUnit IsVortexed22"/>
+        <On index="45" Terms="UnitDeathCustomize; ValidateUnit HasForceLowDeathProtoss22"/>
+        <On index="46" Terms="UnitDeathCustomize; ValidateUnit HasForceLowDeathZerg22"/>
+        <On index="47" Terms="UnitDeathCustomize; ValidateUnit HasForceLowDeathTerran22"/>
+        <On index="50" Terms="Behavior.ForceLowDeath22.On"/>
+        <On index="64" Terms="Abil.attack22.ReadyStart" Send="AnimGroupApply Ready"/>
+        <On index="68" Terms="Abil.attack22.ReadyStop" Send="AnimGroupRemove Ready"/>
+        <Model value="PlanetIconCastanar2"/>
+        <BuildModel value="SMMarSaraPlanet223222"/>
+        <DeathArray index="Normal" ModelLink="SMMarSaraPlanet223222"/>
+        <DeathCustoms index="0" ModelLink="ZergSmallUnitDeathLow223222"/>
+        <DeathCustoms index="1" ModelLink="ProtossSmallUnitDeathLow223222"/>
+        <DeathCustoms index="2" ModelLink="TerranSmallUnitDeathLow223222"/>
+        <DeathCustoms index="3" ModelLink="ZergSmallUnitDeathLow223222"/>
+        <DeathCustoms index="4" ModelLink="Invisible223222"/>
+        <PlacementModel value="SMMarSaraPlanet223222"/>
+        <PortraitModel value="StaticPortrait223222"/>
+        <HighlightTooltip value="Unit/Name/SMMarSaraPlanet223222"/>
+    </CActorUnit>
+    <CActorUnit id="SMMarSaraPlanet223223" parent="GenericUnitSM" unitName="PlanetMarSara23223">
+        <On index="7" Terms="ActorCreation; ValidateUnit IsFlying22; Option Shadow Low; $AllowBlobShadow"/>
+        <On index="8" Terms="ActorCreation; ValidateUnit IsNotFlying22; Option Shadow Low; $AllowBlobShadow"/>
+        <On index="11" Terms="StatusOn.*.PreTargetingModel; ValidateUnit IsFlying22"/>
+        <On index="19" Terms="CursorUpdate.*.Start; ValidateUnit IsFlying22"/>
+        <On index="20" Terms="CursorUpdate.*.Stop; ValidateUnit IsFlying22; HasStatus FlyerHelper"/>
+        <On index="24" Terms="StatusOn.*.Selected; ValidateUnit IsFlying22"/>
+        <On index="25" Terms="StatusOff.*.Selected; ValidateUnit IsFlying22; HasStatus FlyerHelper"/>
+        <On index="29" Terms="ActorCreation; FlyerHelper All; ValidateUnit IsFlying22"/>
+        <On index="34" Terms="FlyerHelperChange; FlyerHelper All; ValidateUnit IsFlying22; !ScopeContains FlyerHelperSplat"/>
+        <On index="38" Terms="UnitDetectedByViewer.*.On; ValidateUnit IsHallucination22"/>
+        <On index="39" Terms="UnitDetectedByViewer.*.Off; ValidateUnit IsHallucination22"/>
+        <On index="40" Terms="UnitDeathCustomize; ValidateUnit NotStructure22; IsStatus InAir 1"/>
+        <On index="41" Terms="UnitDeathCustomize; ValidateUnit IsProtossUnit22; IsStatus InAir 1"/>
+        <On index="42" Terms="UnitDeathCustomize; ValidateUnit IsTerranUnit22; IsStatus InAir 1"/>
+        <On index="43" Terms="UnitDeathCustomize; ValidateUnit IsZergUnit22; IsStatus InAir 1"/>
+        <On index="44" Terms="UnitDeathCustomize; ValidateUnit IsVortexed22"/>
+        <On index="45" Terms="UnitDeathCustomize; ValidateUnit HasForceLowDeathProtoss22"/>
+        <On index="46" Terms="UnitDeathCustomize; ValidateUnit HasForceLowDeathZerg22"/>
+        <On index="47" Terms="UnitDeathCustomize; ValidateUnit HasForceLowDeathTerran22"/>
+        <On index="50" Terms="Behavior.ForceLowDeath22.On"/>
+        <On index="64" Terms="Abil.attack22.ReadyStart" Send="AnimGroupApply Ready"/>
+        <On index="68" Terms="Abil.attack22.ReadyStop" Send="AnimGroupRemove Ready"/>
+        <Model value="PlanetIconKorhal"/>
+        <BuildModel value="SMMarSaraPlanet223223"/>
+        <DeathArray index="Normal" ModelLink="SMMarSaraPlanet223223"/>
+        <DeathCustoms index="0" ModelLink="ZergSmallUnitDeathLow223223"/>
+        <DeathCustoms index="1" ModelLink="ProtossSmallUnitDeathLow223223"/>
+        <DeathCustoms index="2" ModelLink="TerranSmallUnitDeathLow223223"/>
+        <DeathCustoms index="3" ModelLink="ZergSmallUnitDeathLow223223"/>
+        <DeathCustoms index="4" ModelLink="Invisible223223"/>
+        <PlacementModel value="SMMarSaraPlanet223223"/>
+        <PortraitModel value="StaticPortrait223223"/>
+        <HighlightTooltip value="Unit/Name/SMMarSaraPlanet223223"/>
+    </CActorUnit>
+    <CActorUnit id="SMMarSaraPlanet2232232" parent="GenericUnitSM" unitName="PlanetMarSara232232">
+        <On index="7" Terms="ActorCreation; ValidateUnit IsFlying22; Option Shadow Low; $AllowBlobShadow"/>
+        <On index="8" Terms="ActorCreation; ValidateUnit IsNotFlying22; Option Shadow Low; $AllowBlobShadow"/>
+        <On index="11" Terms="StatusOn.*.PreTargetingModel; ValidateUnit IsFlying22"/>
+        <On index="19" Terms="CursorUpdate.*.Start; ValidateUnit IsFlying22"/>
+        <On index="20" Terms="CursorUpdate.*.Stop; ValidateUnit IsFlying22; HasStatus FlyerHelper"/>
+        <On index="24" Terms="StatusOn.*.Selected; ValidateUnit IsFlying22"/>
+        <On index="25" Terms="StatusOff.*.Selected; ValidateUnit IsFlying22; HasStatus FlyerHelper"/>
+        <On index="29" Terms="ActorCreation; FlyerHelper All; ValidateUnit IsFlying22"/>
+        <On index="34" Terms="FlyerHelperChange; FlyerHelper All; ValidateUnit IsFlying22; !ScopeContains FlyerHelperSplat"/>
+        <On index="38" Terms="UnitDetectedByViewer.*.On; ValidateUnit IsHallucination22"/>
+        <On index="39" Terms="UnitDetectedByViewer.*.Off; ValidateUnit IsHallucination22"/>
+        <On index="40" Terms="UnitDeathCustomize; ValidateUnit NotStructure22; IsStatus InAir 1"/>
+        <On index="41" Terms="UnitDeathCustomize; ValidateUnit IsProtossUnit22; IsStatus InAir 1"/>
+        <On index="42" Terms="UnitDeathCustomize; ValidateUnit IsTerranUnit22; IsStatus InAir 1"/>
+        <On index="43" Terms="UnitDeathCustomize; ValidateUnit IsZergUnit22; IsStatus InAir 1"/>
+        <On index="44" Terms="UnitDeathCustomize; ValidateUnit IsVortexed22"/>
+        <On index="45" Terms="UnitDeathCustomize; ValidateUnit HasForceLowDeathProtoss22"/>
+        <On index="46" Terms="UnitDeathCustomize; ValidateUnit HasForceLowDeathZerg22"/>
+        <On index="47" Terms="UnitDeathCustomize; ValidateUnit HasForceLowDeathTerran22"/>
+        <On index="50" Terms="Behavior.ForceLowDeath22.On"/>
+        <On index="64" Terms="Abil.attack22.ReadyStart" Send="AnimGroupApply Ready"/>
+        <On index="68" Terms="Abil.attack22.ReadyStop" Send="AnimGroupRemove Ready"/>
+        <Model value="PlanetIconHaven2"/>
+        <BuildModel value="SMMarSaraPlanet2232232"/>
+        <DeathArray index="Normal" ModelLink="SMMarSaraPlanet2232232"/>
+        <DeathCustoms index="0" ModelLink="ZergSmallUnitDeathLow2232232"/>
+        <DeathCustoms index="1" ModelLink="ProtossSmallUnitDeathLow2232232"/>
+        <DeathCustoms index="2" ModelLink="TerranSmallUnitDeathLow2232232"/>
+        <DeathCustoms index="3" ModelLink="ZergSmallUnitDeathLow2232232"/>
+        <DeathCustoms index="4" ModelLink="Invisible2232232"/>
+        <PlacementModel value="SMMarSaraPlanet2232232"/>
+        <PortraitModel value="StaticPortrait2232232"/>
+        <HighlightTooltip value="Unit/Name/SMMarSaraPlanet2232232"/>
+    </CActorUnit>
+    <CActorUnit id="SMMarSaraPlanet23" parent="GenericUnitSM" unitName="PlanetMarSara3">
+        <On index="7" Terms="ActorCreation; ValidateUnit IsFlying2; Option Shadow Low; $AllowBlobShadow"/>
+        <On index="8" Terms="ActorCreation; ValidateUnit IsNotFlying2; Option Shadow Low; $AllowBlobShadow"/>
+        <On index="11" Terms="StatusOn.*.PreTargetingModel; ValidateUnit IsFlying2"/>
+        <On index="19" Terms="CursorUpdate.*.Start; ValidateUnit IsFlying2"/>
+        <On index="20" Terms="CursorUpdate.*.Stop; ValidateUnit IsFlying2; HasStatus FlyerHelper"/>
+        <On index="24" Terms="StatusOn.*.Selected; ValidateUnit IsFlying2"/>
+        <On index="25" Terms="StatusOff.*.Selected; ValidateUnit IsFlying2; HasStatus FlyerHelper"/>
+        <On index="29" Terms="ActorCreation; FlyerHelper All; ValidateUnit IsFlying2"/>
+        <On index="34" Terms="FlyerHelperChange; FlyerHelper All; ValidateUnit IsFlying2; !ScopeContains FlyerHelperSplat"/>
+        <On index="38" Terms="UnitDetectedByViewer.*.On; ValidateUnit IsHallucination2"/>
+        <On index="39" Terms="UnitDetectedByViewer.*.Off; ValidateUnit IsHallucination2"/>
+        <On index="40" Terms="UnitDeathCustomize; ValidateUnit NotStructure2; IsStatus InAir 1"/>
+        <On index="41" Terms="UnitDeathCustomize; ValidateUnit IsProtossUnit2; IsStatus InAir 1"/>
+        <On index="42" Terms="UnitDeathCustomize; ValidateUnit IsTerranUnit2; IsStatus InAir 1"/>
+        <On index="43" Terms="UnitDeathCustomize; ValidateUnit IsZergUnit2; IsStatus InAir 1"/>
+        <On index="44" Terms="UnitDeathCustomize; ValidateUnit IsVortexed2"/>
+        <On index="45" Terms="UnitDeathCustomize; ValidateUnit HasForceLowDeathProtoss2"/>
+        <On index="46" Terms="UnitDeathCustomize; ValidateUnit HasForceLowDeathZerg2"/>
+        <On index="47" Terms="UnitDeathCustomize; ValidateUnit HasForceLowDeathTerran2"/>
+        <On index="50" Terms="Behavior.ForceLowDeath2.On"/>
+        <On index="64" Terms="Abil.attack2.ReadyStart" Send="AnimGroupApply Ready"/>
+        <On index="68" Terms="Abil.attack2.ReadyStop" Send="AnimGroupRemove Ready"/>
+        <Model value="PlanetIconMarSara3"/>
+        <BuildModel value="SMMarSaraPlanet23"/>
+        <DeathArray index="Normal" ModelLink="SMMarSaraPlanet23"/>
+        <DeathCustoms index="0" ModelLink="ZergSmallUnitDeathLow23"/>
+        <DeathCustoms index="1" ModelLink="ProtossSmallUnitDeathLow23"/>
+        <DeathCustoms index="2" ModelLink="TerranSmallUnitDeathLow23"/>
+        <DeathCustoms index="3" ModelLink="ZergSmallUnitDeathLow23"/>
+        <DeathCustoms index="4" ModelLink="Invisible23"/>
+        <PlacementModel value="SMMarSaraPlanet23"/>
+        <PortraitModel value="StaticPortrait23"/>
+        <HighlightTooltip value="Unit/Name/SMMarSaraPlanet23"/>
+    </CActorUnit>
+    <CActorUnit id="SMMarSaraPlanet24" parent="GenericUnitSM" unitName="PlanetMarSara4">
+        <On index="7" Terms="ActorCreation; ValidateUnit IsFlying2; Option Shadow Low; $AllowBlobShadow"/>
+        <On index="8" Terms="ActorCreation; ValidateUnit IsNotFlying2; Option Shadow Low; $AllowBlobShadow"/>
+        <On index="11" Terms="StatusOn.*.PreTargetingModel; ValidateUnit IsFlying2"/>
+        <On index="19" Terms="CursorUpdate.*.Start; ValidateUnit IsFlying2"/>
+        <On index="20" Terms="CursorUpdate.*.Stop; ValidateUnit IsFlying2; HasStatus FlyerHelper"/>
+        <On index="24" Terms="StatusOn.*.Selected; ValidateUnit IsFlying2"/>
+        <On index="25" Terms="StatusOff.*.Selected; ValidateUnit IsFlying2; HasStatus FlyerHelper"/>
+        <On index="29" Terms="ActorCreation; FlyerHelper All; ValidateUnit IsFlying2"/>
+        <On index="34" Terms="FlyerHelperChange; FlyerHelper All; ValidateUnit IsFlying2; !ScopeContains FlyerHelperSplat"/>
+        <On index="38" Terms="UnitDetectedByViewer.*.On; ValidateUnit IsHallucination2"/>
+        <On index="39" Terms="UnitDetectedByViewer.*.Off; ValidateUnit IsHallucination2"/>
+        <On index="40" Terms="UnitDeathCustomize; ValidateUnit NotStructure2; IsStatus InAir 1"/>
+        <On index="41" Terms="UnitDeathCustomize; ValidateUnit IsProtossUnit2; IsStatus InAir 1"/>
+        <On index="42" Terms="UnitDeathCustomize; ValidateUnit IsTerranUnit2; IsStatus InAir 1"/>
+        <On index="43" Terms="UnitDeathCustomize; ValidateUnit IsZergUnit2; IsStatus InAir 1"/>
+        <On index="44" Terms="UnitDeathCustomize; ValidateUnit IsVortexed2"/>
+        <On index="45" Terms="UnitDeathCustomize; ValidateUnit HasForceLowDeathProtoss2"/>
+        <On index="46" Terms="UnitDeathCustomize; ValidateUnit HasForceLowDeathZerg2"/>
+        <On index="47" Terms="UnitDeathCustomize; ValidateUnit HasForceLowDeathTerran2"/>
+        <On index="50" Terms="Behavior.ForceLowDeath2.On"/>
+        <On index="64" Terms="Abil.attack2.ReadyStart" Send="AnimGroupApply Ready"/>
+        <On index="68" Terms="Abil.attack2.ReadyStop" Send="AnimGroupRemove Ready"/>
+        <Model value="PlanetIconMonlyth"/>
+        <BuildModel value="SMMarSaraPlanet24"/>
+        <DeathArray index="Normal" ModelLink="SMMarSaraPlanet24"/>
+        <DeathCustoms index="0" ModelLink="ZergSmallUnitDeathLow24"/>
+        <DeathCustoms index="1" ModelLink="ProtossSmallUnitDeathLow24"/>
+        <DeathCustoms index="2" ModelLink="TerranSmallUnitDeathLow24"/>
+        <DeathCustoms index="3" ModelLink="ZergSmallUnitDeathLow24"/>
+        <DeathCustoms index="4" ModelLink="Invisible24"/>
+        <PlacementModel value="SMMarSaraPlanet24"/>
+        <PortraitModel value="StaticPortrait24"/>
+        <HighlightTooltip value="Unit/Name/SMMarSaraPlanet24"/>
+    </CActorUnit>
+    <CActorUnit id="SMMarSaraPlanet242" parent="GenericUnitSM" unitName="PlanetMarSara42">
+        <On index="7" Terms="ActorCreation; ValidateUnit IsFlying2; Option Shadow Low; $AllowBlobShadow"/>
+        <On index="8" Terms="ActorCreation; ValidateUnit IsNotFlying2; Option Shadow Low; $AllowBlobShadow"/>
+        <On index="11" Terms="StatusOn.*.PreTargetingModel; ValidateUnit IsFlying2"/>
+        <On index="19" Terms="CursorUpdate.*.Start; ValidateUnit IsFlying2"/>
+        <On index="20" Terms="CursorUpdate.*.Stop; ValidateUnit IsFlying2; HasStatus FlyerHelper"/>
+        <On index="24" Terms="StatusOn.*.Selected; ValidateUnit IsFlying2"/>
+        <On index="25" Terms="StatusOff.*.Selected; ValidateUnit IsFlying2; HasStatus FlyerHelper"/>
+        <On index="29" Terms="ActorCreation; FlyerHelper All; ValidateUnit IsFlying2"/>
+        <On index="34" Terms="FlyerHelperChange; FlyerHelper All; ValidateUnit IsFlying2; !ScopeContains FlyerHelperSplat"/>
+        <On index="38" Terms="UnitDetectedByViewer.*.On; ValidateUnit IsHallucination2"/>
+        <On index="39" Terms="UnitDetectedByViewer.*.Off; ValidateUnit IsHallucination2"/>
+        <On index="40" Terms="UnitDeathCustomize; ValidateUnit NotStructure2; IsStatus InAir 1"/>
+        <On index="41" Terms="UnitDeathCustomize; ValidateUnit IsProtossUnit2; IsStatus InAir 1"/>
+        <On index="42" Terms="UnitDeathCustomize; ValidateUnit IsTerranUnit2; IsStatus InAir 1"/>
+        <On index="43" Terms="UnitDeathCustomize; ValidateUnit IsZergUnit2; IsStatus InAir 1"/>
+        <On index="44" Terms="UnitDeathCustomize; ValidateUnit IsVortexed2"/>
+        <On index="45" Terms="UnitDeathCustomize; ValidateUnit HasForceLowDeathProtoss2"/>
+        <On index="46" Terms="UnitDeathCustomize; ValidateUnit HasForceLowDeathZerg2"/>
+        <On index="47" Terms="UnitDeathCustomize; ValidateUnit HasForceLowDeathTerran2"/>
+        <On index="50" Terms="Behavior.ForceLowDeath2.On"/>
+        <On index="64" Terms="Abil.attack2.ReadyStart" Send="AnimGroupApply Ready"/>
+        <On index="68" Terms="Abil.attack2.ReadyStop" Send="AnimGroupRemove Ready"/>
+        <Model value="PlanetIconNewFolsom"/>
+        <BuildModel value="SMMarSaraPlanet242"/>
+        <DeathArray index="Normal" ModelLink="SMMarSaraPlanet242"/>
+        <DeathCustoms index="0" ModelLink="ZergSmallUnitDeathLow242"/>
+        <DeathCustoms index="1" ModelLink="ProtossSmallUnitDeathLow242"/>
+        <DeathCustoms index="2" ModelLink="TerranSmallUnitDeathLow242"/>
+        <DeathCustoms index="3" ModelLink="ZergSmallUnitDeathLow242"/>
+        <DeathCustoms index="4" ModelLink="Invisible242"/>
+        <PlacementModel value="SMMarSaraPlanet242"/>
+        <PortraitModel value="StaticPortrait242"/>
+        <HighlightTooltip value="Unit/Name/SMMarSaraPlanet242"/>
+    </CActorUnit>
+    <CActorUnit id="SMMarSaraPlanet2422" parent="GenericUnitSM" unitName="PlanetMarSara422">
+        <On index="7" Terms="ActorCreation; ValidateUnit IsFlying2; Option Shadow Low; $AllowBlobShadow"/>
+        <On index="8" Terms="ActorCreation; ValidateUnit IsNotFlying2; Option Shadow Low; $AllowBlobShadow"/>
+        <On index="11" Terms="StatusOn.*.PreTargetingModel; ValidateUnit IsFlying2"/>
+        <On index="19" Terms="CursorUpdate.*.Start; ValidateUnit IsFlying2"/>
+        <On index="20" Terms="CursorUpdate.*.Stop; ValidateUnit IsFlying2; HasStatus FlyerHelper"/>
+        <On index="24" Terms="StatusOn.*.Selected; ValidateUnit IsFlying2"/>
+        <On index="25" Terms="StatusOff.*.Selected; ValidateUnit IsFlying2; HasStatus FlyerHelper"/>
+        <On index="29" Terms="ActorCreation; FlyerHelper All; ValidateUnit IsFlying2"/>
+        <On index="34" Terms="FlyerHelperChange; FlyerHelper All; ValidateUnit IsFlying2; !ScopeContains FlyerHelperSplat"/>
+        <On index="38" Terms="UnitDetectedByViewer.*.On; ValidateUnit IsHallucination2"/>
+        <On index="39" Terms="UnitDetectedByViewer.*.Off; ValidateUnit IsHallucination2"/>
+        <On index="40" Terms="UnitDeathCustomize; ValidateUnit NotStructure2; IsStatus InAir 1"/>
+        <On index="41" Terms="UnitDeathCustomize; ValidateUnit IsProtossUnit2; IsStatus InAir 1"/>
+        <On index="42" Terms="UnitDeathCustomize; ValidateUnit IsTerranUnit2; IsStatus InAir 1"/>
+        <On index="43" Terms="UnitDeathCustomize; ValidateUnit IsZergUnit2; IsStatus InAir 1"/>
+        <On index="44" Terms="UnitDeathCustomize; ValidateUnit IsVortexed2"/>
+        <On index="45" Terms="UnitDeathCustomize; ValidateUnit HasForceLowDeathProtoss2"/>
+        <On index="46" Terms="UnitDeathCustomize; ValidateUnit HasForceLowDeathZerg2"/>
+        <On index="47" Terms="UnitDeathCustomize; ValidateUnit HasForceLowDeathTerran2"/>
+        <On index="50" Terms="Behavior.ForceLowDeath2.On"/>
+        <On index="64" Terms="Abil.attack2.ReadyStart" Send="AnimGroupApply Ready"/>
+        <On index="68" Terms="Abil.attack2.ReadyStop" Send="AnimGroupRemove Ready"/>
+        <Model value="PlanetIconPortZion"/>
+        <BuildModel value="SMMarSaraPlanet2422"/>
+        <DeathArray index="Normal" ModelLink="SMMarSaraPlanet2422"/>
+        <DeathCustoms index="0" ModelLink="ZergSmallUnitDeathLow2422"/>
+        <DeathCustoms index="1" ModelLink="ProtossSmallUnitDeathLow2422"/>
+        <DeathCustoms index="2" ModelLink="TerranSmallUnitDeathLow2422"/>
+        <DeathCustoms index="3" ModelLink="ZergSmallUnitDeathLow2422"/>
+        <DeathCustoms index="4" ModelLink="Invisible2422"/>
+        <PlacementModel value="SMMarSaraPlanet2422"/>
+        <PortraitModel value="StaticPortrait2422"/>
+        <HighlightTooltip value="Unit/Name/SMMarSaraPlanet2422"/>
+    </CActorUnit>
+    <CActorUnit id="SMMarSaraPlanet24222" parent="GenericUnitSM" unitName="PlanetMarSara4222">
+        <On index="7" Terms="ActorCreation; ValidateUnit IsFlying2; Option Shadow Low; $AllowBlobShadow"/>
+        <On index="8" Terms="ActorCreation; ValidateUnit IsNotFlying2; Option Shadow Low; $AllowBlobShadow"/>
+        <On index="11" Terms="StatusOn.*.PreTargetingModel; ValidateUnit IsFlying2"/>
+        <On index="19" Terms="CursorUpdate.*.Start; ValidateUnit IsFlying2"/>
+        <On index="20" Terms="CursorUpdate.*.Stop; ValidateUnit IsFlying2; HasStatus FlyerHelper"/>
+        <On index="24" Terms="StatusOn.*.Selected; ValidateUnit IsFlying2"/>
+        <On index="25" Terms="StatusOff.*.Selected; ValidateUnit IsFlying2; HasStatus FlyerHelper"/>
+        <On index="29" Terms="ActorCreation; FlyerHelper All; ValidateUnit IsFlying2"/>
+        <On index="34" Terms="FlyerHelperChange; FlyerHelper All; ValidateUnit IsFlying2; !ScopeContains FlyerHelperSplat"/>
+        <On index="38" Terms="UnitDetectedByViewer.*.On; ValidateUnit IsHallucination2"/>
+        <On index="39" Terms="UnitDetectedByViewer.*.Off; ValidateUnit IsHallucination2"/>
+        <On index="40" Terms="UnitDeathCustomize; ValidateUnit NotStructure2; IsStatus InAir 1"/>
+        <On index="41" Terms="UnitDeathCustomize; ValidateUnit IsProtossUnit2; IsStatus InAir 1"/>
+        <On index="42" Terms="UnitDeathCustomize; ValidateUnit IsTerranUnit2; IsStatus InAir 1"/>
+        <On index="43" Terms="UnitDeathCustomize; ValidateUnit IsZergUnit2; IsStatus InAir 1"/>
+        <On index="44" Terms="UnitDeathCustomize; ValidateUnit IsVortexed2"/>
+        <On index="45" Terms="UnitDeathCustomize; ValidateUnit HasForceLowDeathProtoss2"/>
+        <On index="46" Terms="UnitDeathCustomize; ValidateUnit HasForceLowDeathZerg2"/>
+        <On index="47" Terms="UnitDeathCustomize; ValidateUnit HasForceLowDeathTerran2"/>
+        <On index="50" Terms="Behavior.ForceLowDeath2.On"/>
+        <On index="64" Terms="Abil.attack2.ReadyStart" Send="AnimGroupApply Ready"/>
+        <On index="68" Terms="Abil.attack2.ReadyStop" Send="AnimGroupRemove Ready"/>
+        <Model value="PlanetIconRedstone"/>
+        <BuildModel value="SMMarSaraPlanet24222"/>
+        <DeathArray index="Normal" ModelLink="SMMarSaraPlanet24222"/>
+        <DeathCustoms index="0" ModelLink="ZergSmallUnitDeathLow24222"/>
+        <DeathCustoms index="1" ModelLink="ProtossSmallUnitDeathLow24222"/>
+        <DeathCustoms index="2" ModelLink="TerranSmallUnitDeathLow24222"/>
+        <DeathCustoms index="3" ModelLink="ZergSmallUnitDeathLow24222"/>
+        <DeathCustoms index="4" ModelLink="Invisible24222"/>
+        <PlacementModel value="SMMarSaraPlanet24222"/>
+        <PortraitModel value="StaticPortrait24222"/>
+        <HighlightTooltip value="Unit/Name/SMMarSaraPlanet24222"/>
+    </CActorUnit>
+    <CActorUnit id="SMMarSaraPlanet242222" parent="GenericUnitSM" unitName="PlanetMarSara42222">
+        <On index="7" Terms="ActorCreation; ValidateUnit IsFlying2; Option Shadow Low; $AllowBlobShadow"/>
+        <On index="8" Terms="ActorCreation; ValidateUnit IsNotFlying2; Option Shadow Low; $AllowBlobShadow"/>
+        <On index="11" Terms="StatusOn.*.PreTargetingModel; ValidateUnit IsFlying2"/>
+        <On index="19" Terms="CursorUpdate.*.Start; ValidateUnit IsFlying2"/>
+        <On index="20" Terms="CursorUpdate.*.Stop; ValidateUnit IsFlying2; HasStatus FlyerHelper"/>
+        <On index="24" Terms="StatusOn.*.Selected; ValidateUnit IsFlying2"/>
+        <On index="25" Terms="StatusOff.*.Selected; ValidateUnit IsFlying2; HasStatus FlyerHelper"/>
+        <On index="29" Terms="ActorCreation; FlyerHelper All; ValidateUnit IsFlying2"/>
+        <On index="34" Terms="FlyerHelperChange; FlyerHelper All; ValidateUnit IsFlying2; !ScopeContains FlyerHelperSplat"/>
+        <On index="38" Terms="UnitDetectedByViewer.*.On; ValidateUnit IsHallucination2"/>
+        <On index="39" Terms="UnitDetectedByViewer.*.Off; ValidateUnit IsHallucination2"/>
+        <On index="40" Terms="UnitDeathCustomize; ValidateUnit NotStructure2; IsStatus InAir 1"/>
+        <On index="41" Terms="UnitDeathCustomize; ValidateUnit IsProtossUnit2; IsStatus InAir 1"/>
+        <On index="42" Terms="UnitDeathCustomize; ValidateUnit IsTerranUnit2; IsStatus InAir 1"/>
+        <On index="43" Terms="UnitDeathCustomize; ValidateUnit IsZergUnit2; IsStatus InAir 1"/>
+        <On index="44" Terms="UnitDeathCustomize; ValidateUnit IsVortexed2"/>
+        <On index="45" Terms="UnitDeathCustomize; ValidateUnit HasForceLowDeathProtoss2"/>
+        <On index="46" Terms="UnitDeathCustomize; ValidateUnit HasForceLowDeathZerg2"/>
+        <On index="47" Terms="UnitDeathCustomize; ValidateUnit HasForceLowDeathTerran2"/>
+        <On index="50" Terms="Behavior.ForceLowDeath2.On"/>
+        <On index="64" Terms="Abil.attack2.ReadyStart" Send="AnimGroupApply Ready"/>
+        <On index="68" Terms="Abil.attack2.ReadyStop" Send="AnimGroupRemove Ready"/>
+        <Model value="PlanetIconShakuras"/>
+        <BuildModel value="SMMarSaraPlanet242222"/>
+        <DeathArray index="Normal" ModelLink="SMMarSaraPlanet242222"/>
+        <DeathCustoms index="0" ModelLink="ZergSmallUnitDeathLow242222"/>
+        <DeathCustoms index="1" ModelLink="ProtossSmallUnitDeathLow242222"/>
+        <DeathCustoms index="2" ModelLink="TerranSmallUnitDeathLow242222"/>
+        <DeathCustoms index="3" ModelLink="ZergSmallUnitDeathLow242222"/>
+        <DeathCustoms index="4" ModelLink="Invisible242222"/>
+        <PlacementModel value="SMMarSaraPlanet242222"/>
+        <PortraitModel value="StaticPortrait242222"/>
+        <HighlightTooltip value="Unit/Name/SMMarSaraPlanet242222"/>
+    </CActorUnit>
+    <CActorUnit id="SMMarSaraPlanet2422222" parent="GenericUnitSM" unitName="PlanetMarSara422222">
+        <On index="7" Terms="ActorCreation; ValidateUnit IsFlying2; Option Shadow Low; $AllowBlobShadow"/>
+        <On index="8" Terms="ActorCreation; ValidateUnit IsNotFlying2; Option Shadow Low; $AllowBlobShadow"/>
+        <On index="11" Terms="StatusOn.*.PreTargetingModel; ValidateUnit IsFlying2"/>
+        <On index="19" Terms="CursorUpdate.*.Start; ValidateUnit IsFlying2"/>
+        <On index="20" Terms="CursorUpdate.*.Stop; ValidateUnit IsFlying2; HasStatus FlyerHelper"/>
+        <On index="24" Terms="StatusOn.*.Selected; ValidateUnit IsFlying2"/>
+        <On index="25" Terms="StatusOff.*.Selected; ValidateUnit IsFlying2; HasStatus FlyerHelper"/>
+        <On index="29" Terms="ActorCreation; FlyerHelper All; ValidateUnit IsFlying2"/>
+        <On index="34" Terms="FlyerHelperChange; FlyerHelper All; ValidateUnit IsFlying2; !ScopeContains FlyerHelperSplat"/>
+        <On index="38" Terms="UnitDetectedByViewer.*.On; ValidateUnit IsHallucination2"/>
+        <On index="39" Terms="UnitDetectedByViewer.*.Off; ValidateUnit IsHallucination2"/>
+        <On index="40" Terms="UnitDeathCustomize; ValidateUnit NotStructure2; IsStatus InAir 1"/>
+        <On index="41" Terms="UnitDeathCustomize; ValidateUnit IsProtossUnit2; IsStatus InAir 1"/>
+        <On index="42" Terms="UnitDeathCustomize; ValidateUnit IsTerranUnit2; IsStatus InAir 1"/>
+        <On index="43" Terms="UnitDeathCustomize; ValidateUnit IsZergUnit2; IsStatus InAir 1"/>
+        <On index="44" Terms="UnitDeathCustomize; ValidateUnit IsVortexed2"/>
+        <On index="45" Terms="UnitDeathCustomize; ValidateUnit HasForceLowDeathProtoss2"/>
+        <On index="46" Terms="UnitDeathCustomize; ValidateUnit HasForceLowDeathZerg2"/>
+        <On index="47" Terms="UnitDeathCustomize; ValidateUnit HasForceLowDeathTerran2"/>
+        <On index="50" Terms="Behavior.ForceLowDeath2.On"/>
+        <On index="64" Terms="Abil.attack2.ReadyStart" Send="AnimGroupApply Ready"/>
+        <On index="68" Terms="Abil.attack2.ReadyStop" Send="AnimGroupRemove Ready"/>
+        <Model value="PlanetIconSigmaQuadrant"/>
+        <BuildModel value="SMMarSaraPlanet2422222"/>
+        <DeathArray index="Normal" ModelLink="SMMarSaraPlanet2422222"/>
+        <DeathCustoms index="0" ModelLink="ZergSmallUnitDeathLow2422222"/>
+        <DeathCustoms index="1" ModelLink="ProtossSmallUnitDeathLow2422222"/>
+        <DeathCustoms index="2" ModelLink="TerranSmallUnitDeathLow2422222"/>
+        <DeathCustoms index="3" ModelLink="ZergSmallUnitDeathLow2422222"/>
+        <DeathCustoms index="4" ModelLink="Invisible2422222"/>
+        <PlacementModel value="SMMarSaraPlanet2422222"/>
+        <PortraitModel value="StaticPortrait2422222"/>
+        <HighlightTooltip value="Unit/Name/SMMarSaraPlanet2422222"/>
+    </CActorUnit>
+    <CActorUnit id="SMMarSaraPlanet24222222" parent="GenericUnitSM" unitName="PlanetMarSara4222222">
+        <On index="7" Terms="ActorCreation; ValidateUnit IsFlying2; Option Shadow Low; $AllowBlobShadow"/>
+        <On index="8" Terms="ActorCreation; ValidateUnit IsNotFlying2; Option Shadow Low; $AllowBlobShadow"/>
+        <On index="11" Terms="StatusOn.*.PreTargetingModel; ValidateUnit IsFlying2"/>
+        <On index="19" Terms="CursorUpdate.*.Start; ValidateUnit IsFlying2"/>
+        <On index="20" Terms="CursorUpdate.*.Stop; ValidateUnit IsFlying2; HasStatus FlyerHelper"/>
+        <On index="24" Terms="StatusOn.*.Selected; ValidateUnit IsFlying2"/>
+        <On index="25" Terms="StatusOff.*.Selected; ValidateUnit IsFlying2; HasStatus FlyerHelper"/>
+        <On index="29" Terms="ActorCreation; FlyerHelper All; ValidateUnit IsFlying2"/>
+        <On index="34" Terms="FlyerHelperChange; FlyerHelper All; ValidateUnit IsFlying2; !ScopeContains FlyerHelperSplat"/>
+        <On index="38" Terms="UnitDetectedByViewer.*.On; ValidateUnit IsHallucination2"/>
+        <On index="39" Terms="UnitDetectedByViewer.*.Off; ValidateUnit IsHallucination2"/>
+        <On index="40" Terms="UnitDeathCustomize; ValidateUnit NotStructure2; IsStatus InAir 1"/>
+        <On index="41" Terms="UnitDeathCustomize; ValidateUnit IsProtossUnit2; IsStatus InAir 1"/>
+        <On index="42" Terms="UnitDeathCustomize; ValidateUnit IsTerranUnit2; IsStatus InAir 1"/>
+        <On index="43" Terms="UnitDeathCustomize; ValidateUnit IsZergUnit2; IsStatus InAir 1"/>
+        <On index="44" Terms="UnitDeathCustomize; ValidateUnit IsVortexed2"/>
+        <On index="45" Terms="UnitDeathCustomize; ValidateUnit HasForceLowDeathProtoss2"/>
+        <On index="46" Terms="UnitDeathCustomize; ValidateUnit HasForceLowDeathZerg2"/>
+        <On index="47" Terms="UnitDeathCustomize; ValidateUnit HasForceLowDeathTerran2"/>
+        <On index="50" Terms="Behavior.ForceLowDeath2.On"/>
+        <On index="64" Terms="Abil.attack2.ReadyStart" Send="AnimGroupApply Ready"/>
+        <On index="68" Terms="Abil.attack2.ReadyStop" Send="AnimGroupRemove Ready"/>
+        <Model value="PlanetIconTarsonis"/>
+        <BuildModel value="SMMarSaraPlanet24222222"/>
+        <DeathArray index="Normal" ModelLink="SMMarSaraPlanet24222222"/>
+        <DeathCustoms index="0" ModelLink="ZergSmallUnitDeathLow24222222"/>
+        <DeathCustoms index="1" ModelLink="ProtossSmallUnitDeathLow24222222"/>
+        <DeathCustoms index="2" ModelLink="TerranSmallUnitDeathLow24222222"/>
+        <DeathCustoms index="3" ModelLink="ZergSmallUnitDeathLow24222222"/>
+        <DeathCustoms index="4" ModelLink="Invisible24222222"/>
+        <PlacementModel value="SMMarSaraPlanet24222222"/>
+        <PortraitModel value="StaticPortrait24222222"/>
+        <HighlightTooltip value="Unit/Name/SMMarSaraPlanet24222222"/>
+    </CActorUnit>
+    <CActorUnit id="SMMarSaraPlanet242222222" parent="GenericUnitSM" unitName="PlanetMarSara42222222">
+        <On index="7" Terms="ActorCreation; ValidateUnit IsFlying2; Option Shadow Low; $AllowBlobShadow"/>
+        <On index="8" Terms="ActorCreation; ValidateUnit IsNotFlying2; Option Shadow Low; $AllowBlobShadow"/>
+        <On index="11" Terms="StatusOn.*.PreTargetingModel; ValidateUnit IsFlying2"/>
+        <On index="19" Terms="CursorUpdate.*.Start; ValidateUnit IsFlying2"/>
+        <On index="20" Terms="CursorUpdate.*.Stop; ValidateUnit IsFlying2; HasStatus FlyerHelper"/>
+        <On index="24" Terms="StatusOn.*.Selected; ValidateUnit IsFlying2"/>
+        <On index="25" Terms="StatusOff.*.Selected; ValidateUnit IsFlying2; HasStatus FlyerHelper"/>
+        <On index="29" Terms="ActorCreation; FlyerHelper All; ValidateUnit IsFlying2"/>
+        <On index="34" Terms="FlyerHelperChange; FlyerHelper All; ValidateUnit IsFlying2; !ScopeContains FlyerHelperSplat"/>
+        <On index="38" Terms="UnitDetectedByViewer.*.On; ValidateUnit IsHallucination2"/>
+        <On index="39" Terms="UnitDetectedByViewer.*.Off; ValidateUnit IsHallucination2"/>
+        <On index="40" Terms="UnitDeathCustomize; ValidateUnit NotStructure2; IsStatus InAir 1"/>
+        <On index="41" Terms="UnitDeathCustomize; ValidateUnit IsProtossUnit2; IsStatus InAir 1"/>
+        <On index="42" Terms="UnitDeathCustomize; ValidateUnit IsTerranUnit2; IsStatus InAir 1"/>
+        <On index="43" Terms="UnitDeathCustomize; ValidateUnit IsZergUnit2; IsStatus InAir 1"/>
+        <On index="44" Terms="UnitDeathCustomize; ValidateUnit IsVortexed2"/>
+        <On index="45" Terms="UnitDeathCustomize; ValidateUnit HasForceLowDeathProtoss2"/>
+        <On index="46" Terms="UnitDeathCustomize; ValidateUnit HasForceLowDeathZerg2"/>
+        <On index="47" Terms="UnitDeathCustomize; ValidateUnit HasForceLowDeathTerran2"/>
+        <On index="50" Terms="Behavior.ForceLowDeath2.On"/>
+        <On index="64" Terms="Abil.attack2.ReadyStart" Send="AnimGroupApply Ready"/>
+        <On index="68" Terms="Abil.attack2.ReadyStop" Send="AnimGroupRemove Ready"/>
+        <Model value="PlanetIconTyphon"/>
+        <BuildModel value="SMMarSaraPlanet242222222"/>
+        <DeathArray index="Normal" ModelLink="SMMarSaraPlanet242222222"/>
+        <DeathCustoms index="0" ModelLink="ZergSmallUnitDeathLow242222222"/>
+        <DeathCustoms index="1" ModelLink="ProtossSmallUnitDeathLow242222222"/>
+        <DeathCustoms index="2" ModelLink="TerranSmallUnitDeathLow242222222"/>
+        <DeathCustoms index="3" ModelLink="ZergSmallUnitDeathLow242222222"/>
+        <DeathCustoms index="4" ModelLink="Invisible242222222"/>
+        <PlacementModel value="SMMarSaraPlanet242222222"/>
+        <PortraitModel value="StaticPortrait242222222"/>
+        <HighlightTooltip value="Unit/Name/SMMarSaraPlanet242222222"/>
+    </CActorUnit>
+    <CActorUnit id="SMMarSaraPlanet2422222222" parent="GenericUnitSM" unitName="PlanetMarSara422222222">
+        <On index="7" Terms="ActorCreation; ValidateUnit IsFlying2; Option Shadow Low; $AllowBlobShadow"/>
+        <On index="8" Terms="ActorCreation; ValidateUnit IsNotFlying2; Option Shadow Low; $AllowBlobShadow"/>
+        <On index="11" Terms="StatusOn.*.PreTargetingModel; ValidateUnit IsFlying2"/>
+        <On index="19" Terms="CursorUpdate.*.Start; ValidateUnit IsFlying2"/>
+        <On index="20" Terms="CursorUpdate.*.Stop; ValidateUnit IsFlying2; HasStatus FlyerHelper"/>
+        <On index="24" Terms="StatusOn.*.Selected; ValidateUnit IsFlying2"/>
+        <On index="25" Terms="StatusOff.*.Selected; ValidateUnit IsFlying2; HasStatus FlyerHelper"/>
+        <On index="29" Terms="ActorCreation; FlyerHelper All; ValidateUnit IsFlying2"/>
+        <On index="34" Terms="FlyerHelperChange; FlyerHelper All; ValidateUnit IsFlying2; !ScopeContains FlyerHelperSplat"/>
+        <On index="38" Terms="UnitDetectedByViewer.*.On; ValidateUnit IsHallucination2"/>
+        <On index="39" Terms="UnitDetectedByViewer.*.Off; ValidateUnit IsHallucination2"/>
+        <On index="40" Terms="UnitDeathCustomize; ValidateUnit NotStructure2; IsStatus InAir 1"/>
+        <On index="41" Terms="UnitDeathCustomize; ValidateUnit IsProtossUnit2; IsStatus InAir 1"/>
+        <On index="42" Terms="UnitDeathCustomize; ValidateUnit IsTerranUnit2; IsStatus InAir 1"/>
+        <On index="43" Terms="UnitDeathCustomize; ValidateUnit IsZergUnit2; IsStatus InAir 1"/>
+        <On index="44" Terms="UnitDeathCustomize; ValidateUnit IsVortexed2"/>
+        <On index="45" Terms="UnitDeathCustomize; ValidateUnit HasForceLowDeathProtoss2"/>
+        <On index="46" Terms="UnitDeathCustomize; ValidateUnit HasForceLowDeathZerg2"/>
+        <On index="47" Terms="UnitDeathCustomize; ValidateUnit HasForceLowDeathTerran2"/>
+        <On index="50" Terms="Behavior.ForceLowDeath2.On"/>
+        <On index="64" Terms="Abil.attack2.ReadyStart" Send="AnimGroupApply Ready"/>
+        <On index="68" Terms="Abil.attack2.ReadyStop" Send="AnimGroupRemove Ready"/>
+        <Model value="PlanetIconTyrador"/>
+        <BuildModel value="SMMarSaraPlanet2422222222"/>
+        <DeathArray index="Normal" ModelLink="SMMarSaraPlanet2422222222"/>
+        <DeathCustoms index="0" ModelLink="ZergSmallUnitDeathLow2422222222"/>
+        <DeathCustoms index="1" ModelLink="ProtossSmallUnitDeathLow2422222222"/>
+        <DeathCustoms index="2" ModelLink="TerranSmallUnitDeathLow2422222222"/>
+        <DeathCustoms index="3" ModelLink="ZergSmallUnitDeathLow2422222222"/>
+        <DeathCustoms index="4" ModelLink="Invisible2422222222"/>
+        <PlacementModel value="SMMarSaraPlanet2422222222"/>
+        <PortraitModel value="StaticPortrait2422222222"/>
+        <HighlightTooltip value="Unit/Name/SMMarSaraPlanet2422222222"/>
+    </CActorUnit>
+    <CActorUnit id="SMMarSaraPlanet24222222222" parent="GenericUnitSM" unitName="PlanetMarSara4222222222">
+        <On index="7" Terms="ActorCreation; ValidateUnit IsFlying2; Option Shadow Low; $AllowBlobShadow"/>
+        <On index="8" Terms="ActorCreation; ValidateUnit IsNotFlying2; Option Shadow Low; $AllowBlobShadow"/>
+        <On index="11" Terms="StatusOn.*.PreTargetingModel; ValidateUnit IsFlying2"/>
+        <On index="19" Terms="CursorUpdate.*.Start; ValidateUnit IsFlying2"/>
+        <On index="20" Terms="CursorUpdate.*.Stop; ValidateUnit IsFlying2; HasStatus FlyerHelper"/>
+        <On index="24" Terms="StatusOn.*.Selected; ValidateUnit IsFlying2"/>
+        <On index="25" Terms="StatusOff.*.Selected; ValidateUnit IsFlying2; HasStatus FlyerHelper"/>
+        <On index="29" Terms="ActorCreation; FlyerHelper All; ValidateUnit IsFlying2"/>
+        <On index="34" Terms="FlyerHelperChange; FlyerHelper All; ValidateUnit IsFlying2; !ScopeContains FlyerHelperSplat"/>
+        <On index="38" Terms="UnitDetectedByViewer.*.On; ValidateUnit IsHallucination2"/>
+        <On index="39" Terms="UnitDetectedByViewer.*.Off; ValidateUnit IsHallucination2"/>
+        <On index="40" Terms="UnitDeathCustomize; ValidateUnit NotStructure2; IsStatus InAir 1"/>
+        <On index="41" Terms="UnitDeathCustomize; ValidateUnit IsProtossUnit2; IsStatus InAir 1"/>
+        <On index="42" Terms="UnitDeathCustomize; ValidateUnit IsTerranUnit2; IsStatus InAir 1"/>
+        <On index="43" Terms="UnitDeathCustomize; ValidateUnit IsZergUnit2; IsStatus InAir 1"/>
+        <On index="44" Terms="UnitDeathCustomize; ValidateUnit IsVortexed2"/>
+        <On index="45" Terms="UnitDeathCustomize; ValidateUnit HasForceLowDeathProtoss2"/>
+        <On index="46" Terms="UnitDeathCustomize; ValidateUnit HasForceLowDeathZerg2"/>
+        <On index="47" Terms="UnitDeathCustomize; ValidateUnit HasForceLowDeathTerran2"/>
+        <On index="50" Terms="Behavior.ForceLowDeath2.On"/>
+        <On index="64" Terms="Abil.attack2.ReadyStart" Send="AnimGroupApply Ready"/>
+        <On index="68" Terms="Abil.attack2.ReadyStop" Send="AnimGroupRemove Ready"/>
+        <Model value="PlanetIconUlaan"/>
+        <BuildModel value="SMMarSaraPlanet24222222222"/>
+        <DeathArray index="Normal" ModelLink="SMMarSaraPlanet24222222222"/>
+        <DeathCustoms index="0" ModelLink="ZergSmallUnitDeathLow24222222222"/>
+        <DeathCustoms index="1" ModelLink="ProtossSmallUnitDeathLow24222222222"/>
+        <DeathCustoms index="2" ModelLink="TerranSmallUnitDeathLow24222222222"/>
+        <DeathCustoms index="3" ModelLink="ZergSmallUnitDeathLow24222222222"/>
+        <DeathCustoms index="4" ModelLink="Invisible24222222222"/>
+        <PlacementModel value="SMMarSaraPlanet24222222222"/>
+        <PortraitModel value="StaticPortrait24222222222"/>
+        <HighlightTooltip value="Unit/Name/SMMarSaraPlanet24222222222"/>
+    </CActorUnit>
+    <CActorUnit id="SMMarSaraPlanet242222222222" parent="GenericUnitSM" unitName="PlanetMarSara42222222222">
+        <On index="7" Terms="ActorCreation; ValidateUnit IsFlying2; Option Shadow Low; $AllowBlobShadow"/>
+        <On index="8" Terms="ActorCreation; ValidateUnit IsNotFlying2; Option Shadow Low; $AllowBlobShadow"/>
+        <On index="11" Terms="StatusOn.*.PreTargetingModel; ValidateUnit IsFlying2"/>
+        <On index="19" Terms="CursorUpdate.*.Start; ValidateUnit IsFlying2"/>
+        <On index="20" Terms="CursorUpdate.*.Stop; ValidateUnit IsFlying2; HasStatus FlyerHelper"/>
+        <On index="24" Terms="StatusOn.*.Selected; ValidateUnit IsFlying2"/>
+        <On index="25" Terms="StatusOff.*.Selected; ValidateUnit IsFlying2; HasStatus FlyerHelper"/>
+        <On index="29" Terms="ActorCreation; FlyerHelper All; ValidateUnit IsFlying2"/>
+        <On index="34" Terms="FlyerHelperChange; FlyerHelper All; ValidateUnit IsFlying2; !ScopeContains FlyerHelperSplat"/>
+        <On index="38" Terms="UnitDetectedByViewer.*.On; ValidateUnit IsHallucination2"/>
+        <On index="39" Terms="UnitDetectedByViewer.*.Off; ValidateUnit IsHallucination2"/>
+        <On index="40" Terms="UnitDeathCustomize; ValidateUnit NotStructure2; IsStatus InAir 1"/>
+        <On index="41" Terms="UnitDeathCustomize; ValidateUnit IsProtossUnit2; IsStatus InAir 1"/>
+        <On index="42" Terms="UnitDeathCustomize; ValidateUnit IsTerranUnit2; IsStatus InAir 1"/>
+        <On index="43" Terms="UnitDeathCustomize; ValidateUnit IsZergUnit2; IsStatus InAir 1"/>
+        <On index="44" Terms="UnitDeathCustomize; ValidateUnit IsVortexed2"/>
+        <On index="45" Terms="UnitDeathCustomize; ValidateUnit HasForceLowDeathProtoss2"/>
+        <On index="46" Terms="UnitDeathCustomize; ValidateUnit HasForceLowDeathZerg2"/>
+        <On index="47" Terms="UnitDeathCustomize; ValidateUnit HasForceLowDeathTerran2"/>
+        <On index="50" Terms="Behavior.ForceLowDeath2.On"/>
+        <On index="64" Terms="Abil.attack2.ReadyStart" Send="AnimGroupApply Ready"/>
+        <On index="68" Terms="Abil.attack2.ReadyStop" Send="AnimGroupRemove Ready"/>
+        <Model value="PlanetIconUlnar"/>
+        <BuildModel value="SMMarSaraPlanet242222222222"/>
+        <DeathArray index="Normal" ModelLink="SMMarSaraPlanet242222222222"/>
+        <DeathCustoms index="0" ModelLink="ZergSmallUnitDeathLow242222222222"/>
+        <DeathCustoms index="1" ModelLink="ProtossSmallUnitDeathLow242222222222"/>
+        <DeathCustoms index="2" ModelLink="TerranSmallUnitDeathLow242222222222"/>
+        <DeathCustoms index="3" ModelLink="ZergSmallUnitDeathLow242222222222"/>
+        <DeathCustoms index="4" ModelLink="Invisible242222222222"/>
+        <PlacementModel value="SMMarSaraPlanet242222222222"/>
+        <PortraitModel value="StaticPortrait242222222222"/>
+        <HighlightTooltip value="Unit/Name/SMMarSaraPlanet242222222222"/>
+    </CActorUnit>
+    <CActorUnit id="SMMarSaraPlanet2422222222222" parent="GenericUnitSM" unitName="PlanetMarSara422222222222">
+        <On index="7" Terms="ActorCreation; ValidateUnit IsFlying2; Option Shadow Low; $AllowBlobShadow"/>
+        <On index="8" Terms="ActorCreation; ValidateUnit IsNotFlying2; Option Shadow Low; $AllowBlobShadow"/>
+        <On index="11" Terms="StatusOn.*.PreTargetingModel; ValidateUnit IsFlying2"/>
+        <On index="19" Terms="CursorUpdate.*.Start; ValidateUnit IsFlying2"/>
+        <On index="20" Terms="CursorUpdate.*.Stop; ValidateUnit IsFlying2; HasStatus FlyerHelper"/>
+        <On index="24" Terms="StatusOn.*.Selected; ValidateUnit IsFlying2"/>
+        <On index="25" Terms="StatusOff.*.Selected; ValidateUnit IsFlying2; HasStatus FlyerHelper"/>
+        <On index="29" Terms="ActorCreation; FlyerHelper All; ValidateUnit IsFlying2"/>
+        <On index="34" Terms="FlyerHelperChange; FlyerHelper All; ValidateUnit IsFlying2; !ScopeContains FlyerHelperSplat"/>
+        <On index="38" Terms="UnitDetectedByViewer.*.On; ValidateUnit IsHallucination2"/>
+        <On index="39" Terms="UnitDetectedByViewer.*.Off; ValidateUnit IsHallucination2"/>
+        <On index="40" Terms="UnitDeathCustomize; ValidateUnit NotStructure2; IsStatus InAir 1"/>
+        <On index="41" Terms="UnitDeathCustomize; ValidateUnit IsProtossUnit2; IsStatus InAir 1"/>
+        <On index="42" Terms="UnitDeathCustomize; ValidateUnit IsTerranUnit2; IsStatus InAir 1"/>
+        <On index="43" Terms="UnitDeathCustomize; ValidateUnit IsZergUnit2; IsStatus InAir 1"/>
+        <On index="44" Terms="UnitDeathCustomize; ValidateUnit IsVortexed2"/>
+        <On index="45" Terms="UnitDeathCustomize; ValidateUnit HasForceLowDeathProtoss2"/>
+        <On index="46" Terms="UnitDeathCustomize; ValidateUnit HasForceLowDeathZerg2"/>
+        <On index="47" Terms="UnitDeathCustomize; ValidateUnit HasForceLowDeathTerran2"/>
+        <On index="50" Terms="Behavior.ForceLowDeath2.On"/>
+        <On index="64" Terms="Abil.attack2.ReadyStart" Send="AnimGroupApply Ready"/>
+        <On index="68" Terms="Abil.attack2.ReadyStop" Send="AnimGroupRemove Ready"/>
+        <Model value="PlanetIconValhalla"/>
+        <BuildModel value="SMMarSaraPlanet2422222222222"/>
+        <DeathArray index="Normal" ModelLink="SMMarSaraPlanet2422222222222"/>
+        <DeathCustoms index="0" ModelLink="ZergSmallUnitDeathLow2422222222222"/>
+        <DeathCustoms index="1" ModelLink="ProtossSmallUnitDeathLow2422222222222"/>
+        <DeathCustoms index="2" ModelLink="TerranSmallUnitDeathLow2422222222222"/>
+        <DeathCustoms index="3" ModelLink="ZergSmallUnitDeathLow2422222222222"/>
+        <DeathCustoms index="4" ModelLink="Invisible2422222222222"/>
+        <PlacementModel value="SMMarSaraPlanet2422222222222"/>
+        <PortraitModel value="StaticPortrait2422222222222"/>
+        <HighlightTooltip value="Unit/Name/SMMarSaraPlanet2422222222222"/>
+    </CActorUnit>
+    <CActorUnit id="SMMarSaraPlanet24222222222222" parent="GenericUnitSM" unitName="PlanetMarSara4222222222222">
+        <On index="7" Terms="ActorCreation; ValidateUnit IsFlying2; Option Shadow Low; $AllowBlobShadow"/>
+        <On index="8" Terms="ActorCreation; ValidateUnit IsNotFlying2; Option Shadow Low; $AllowBlobShadow"/>
+        <On index="11" Terms="StatusOn.*.PreTargetingModel; ValidateUnit IsFlying2"/>
+        <On index="19" Terms="CursorUpdate.*.Start; ValidateUnit IsFlying2"/>
+        <On index="20" Terms="CursorUpdate.*.Stop; ValidateUnit IsFlying2; HasStatus FlyerHelper"/>
+        <On index="24" Terms="StatusOn.*.Selected; ValidateUnit IsFlying2"/>
+        <On index="25" Terms="StatusOff.*.Selected; ValidateUnit IsFlying2; HasStatus FlyerHelper"/>
+        <On index="29" Terms="ActorCreation; FlyerHelper All; ValidateUnit IsFlying2"/>
+        <On index="34" Terms="FlyerHelperChange; FlyerHelper All; ValidateUnit IsFlying2; !ScopeContains FlyerHelperSplat"/>
+        <On index="38" Terms="UnitDetectedByViewer.*.On; ValidateUnit IsHallucination2"/>
+        <On index="39" Terms="UnitDetectedByViewer.*.Off; ValidateUnit IsHallucination2"/>
+        <On index="40" Terms="UnitDeathCustomize; ValidateUnit NotStructure2; IsStatus InAir 1"/>
+        <On index="41" Terms="UnitDeathCustomize; ValidateUnit IsProtossUnit2; IsStatus InAir 1"/>
+        <On index="42" Terms="UnitDeathCustomize; ValidateUnit IsTerranUnit2; IsStatus InAir 1"/>
+        <On index="43" Terms="UnitDeathCustomize; ValidateUnit IsZergUnit2; IsStatus InAir 1"/>
+        <On index="44" Terms="UnitDeathCustomize; ValidateUnit IsVortexed2"/>
+        <On index="45" Terms="UnitDeathCustomize; ValidateUnit HasForceLowDeathProtoss2"/>
+        <On index="46" Terms="UnitDeathCustomize; ValidateUnit HasForceLowDeathZerg2"/>
+        <On index="47" Terms="UnitDeathCustomize; ValidateUnit HasForceLowDeathTerran2"/>
+        <On index="50" Terms="Behavior.ForceLowDeath2.On"/>
+        <On index="64" Terms="Abil.attack2.ReadyStart" Send="AnimGroupApply Ready"/>
+        <On index="68" Terms="Abil.attack2.ReadyStop" Send="AnimGroupRemove Ready"/>
+        <Model value="PlanetIconXil"/>
+        <BuildModel value="SMMarSaraPlanet24222222222222"/>
+        <DeathArray index="Normal" ModelLink="SMMarSaraPlanet24222222222222"/>
+        <DeathCustoms index="0" ModelLink="ZergSmallUnitDeathLow24222222222222"/>
+        <DeathCustoms index="1" ModelLink="ProtossSmallUnitDeathLow24222222222222"/>
+        <DeathCustoms index="2" ModelLink="TerranSmallUnitDeathLow24222222222222"/>
+        <DeathCustoms index="3" ModelLink="ZergSmallUnitDeathLow24222222222222"/>
+        <DeathCustoms index="4" ModelLink="Invisible24222222222222"/>
+        <PlacementModel value="SMMarSaraPlanet24222222222222"/>
+        <PortraitModel value="StaticPortrait24222222222222"/>
+        <HighlightTooltip value="Unit/Name/SMMarSaraPlanet24222222222222"/>
+    </CActorUnit>
+    <CActorUnit id="SMMarSaraPlanet242222222222222" parent="GenericUnitSM" unitName="PlanetMarSara42222222222222">
+        <On index="7" Terms="ActorCreation; ValidateUnit IsFlying2; Option Shadow Low; $AllowBlobShadow"/>
+        <On index="8" Terms="ActorCreation; ValidateUnit IsNotFlying2; Option Shadow Low; $AllowBlobShadow"/>
+        <On index="11" Terms="StatusOn.*.PreTargetingModel; ValidateUnit IsFlying2"/>
+        <On index="19" Terms="CursorUpdate.*.Start; ValidateUnit IsFlying2"/>
+        <On index="20" Terms="CursorUpdate.*.Stop; ValidateUnit IsFlying2; HasStatus FlyerHelper"/>
+        <On index="24" Terms="StatusOn.*.Selected; ValidateUnit IsFlying2"/>
+        <On index="25" Terms="StatusOff.*.Selected; ValidateUnit IsFlying2; HasStatus FlyerHelper"/>
+        <On index="29" Terms="ActorCreation; FlyerHelper All; ValidateUnit IsFlying2"/>
+        <On index="34" Terms="FlyerHelperChange; FlyerHelper All; ValidateUnit IsFlying2; !ScopeContains FlyerHelperSplat"/>
+        <On index="38" Terms="UnitDetectedByViewer.*.On; ValidateUnit IsHallucination2"/>
+        <On index="39" Terms="UnitDetectedByViewer.*.Off; ValidateUnit IsHallucination2"/>
+        <On index="40" Terms="UnitDeathCustomize; ValidateUnit NotStructure2; IsStatus InAir 1"/>
+        <On index="41" Terms="UnitDeathCustomize; ValidateUnit IsProtossUnit2; IsStatus InAir 1"/>
+        <On index="42" Terms="UnitDeathCustomize; ValidateUnit IsTerranUnit2; IsStatus InAir 1"/>
+        <On index="43" Terms="UnitDeathCustomize; ValidateUnit IsZergUnit2; IsStatus InAir 1"/>
+        <On index="44" Terms="UnitDeathCustomize; ValidateUnit IsVortexed2"/>
+        <On index="45" Terms="UnitDeathCustomize; ValidateUnit HasForceLowDeathProtoss2"/>
+        <On index="46" Terms="UnitDeathCustomize; ValidateUnit HasForceLowDeathZerg2"/>
+        <On index="47" Terms="UnitDeathCustomize; ValidateUnit HasForceLowDeathTerran2"/>
+        <On index="50" Terms="Behavior.ForceLowDeath2.On"/>
+        <On index="64" Terms="Abil.attack2.ReadyStart" Send="AnimGroupApply Ready"/>
+        <On index="68" Terms="Abil.attack2.ReadyStop" Send="AnimGroupRemove Ready"/>
+        <Model value="PlanetIconZhakulDas"/>
+        <BuildModel value="SMMarSaraPlanet242222222222222"/>
+        <DeathArray index="Normal" ModelLink="SMMarSaraPlanet242222222222222"/>
+        <DeathCustoms index="0" ModelLink="ZergSmallUnitDeathLow242222222222222"/>
+        <DeathCustoms index="1" ModelLink="ProtossSmallUnitDeathLow242222222222222"/>
+        <DeathCustoms index="2" ModelLink="TerranSmallUnitDeathLow242222222222222"/>
+        <DeathCustoms index="3" ModelLink="ZergSmallUnitDeathLow242222222222222"/>
+        <DeathCustoms index="4" ModelLink="Invisible242222222222222"/>
+        <PlacementModel value="SMMarSaraPlanet242222222222222"/>
+        <PortraitModel value="StaticPortrait242222222222222"/>
+        <HighlightTooltip value="Unit/Name/SMMarSaraPlanet242222222222222"/>
     </CActorUnit>
     <CActorSound id="SoundEmitter2" parent="SoundContinuous">
         <Terms value="!HasScopeFlag DisableSoundEmitters"/>

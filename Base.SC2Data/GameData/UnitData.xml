@@ -6,4 +6,92 @@
     <CUnit id="PlanetMarSara2">
         <EditorCategories value="ObjectType:Set,ObjectFamily:Storymode"/>
     </CUnit>
+    <CUnit id="PlanetMarSara22">
+        <Mover value="Ground2"/>
+        <EditorCategories value="ObjectType:Set,ObjectFamily:Storymode"/>
+    </CUnit>
+    <CUnit id="PlanetMarSara23">
+        <Mover value="Ground3"/>
+        <EditorCategories value="ObjectType:Set,ObjectFamily:Storymode"/>
+    </CUnit>
+    <CUnit id="PlanetMarSara232">
+        <Mover value="Ground32"/>
+        <EditorCategories value="ObjectType:Set,ObjectFamily:Storymode"/>
+    </CUnit>
+    <CUnit id="PlanetMarSara2322">
+        <Mover value="Ground322"/>
+        <EditorCategories value="ObjectType:Set,ObjectFamily:Storymode"/>
+    </CUnit>
+    <CUnit id="PlanetMarSara23222">
+        <Mover value="Ground3222"/>
+        <EditorCategories value="ObjectType:Set,ObjectFamily:Storymode"/>
+    </CUnit>
+    <CUnit id="PlanetMarSara23223">
+        <Mover value="Ground3223"/>
+        <EditorCategories value="ObjectType:Set,ObjectFamily:Storymode"/>
+    </CUnit>
+    <CUnit id="PlanetMarSara232232">
+        <Mover value="Ground32232"/>
+        <EditorCategories value="ObjectType:Set,ObjectFamily:Storymode"/>
+    </CUnit>
+    <CUnit id="PlanetMarSara3">
+        <Mover value="Ground4"/>
+        <EditorCategories value="ObjectType:Set,ObjectFamily:Storymode"/>
+    </CUnit>
+    <CUnit id="PlanetMarSara4">
+        <Mover value="Ground5"/>
+        <EditorCategories value="ObjectType:Set,ObjectFamily:Storymode"/>
+    </CUnit>
+    <CUnit id="PlanetMarSara42">
+        <Mover value="Ground52"/>
+        <EditorCategories value="ObjectType:Set,ObjectFamily:Storymode"/>
+    </CUnit>
+    <CUnit id="PlanetMarSara422">
+        <Mover value="Ground522"/>
+        <EditorCategories value="ObjectType:Set,ObjectFamily:Storymode"/>
+    </CUnit>
+    <CUnit id="PlanetMarSara4222">
+        <Mover value="Ground5222"/>
+        <EditorCategories value="ObjectType:Set,ObjectFamily:Storymode"/>
+    </CUnit>
+    <CUnit id="PlanetMarSara42222">
+        <Mover value="Ground52222"/>
+        <EditorCategories value="ObjectType:Set,ObjectFamily:Storymode"/>
+    </CUnit>
+    <CUnit id="PlanetMarSara422222">
+        <Mover value="Ground522222"/>
+        <EditorCategories value="ObjectType:Set,ObjectFamily:Storymode"/>
+    </CUnit>
+    <CUnit id="PlanetMarSara4222222">
+        <Mover value="Ground5222222"/>
+        <EditorCategories value="ObjectType:Set,ObjectFamily:Storymode"/>
+    </CUnit>
+    <CUnit id="PlanetMarSara42222222">
+        <Mover value="Ground52222222"/>
+        <EditorCategories value="ObjectType:Set,ObjectFamily:Storymode"/>
+    </CUnit>
+    <CUnit id="PlanetMarSara422222222">
+        <Mover value="Ground522222222"/>
+        <EditorCategories value="ObjectType:Set,ObjectFamily:Storymode"/>
+    </CUnit>
+    <CUnit id="PlanetMarSara4222222222">
+        <Mover value="Ground5222222222"/>
+        <EditorCategories value="ObjectType:Set,ObjectFamily:Storymode"/>
+    </CUnit>
+    <CUnit id="PlanetMarSara42222222222">
+        <Mover value="Ground52222222222"/>
+        <EditorCategories value="ObjectType:Set,ObjectFamily:Storymode"/>
+    </CUnit>
+    <CUnit id="PlanetMarSara422222222222">
+        <Mover value="Ground522222222222"/>
+        <EditorCategories value="ObjectType:Set,ObjectFamily:Storymode"/>
+    </CUnit>
+    <CUnit id="PlanetMarSara4222222222222">
+        <Mover value="Ground5222222222222"/>
+        <EditorCategories value="ObjectType:Set,ObjectFamily:Storymode"/>
+    </CUnit>
+    <CUnit id="PlanetMarSara42222222222222">
+        <Mover value="Ground52222222222222"/>
+        <EditorCategories value="ObjectType:Set,ObjectFamily:Storymode"/>
+    </CUnit>
 </Catalog>
