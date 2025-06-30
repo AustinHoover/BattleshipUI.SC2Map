@@ -400,6 +400,8 @@ int gv_customPlanetMissionResearch;
 int gv_customPlanetMissionBonusOpportunities;
 int gv_customPlanetMissionBackgroundPortrait;
 int gv_customPlanetMissionContactPortrait;
+int gv_customPlanetBriefingPlayButton;
+int gv_customPlanetBriefingStopButton;
 fixed gv_talkBlendTime;
 fixed gv_standBlendTime;
 fixed gv_idleFidgetStartTime;
@@ -899,6 +901,8 @@ void InitGlobals () {
     gv_customPlanetMissionBonusOpportunities = c_invalidDialogControlId;
     gv_customPlanetMissionBackgroundPortrait = c_invalidDialogControlId;
     gv_customPlanetMissionContactPortrait = c_invalidDialogControlId;
+    gv_customPlanetBriefingPlayButton = c_invalidDialogControlId;
+    gv_customPlanetBriefingStopButton = c_invalidDialogControlId;
     gv_talkBlendTime = 0.75;
     gv_standBlendTime = 0.75;
     gv_idleFidgetStartTime = 40.0;
@@ -2419,6 +2423,8 @@ void gf_CustomPlanetResetUI () {
     libNtve_gf_SetDialogItemText(gv_customPlanetMissionResearch, StringToText(""), PlayerGroupAll());
     libNtve_gf_SetDialogItemText(gv_customPlanetMissionBonusOpportunities, StringToText(""), PlayerGroupAll());
     libNtve_gf_SetDialogItemModel(gv_customPlanetMissionBackgroundPortrait, "PlanetViewGalaxy", PlayerGroupAll());
+    DialogControlSetVisible(gv_customPlanetBriefingPlayButton, PlayerGroupAll(), false);
+    DialogControlSetVisible(gv_customPlanetBriefingStopButton, PlayerGroupAll(), false);
 }
 
 void gf_CustomPlanetShow () {
@@ -15101,6 +15107,10 @@ bool gt_CustomPlanetInit_Func (bool testConds, bool runActions) {
     gv_customPlanetButtonCycleForward = DialogControlLastCreated();
     DialogControlHookupStandard(c_triggerControlTypeButton, "UIContainer/CustomPlanetPanel/DecrementArrowButton");
     gv_customPlanetButtonCycleBackward = DialogControlLastCreated();
+    DialogControlHookupStandard(c_triggerControlTypeButton, "UIContainer/CustomPlanetPanel/ContactPlayButton");
+    gv_customPlanetBriefingPlayButton = DialogControlLastCreated();
+    DialogControlHookupStandard(c_triggerControlTypeButton, "UIContainer/CustomPlanetPanel/ContactStopButton");
+    gv_customPlanetBriefingStopButton = DialogControlLastCreated();
     DialogControlSetVisible(gv_customPlanetPanel, PlayerGroupAll(), false);
     return true;
 }
