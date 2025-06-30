@@ -1,17 +1,22 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <Desc>
-    <Frame type="Portrait" name="UnitModelFrame">
-		<Anchor side="Top" relative="$parent" pos="Min" offset="80"/>
-		<Anchor side="Bottom" relative="$parent" pos="Max" offset="-80"/>
-		<Anchor side="Left" relative="$parent" pos="Min" offset="80"/>
-		<Anchor side="Right" relative="$parent" pos="Max" offset="-80"/>
-		<BorderImage val="BackgroundPortraitBorderImage"/>
-		<AcceptsMouse val="false"/>
-		<UseTransition val="false"/>
-
-		<Frame type="Image" name="BackgroundPortraitBorderImage">
-			<Visible val="false"/>
-			<DescFlags val="Internal"/>
+    <Frame type="UnitModelFrame" name="UnitModelFrame">
+		<Anchor side="Top" relative="$parent" pos="Min" offset="0" />
+		<Anchor side="Left" relative="$parent" pos="Min" offset="0" />
+		<Height val="150"/>
+		<Width val="150"/>
+		<TeamColorIndex val="0"/>
+		<TurningEnabled val="false"/>
+		<Rotation val="150"/>
+        <UnitWorldY val="-1.85"/>
+		<UnitWorldZ val="1.5"/>
+		<UnitLink val="Marauder"/>
+		<Camera val="Star2CameraMid01"/>
+        <AcceptsMouse val="true"/>
+        <Frame type="Model" name="Model">
+            <Anchor relative="$parent"/>
+			<UseAlternateTime val="false"/>
+			<UseAspectScaling val="false"/>
 		</Frame>
 	</Frame>
 </Desc>
