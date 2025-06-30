@@ -3418,6 +3418,7 @@ Variable/Name/9465291B=CustomPlanet - Mission Title
 Variable/Name/94900FD7=PlayCantinaLine
 Variable/Name/94E4AADC=Door
 Variable/Name/94F456A9=JukeboxCount
+Variable/Name/9523A91A=CustomPlanet - Unit Preview
 Variable/Name/953C15F5=ObservatoryRoom
 Variable/Name/9574BEFF=ABChoiceLoading
 Variable/Name/95C6370A=SOUNDACTOR_Lab_Monitors

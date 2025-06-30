@@ -402,6 +402,7 @@ int gv_customPlanetMissionBackgroundPortrait;
 int gv_customPlanetMissionContactPortrait;
 int gv_customPlanetBriefingPlayButton;
 int gv_customPlanetBriefingStopButton;
+int gv_customPlanetUnitPreview;
 fixed gv_talkBlendTime;
 fixed gv_standBlendTime;
 fixed gv_idleFidgetStartTime;
@@ -903,6 +904,7 @@ void InitGlobals () {
     gv_customPlanetMissionContactPortrait = c_invalidDialogControlId;
     gv_customPlanetBriefingPlayButton = c_invalidDialogControlId;
     gv_customPlanetBriefingStopButton = c_invalidDialogControlId;
+    gv_customPlanetUnitPreview = c_invalidDialogControlId;
     gv_talkBlendTime = 0.75;
     gv_standBlendTime = 0.75;
     gv_idleFidgetStartTime = 40.0;
@@ -2423,8 +2425,11 @@ void gf_CustomPlanetResetUI () {
     libNtve_gf_SetDialogItemText(gv_customPlanetMissionResearch, StringToText(""), PlayerGroupAll());
     libNtve_gf_SetDialogItemText(gv_customPlanetMissionBonusOpportunities, StringToText(""), PlayerGroupAll());
     libNtve_gf_SetDialogItemModel(gv_customPlanetMissionBackgroundPortrait, "PlanetViewGalaxy", PlayerGroupAll());
+    libNtve_gf_SetDialogItemModel(gv_customPlanetMissionContactPortrait, "Invisible242222222222222", PlayerGroupAll());
     DialogControlSetVisible(gv_customPlanetBriefingPlayButton, PlayerGroupAll(), false);
     DialogControlSetVisible(gv_customPlanetBriefingStopButton, PlayerGroupAll(), false);
+    libNtve_gf_SetDialogItemUnitLink(gv_customPlanetUnitPreview, "InvisiblePylon", PlayerGroupAll());
+    libNtve_gf_SetDialogItemCamera(gv_customPlanetUnitPreview, "Star2CameraMid01", PlayerGroupAll());
 }
 
 void gf_CustomPlanetShow () {
@@ -2527,6 +2532,8 @@ void gf_CustomPlanetSelectPlanet (int lp_index) {
     libNtve_gf_SetDialogItemText(gv_customPlanetMissionBonusOpportunities, StringToText(gv_missionRegistry[gv_customPlanetUISlottoMissionIndexMap[lp_index]].lv_bonusOpportunities), PlayerGroupAll());
     libNtve_gf_SetDialogItemModel(gv_customPlanetMissionBackgroundPortrait, gv_missionRegistry[gv_customPlanetUISlottoMissionIndexMap[lp_index]].lv_mapViewBackgroundPortraitModel, PlayerGroupAll());
     libNtve_gf_SetDialogItemModel(gv_customPlanetMissionContactPortrait, gv_missionRegistry[gv_customPlanetUISlottoMissionIndexMap[lp_index]].lv_mapViewContactPortraitModel, PlayerGroupAll());
+    libNtve_gf_SetDialogItemUnitLink(gv_customPlanetUnitPreview, "QuestionMark", PlayerGroupAll());
+    libNtve_gf_SetDialogItemCamera(gv_customPlanetUnitPreview, "Star2CameraMid01", PlayerGroupAll());
 }
 
 void gf_CustomFadeInOut (bool lp_fadeIn, fixed lp_duration, bool lp_waitUntilDone) {
@@ -15099,6 +15106,8 @@ bool gt_CustomPlanetInit_Func (bool testConds, bool runActions) {
     gv_customPlanetMissionBackgroundPortrait = DialogControlLastCreated();
     DialogControlHookupStandard(c_triggerControlTypePortrait, "UIContainer/CustomPlanetPanel/ContactPortrait");
     gv_customPlanetMissionContactPortrait = DialogControlLastCreated();
+    DialogControlHookupStandard(c_triggerControlTypeUnitModel, "UIContainer/CustomPlanetPanel/TechnologyUnitModelFrame");
+    gv_customPlanetUnitPreview = DialogControlLastCreated();
     DialogControlHookupStandard(c_triggerControlTypeButton, "UIContainer/CustomPlanetPanel/CloseButton");
     gv_customPlanetButtonClose = DialogControlLastCreated();
     DialogControlHookupStandard(c_triggerControlTypeButton, "UIContainer/CustomPlanetPanel/LaunchButton");
