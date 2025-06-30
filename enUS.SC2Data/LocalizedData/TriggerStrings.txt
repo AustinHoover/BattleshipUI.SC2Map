@@ -1999,6 +1999,7 @@ Trigger/Name/396E8E56=Debug Merc Intro
 Trigger/Name/39875C19=MarSaraBriefcase Leave
 Trigger/Name/39BACBC6=ArmoryTech_Marauder Clicked
 Trigger/Name/3A24E9D0=Cantina Background Waiter 2 Stop
+Trigger/Name/3A6B026E=Disable tips
 Trigger/Name/3A7EC14A=Briefing - TValerian02A Preload Rough
 Trigger/Name/3B54FD88=Enter Char
 Trigger/Name/3B76897D=LabHanson Clicked Post Callback

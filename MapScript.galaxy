@@ -1570,6 +1570,7 @@ void gf_StartTipHint ();
 // Trigger Variables
 //--------------------------------------------------------------------------------------------------
 trigger gt_CustomInit;
+trigger gt_Disabletips;
 trigger gt_RegisterMissions;
 trigger gt_CustomPlanetInit;
 trigger gt_CustomPlanetIconClick;
@@ -9440,10 +9441,10 @@ string gf_RoomLoadingImage (int lp_room) {
         lv_image = "Assets\\Textures\\loading-hyperionbridge.dds";
     }
     else if (autoB9CB7C25_val == ge_RoomID_RoomCantina) {
-        lv_image = "Assets\\Textures\\loading-hyperioncantina.dds";
+        lv_image = "Assets\\Textures\\loading-hyperion4.dds";
     }
     else if (autoB9CB7C25_val == ge_RoomID_RoomArmory) {
-        lv_image = "Assets\\Textures\\loading-hyperionarmory.dds";
+        lv_image = "Assets\\Textures\\loading-hyperion3.dds";
     }
     else if (autoB9CB7C25_val == ge_RoomID_RoomLab) {
         lv_image = "Assets\\Textures\\loading-hyperionlab.dds";
@@ -14978,12 +14979,34 @@ bool gt_CustomInit_Func (bool testConds, bool runActions) {
     TriggerExecute(gt_RegisterMissions, true, false);
     TriggerExecute(gt_CustomPlanetInit, true, false);
     CameraApplyInfo(1, CameraInfoFromId(12), 0.0, -1, 10, true);
+    TriggerExecute(gt_Disabletips, true, false);
     return true;
 }
 
 //--------------------------------------------------------------------------------------------------
 void gt_CustomInit_Init () {
     gt_CustomInit = TriggerCreate("gt_CustomInit_Func");
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Disable tips
+//--------------------------------------------------------------------------------------------------
+bool gt_Disabletips_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    TriggerEnable(gt_TipArmory, false);
+    TriggerEnable(gt_TipCantina, false);
+    TriggerEnable(gt_TipLab, false);
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void gt_Disabletips_Init () {
+    gt_Disabletips = TriggerCreate("gt_Disabletips_Func");
 }
 
 //--------------------------------------------------------------------------------------------------
@@ -41875,6 +41898,7 @@ void gt_TipAfterTValerian01_Init () {
 //--------------------------------------------------------------------------------------------------
 void InitTriggers () {
     gt_CustomInit_Init();
+    gt_Disabletips_Init();
     gt_RegisterMissions_Init();
     gt_CustomPlanetInit_Init();
     gt_CustomPlanetIconClick_Init();
