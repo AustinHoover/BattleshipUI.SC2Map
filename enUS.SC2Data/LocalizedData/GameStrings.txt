@@ -12,6 +12,7 @@ LoadingScreen/Tip=<sp/>
 MapInfo/Player00/Name=Neutral
 MapInfo/Player01/Name=Player 1
 Param/Value/014C5176= 
+Param/Value/01606374=Current room: 
 Param/Value/02875348=
 Param/Value/03979B30=Laboratory
 Param/Value/0474820C=Raynor Intro
@@ -63,6 +64,7 @@ Param/Value/18FFC861=End preloading locations
 Param/Value/1C1C2145=Unload Character: 
 Param/Value/1C6CFB97=Valerian Intro
 Param/Value/1D4E33C9=</s><n/><n/><s val="ZPlanetPanelHeading">MISSION OBJECTIVE:</s><n/><s val="ZPlanetPanelObjective">
+Param/Value/1E1B4C79=Actor clicked: 
 Param/Value/1EE944F3=Simulate
 Param/Value/20202EDF= NOT LOADED
 Param/Value/2042EB05=Terran17
