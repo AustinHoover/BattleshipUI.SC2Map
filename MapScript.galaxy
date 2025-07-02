@@ -68,6 +68,10 @@ const fixed gv_c_TIPINTERVALSTART = 1.0;
 //--------------------------------------------------------------------------------------------------
 // Global Structures
 //--------------------------------------------------------------------------------------------------
+struct gs_NFM {
+    bool lv_walkInDoors;
+};
+
 struct gs_Mission {
     string lv_planetIcon;
     string lv_missionPath;
@@ -381,6 +385,7 @@ const int ge_ABChoiceAB_B = 1;
 //--------------------------------------------------------------------------------------------------
 // Global Variables
 //--------------------------------------------------------------------------------------------------
+gs_NFM gv_nFMInstance;
 bool gv_debugMode;
 gs_Mission[gv_maxMissionCount + 1] gv_missionRegistry;
 int gv_missionSelectedIndex;
@@ -1133,6 +1138,7 @@ void InitGlobals () {
 //--------------------------------------------------------------------------------------------------
 // Global Function Declarations
 //--------------------------------------------------------------------------------------------------
+bool gf_IS (bool lp_flag);
 void gf_DebugDisplay (text lp_text);
 bool gf_MissionIsAvailable (int lp_missionIndex);
 int gf_MissionRegistryNextSlot ();
@@ -1143,6 +1149,7 @@ void gf_CustomPlanetShow ();
 void gf_CustomPlanetInjectPlanet (int lp_uISlot, int lp_missionIndex, int lp_offset);
 void gf_CustomPlanetInjectPlanets ();
 void gf_CustomPlanetSelectPlanet (int lp_index);
+void gf_CoopRoomsParseHotspot (unit lp_hotspot);
 void gf_CustomFadeInOut (bool lp_fadeIn, fixed lp_duration, bool lp_waitUntilDone);
 void gf_TurnClickableOnOff (unit lp_unit, bool lp_desiredState);
 void gf_TurnClickablesOnOff (unitgroup lp_whichClickables, bool lp_desiredState);
@@ -1582,6 +1589,8 @@ void gf_StartTipHint ();
 trigger gt_DebugModeOn;
 trigger gt_DebugModeOff;
 trigger gt_DebugCount;
+trigger gt_DebugRoom;
+trigger gt_DebugObservatory;
 trigger gt_CustomInit;
 trigger gt_Disabletips;
 trigger gt_RegisterMissions;
@@ -1592,6 +1601,9 @@ trigger gt_CustomPlanetLaunch;
 trigger gt_CustomPlanetNextPlanet;
 trigger gt_CustomPlanetPrevPlanet;
 trigger gt_HideBaseGameUI;
+trigger gt_CoopRoomsLabDoor_Click;
+trigger gt_CoopRoomsBridgeDoor_Click;
+trigger gt_CoopRoomsCantinaDoor_Click;
 trigger gt_WaitForSkipTrig;
 trigger gt_BackButtonClicked;
 trigger gt_BackButtonEscape;
@@ -2415,10 +2427,16 @@ trigger gt_TipAfterTValerian01;
 //--------------------------------------------------------------------------------------------------
 // Global Functions
 //--------------------------------------------------------------------------------------------------
+bool gf_IS (bool lp_flag) {
+    // Automatic Variable Declarations
+    // Implementation
+    return lp_flag;
+}
+
 void gf_DebugDisplay (text lp_text) {
     // Automatic Variable Declarations
     // Implementation
-    if ((gv_debugMode == true)) {
+    if (gf_IS(gv_debugMode)) {
         TriggerDebugOutput(1, lp_text, true);
     }
 
@@ -2452,7 +2470,6 @@ void gf_MissionRegistryAdd (structref<gs_Mission> lp_mission) {
     // Implementation
     int lv_i;
     lv_i = gf_MissionRegistryNextSlot();
-    
     gv_missionRegistry[lv_i].lv_name = lp_mission.lv_name;
     gv_missionRegistry[lv_i].lv_missionPath = lp_mission.lv_missionPath;
     gv_missionRegistry[lv_i].lv_planetIcon = lp_mission.lv_planetIcon;
@@ -2586,6 +2603,23 @@ void gf_CustomPlanetSelectPlanet (int lp_index) {
     libNtve_gf_SetDialogItemModel(gv_customPlanetMissionContactPortrait, gv_missionRegistry[gv_customPlanetUISlottoMissionIndexMap[lp_index]].lv_mapViewContactPortraitModel, PlayerGroupAll());
     libNtve_gf_SetDialogItemUnitLink(gv_customPlanetUnitPreview, "QuestionMark", PlayerGroupAll());
     libNtve_gf_SetDialogItemCamera(gv_customPlanetUnitPreview, "Star2CameraMid01", PlayerGroupAll());
+}
+
+void gf_CoopRoomsParseHotspot (unit lp_hotspot) {
+    // Automatic Variable Declarations
+    // Implementation
+    if ((lp_hotspot == gv_cantinaDoor)) {
+        TriggerExecute(gt_CoopRoomsCantinaDoor_Click, true, false);
+    }
+
+    if ((lp_hotspot == gv_bridgeDoor)) {
+        TriggerExecute(gt_CoopRoomsBridgeDoor_Click, true, false);
+    }
+
+    if ((lp_hotspot == gv_labDoor)) {
+        TriggerExecute(gt_CoopRoomsLabDoor_Click, true, false);
+    }
+
 }
 
 void gf_CustomFadeInOut (bool lp_fadeIn, fixed lp_duration, bool lp_waitUntilDone) {
@@ -15093,6 +15127,46 @@ void gt_DebugCount_Init () {
 }
 
 //--------------------------------------------------------------------------------------------------
+// Trigger: Debug.Room
+//--------------------------------------------------------------------------------------------------
+bool gt_DebugRoom_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    gf_DebugDisplay((StringExternal("Param/Value/01606374") + gf_RoomName(gv_currentRoom)));
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void gt_DebugRoom_Init () {
+    gt_DebugRoom = TriggerCreate("gt_DebugRoom_Func");
+    TriggerAddEventChatMessage(gt_DebugRoom, c_playerAny, "-debug room", true);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Debug.Observatory
+//--------------------------------------------------------------------------------------------------
+bool gt_DebugObservatory_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    gf_ChangeRoom(ge_RoomID_RoomObservatory, false);
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void gt_DebugObservatory_Init () {
+    gt_DebugObservatory = TriggerCreate("gt_DebugObservatory_Func");
+    TriggerAddEventChatMessage(gt_DebugObservatory, c_playerAny, "-debug room observatory", true);
+}
+
+//--------------------------------------------------------------------------------------------------
 // Trigger: Custom Init
 //--------------------------------------------------------------------------------------------------
 bool gt_CustomInit_Func (bool testConds, bool runActions) {
@@ -15487,6 +15561,120 @@ bool gt_HideBaseGameUI_Func (bool testConds, bool runActions) {
 //--------------------------------------------------------------------------------------------------
 void gt_HideBaseGameUI_Init () {
     gt_HideBaseGameUI = TriggerCreate("gt_HideBaseGameUI_Func");
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Coop.Rooms.Lab.Door_Click
+//--------------------------------------------------------------------------------------------------
+bool gt_CoopRoomsLabDoor_Click_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Conditions
+    if (testConds) {
+        if (!((TriggerIsEnabled(TriggerGetCurrent()) == true))) {
+            return false;
+        }
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    gf_TurnClickablesOnOff(gv_clickables, false);
+    gf_OpenDoor(ge_RoomID_RoomLab, false);
+    UnitIssueOrder(gf_ActorUnit(ge_ActorID_ActorRaynor), OrderTargetingPoint(AbilityCommand("move", 0), PointFromId(251)), c_orderQueueReplace);
+    Wait(1.5, c_timeReal);
+    CinematicFade(false, 0.25, c_fadeStyleNormal, ColorWithAlpha(0.00, 0.00, 0.00, 0.00), 0.0, true);
+    gf_CloseDoor(ge_RoomID_RoomLab, false);
+    gf_ChangeRoom(ge_RoomID_RoomBridge, true);
+    CinematicFade(true, 0.5, c_fadeStyleNormal, ColorWithAlpha(0.00, 0.00, 0.00, 0.00), 0.0, true);
+    gf_TurnClickablesOnOff(gv_clickables, true);
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void gt_CoopRoomsLabDoor_Click_Init () {
+    gt_CoopRoomsLabDoor_Click = TriggerCreate("gt_CoopRoomsLabDoor_Click_Func");
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Coop.Rooms.Bridge.Door_Click
+//--------------------------------------------------------------------------------------------------
+bool gt_CoopRoomsBridgeDoor_Click_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Conditions
+    if (testConds) {
+        if (!((TriggerIsEnabled(TriggerGetCurrent()) == true))) {
+            return false;
+        }
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    gf_TurnClickablesOnOff(gv_clickables, false);
+    gf_OpenDoor(ge_RoomID_RoomBridge, false);
+    gf_BridgeRaynorAnimation(true, false, true);
+    UnitIssueOrder(gf_ActorUnit(ge_ActorID_ActorRaynor), OrderTargetingPoint(AbilityCommand("move", 0), PointFromId(136)), c_orderQueueReplace);
+    UnitIssueOrder(gf_ActorUnit(ge_ActorID_ActorRaynor), OrderTargetingPoint(AbilityCommand("move", 4), PointFromId(120)), c_orderQueueAddToEnd);
+    gf_IssueOrderToUnitToMoveToTargetPointWithFacingDirection(gf_ActorUnit(ge_ActorID_ActorRaynor), PointFromId(120), c_orderQueueAddToEnd);
+    Wait(2.0, c_timeReal);
+    CinematicFade(false, 0.25, c_fadeStyleNormal, ColorWithAlpha(0.00, 0.00, 0.00, 0.00), 0.0, true);
+    gf_CloseDoor(ge_RoomID_RoomBridge, false);
+    if ((gf_RoomIsEnabled(ge_RoomID_RoomCantina) == true)) {
+        gf_ChangeRoom(ge_RoomID_RoomCantina, true);
+    }
+    else {
+        gf_ChangeRoom(ge_RoomID_RoomArmory, true);
+    }
+    CinematicFade(true, 0.5, c_fadeStyleNormal, ColorWithAlpha(0.00, 0.00, 0.00, 0.00), 0.0, true);
+    gf_TurnClickablesOnOff(gv_clickables, true);
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void gt_CoopRoomsBridgeDoor_Click_Init () {
+    gt_CoopRoomsBridgeDoor_Click = TriggerCreate("gt_CoopRoomsBridgeDoor_Click_Func");
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Coop.Rooms.Cantina.Door_Click
+//--------------------------------------------------------------------------------------------------
+bool gt_CoopRoomsCantinaDoor_Click_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Conditions
+    if (testConds) {
+        if (!((TriggerIsEnabled(TriggerGetCurrent()) == true))) {
+            return false;
+        }
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    gf_TurnClickablesOnOff(gv_clickables, false);
+    gf_OpenDoor(ge_RoomID_RoomCantina, false);
+    gf_IssueOrderToUnitToMoveToTargetPointWithFacingDirection(gf_ActorUnit(ge_ActorID_ActorRaynor), PointFromId(51), c_orderQueueReplace);
+    Wait(2.0, c_timeReal);
+    CinematicFade(false, 0.25, c_fadeStyleNormal, ColorWithAlpha(0.00, 0.00, 0.00, 0.00), 0.0, true);
+    gf_CloseDoor(ge_RoomID_RoomCantina, false);
+    if ((gf_RoomIsEnabled(ge_RoomID_RoomLab) == true)) {
+        gf_ChangeRoom(ge_RoomID_RoomLab, true);
+    }
+    else {
+        gf_ChangeRoom(ge_RoomID_RoomBridge, true);
+    }
+    gf_TurnClickablesOnOff(gv_clickables, true);
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void gt_CoopRoomsCantinaDoor_Click_Init () {
+    gt_CoopRoomsCantinaDoor_Click = TriggerCreate("gt_CoopRoomsCantinaDoor_Click_Func");
 }
 
 //--------------------------------------------------------------------------------------------------
@@ -17341,8 +17529,16 @@ bool gt_Init02DHotspots_Func (bool testConds, bool runActions) {
         gf_AddClickable(gv_clickables, gv_bridgeCommunicator, ge_RoomID_RoomBridge, ge_ClickableCursorType_Activate);
     }
 
+    if (gf_IS(gv_nFMInstance.lv_walkInDoors)) {
+        gf_AddClickable(gv_clickables, gv_bridgeDoor, ge_RoomID_RoomBridge, ge_ClickableCursorType_Move);
+    }
+
     if ((libCamp_gf_MissionStatusCheck(libCamp_ge_MapID_MapTValerian01, libCamp_ge_MissionStatus_Completed) == false)) {
         gf_AddClickable(gv_clickables, gv_bridgeStarmap, ge_RoomID_RoomBridge, ge_ClickableCursorType_Activate);
+    }
+
+    if (gf_IS(gv_nFMInstance.lv_walkInDoors)) {
+        gf_AddClickable(gv_clickables, gv_bridgeWindow, ge_RoomID_RoomBridge, ge_ClickableCursorType_Look);
     }
 
     gv_cantinaArcade = UnitFromId(145);
@@ -17361,6 +17557,10 @@ bool gt_Init02DHotspots_Func (bool testConds, bool runActions) {
     gv_cantinaTrophyToshB = UnitFromId(266);
     gf_AddClickable(gv_clickables, gv_cantinaArcade, ge_RoomID_RoomCantina, ge_ClickableCursorType_Activate);
     gf_AddClickable(gv_clickables, gv_cantinaBadge, ge_RoomID_RoomCantina, ge_ClickableCursorType_Look);
+    if (gf_IS(gv_nFMInstance.lv_walkInDoors)) {
+        gf_AddClickable(gv_clickables, gv_cantinaDoor, ge_RoomID_RoomCantina, ge_ClickableCursorType_Move);
+    }
+
     gf_AddClickable(gv_clickables, gv_cantinaJukebox, ge_RoomID_RoomCantina, ge_ClickableCursorType_Activate);
     gf_AddClickable(gv_clickables, gv_cantinaMercLabtop, ge_RoomID_RoomCantina, ge_ClickableCursorType_Activate);
     gf_AddClickable(gv_clickables, gv_cantinaPoster1, ge_RoomID_RoomCantina, ge_ClickableCursorType_Look);
@@ -17435,6 +17635,10 @@ bool gt_Init02DHotspots_Func (bool testConds, bool runActions) {
 
     if ((libCamp_gf_StoryResearchPoints(libCamp_ge_StoryResearchCategory_ResearchCategoryZerg) > 0)) {
         gf_AddClickable(gv_clickables, gv_labTubeZerg, ge_RoomID_RoomLab, ge_ClickableCursorType_Look);
+    }
+
+    if (gf_IS(gv_nFMInstance.lv_walkInDoors)) {
+        gf_AddClickable(gv_clickables, gv_labDoor, ge_RoomID_RoomLab, ge_ClickableCursorType_Move);
     }
 
     gf_InitMarSaraBarHotspots();
@@ -20648,6 +20852,11 @@ bool gt_ActorClicked_Func (bool testConds, bool runActions) {
     }
 
     lv_actor = gf_ActorID(gf_HotspotClicked());
+    gf_DebugDisplay((StringExternal("Param/Value/1E1B4C79") + IntToText((lv_actor))));
+    if ((lv_actor == ge_ActorID_ActorNone)) {
+        gf_CoopRoomsParseHotspot(gf_HotspotClicked());
+    }
+
     if ((gv_currentRoom == ge_RoomID_RoomArmory) && (lv_actor == ge_ActorID_ActorSwann) && (gf_ActorWithConversation(lv_actor) == true)) {
         TriggerExecute(gt_ArmorySwannClicked, true, false);
     }
@@ -21277,7 +21486,19 @@ bool gt_WalkinBridge_Func (bool testConds, bool runActions) {
     }
 
     gf_DebriefingTValerian01Play2();
-    gf_ResetActorToLocation(ge_ActorID_ActorRaynor, PointFromId(36));
+    if (gf_IS(gv_nFMInstance.lv_walkInDoors)) {
+        gf_ResetActorToLocation(ge_ActorID_ActorRaynor, libNtve_gf_PointOffsetTowardsPoint(PointFromId(120), -1.0, PointFromId(136)));
+        libNtve_gf_MakeUnitFacePoint(gf_ActorUnit(ge_ActorID_ActorRaynor), PointFromId(136), 0.0);
+        gf_OpenDoor(ge_RoomID_RoomBridge, false);
+        gf_IssueOrderToUnitToMoveToTargetPointWithFacingDirection(gf_ActorUnit(ge_ActorID_ActorRaynor), PointFromId(136), c_orderQueueReplace);
+        CinematicFade(true, 0.5, c_fadeStyleNormal, ColorWithAlpha(0.00, 0.00, 0.00, 0.00), 0.0, true);
+        gf_IssueOrderToUnitToMoveToTargetPointWithFacingDirection(gf_ActorUnit(ge_ActorID_ActorRaynor), PointFromId(36), c_orderQueueAddToEnd);
+        Wait(3.0, c_timeReal);
+        gf_CloseDoor(ge_RoomID_RoomBridge, false);
+    }
+    else {
+        gf_ResetActorToLocation(ge_ActorID_ActorRaynor, PointFromId(36));
+    }
     TriggerExecute(gt_DebriefingLabCantinaOpened, true, false);
     TriggerExecute(gt_DebriefingCommunicatorUnlocked, true, false);
     return true;
@@ -21298,7 +21519,25 @@ bool gt_WalkinCantina_Func (bool testConds, bool runActions) {
         return true;
     }
 
-    gf_ResetActorToLocation(ge_ActorID_ActorRaynor, gf_RaynorCantinaHome());
+    if (gf_IS(gv_nFMInstance.lv_walkInDoors)) {
+        gf_ResetActorToLocation(ge_ActorID_ActorRaynor, libNtve_gf_PointOffsetTowardsPoint(PointFromId(51), -1.0, gf_RaynorCantinaHome()));
+        gf_RoomActorAnimation(ge_RoomID_RoomCantina, ge_ActorID_ActorRaynor, true, false, true);
+        libNtve_gf_MakeUnitFacePoint(gf_ActorUnit(ge_ActorID_ActorRaynor), gf_RaynorCantinaHome(), 0.0);
+        gf_OpenDoor(gv_currentRoom, true);
+        gf_IssueOrderToUnitToMoveToTargetPointWithFacingDirection(gf_ActorUnit(ge_ActorID_ActorRaynor), gf_RaynorCantinaHome(), c_orderQueueReplace);
+        CinematicFade(true, 0.5, c_fadeStyleNormal, ColorWithAlpha(0.00, 0.00, 0.00, 0.00), 0.0, true);
+        Wait(1.0, c_timeReal);
+        gf_CloseDoor(gv_currentRoom, false);
+        Wait(2.0, c_timeReal);
+        CinematicFade(false, 0.25, c_fadeStyleNormal, ColorWithAlpha(0.00, 0.00, 0.00, 0.00), 0.0, true);
+        Wait(0.1, c_timeReal);
+        gf_ResetActorToLocation(ge_ActorID_ActorRaynor, gf_RaynorCantinaHome());
+        Wait(0.1, c_timeReal);
+        CinematicFade(true, 0.5, c_fadeStyleNormal, ColorWithAlpha(0.00, 0.00, 0.00, 0.00), 0.0, true);
+    }
+    else {
+        gf_ResetActorToLocation(ge_ActorID_ActorRaynor, gf_RaynorCantinaHome());
+    }
     return true;
 }
 
@@ -21342,7 +21581,24 @@ bool gt_WalkinLab_Func (bool testConds, bool runActions) {
         TriggerExecute(gt_ScriptSceneLabIntro, true, true);
         return true;
     }
+    else {
+        if (gf_IS(gv_nFMInstance.lv_walkInDoors)) {
+            gf_ResetActorToLocation(ge_ActorID_ActorRaynor, libNtve_gf_PointOffsetTowardsPoint(PointFromId(251), -1.0, gf_LabRaynorHome()));
+            libNtve_gf_MakeUnitFacePoint(gf_ActorUnit(ge_ActorID_ActorRaynor), gf_LabRaynorHome(), 0.0);
+            gf_OpenDoor(gv_currentRoom, true);
+            gf_IssueOrderToUnitToMoveToTargetPointWithFacingDirection(gf_ActorUnit(ge_ActorID_ActorRaynor), gf_LabRaynorHome(), c_orderQueueReplace);
+            CinematicFade(true, 0.5, c_fadeStyleNormal, ColorWithAlpha(0.00, 0.00, 0.00, 0.00), 0.0, true);
+            Wait(1.0, c_timeReal);
+            gf_CloseDoor(gv_currentRoom, false);
+            Wait(2.0, c_timeReal);
+            CinematicFade(false, 0.25, c_fadeStyleNormal, ColorWithAlpha(0.00, 0.00, 0.00, 0.00), 0.0, true);
+            Wait(0.1, c_timeReal);
+            gf_ResetActorToLocation(ge_ActorID_ActorRaynor, gf_LabRaynorHome());
+            Wait(0.1, c_timeReal);
+            CinematicFade(true, 0.5, c_fadeStyleNormal, ColorWithAlpha(0.00, 0.00, 0.00, 0.00), 0.0, true);
+        }
 
+    }
     gf_ResetActorToLocation(ge_ActorID_ActorRaynor, gf_LabRaynorHome());
     return true;
 }
@@ -22795,6 +23051,9 @@ bool gt_HotspotClicked_Func (bool testConds, bool runActions) {
     }
     else if ((gf_HotspotClicked() == gv_bridgeStarmap)) {
         TriggerExecute(gt_BridgeStarmapClicked, true, false);
+    }
+    else if ((gf_HotspotClicked() == gv_bridgeWindow)) {
+        TriggerExecute(gt_BridgeWindowClicked, true, false);
     }
     else if ((gf_HotspotClicked() == gv_cantinaArcade)) {
         TriggerExecute(gt_CantinaArcadeClicked, true, false);
@@ -42056,6 +42315,8 @@ void InitTriggers () {
     gt_DebugModeOn_Init();
     gt_DebugModeOff_Init();
     gt_DebugCount_Init();
+    gt_DebugRoom_Init();
+    gt_DebugObservatory_Init();
     gt_CustomInit_Init();
     gt_Disabletips_Init();
     gt_RegisterMissions_Init();
@@ -42066,6 +42327,9 @@ void InitTriggers () {
     gt_CustomPlanetNextPlanet_Init();
     gt_CustomPlanetPrevPlanet_Init();
     gt_HideBaseGameUI_Init();
+    gt_CoopRoomsLabDoor_Click_Init();
+    gt_CoopRoomsBridgeDoor_Click_Init();
+    gt_CoopRoomsCantinaDoor_Click_Init();
     gt_WaitForSkipTrig_Init();
     gt_BackButtonClicked_Init();
     gt_BackButtonEscape_Init();
