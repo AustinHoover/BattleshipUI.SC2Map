@@ -70,6 +70,7 @@ const fixed gv_c_TIPINTERVALSTART = 1.0;
 //--------------------------------------------------------------------------------------------------
 struct gs_NFM {
     bool lv_walkInDoors;
+    bool lv_onLoadCinematic;
 };
 
 struct gs_Mission {
@@ -409,6 +410,7 @@ int gv_customPlanetMissionContactPortrait;
 int gv_customPlanetBriefingPlayButton;
 int gv_customPlanetBriefingStopButton;
 int gv_customPlanetUnitPreview;
+bool gv_inCinematic;
 fixed gv_talkBlendTime;
 fixed gv_standBlendTime;
 fixed gv_idleFidgetStartTime;
@@ -1150,6 +1152,10 @@ void gf_CustomPlanetInjectPlanet (int lp_uISlot, int lp_missionIndex, int lp_off
 void gf_CustomPlanetInjectPlanets ();
 void gf_CustomPlanetSelectPlanet (int lp_index);
 void gf_CoopRoomsParseHotspot (unit lp_hotspot);
+void gf_CinematicPreload (int lp_room, string lp_conversation);
+void gf_CinematicShowTimestamp (string lp_convoLine);
+void gf_CinematicSetupCinematicState ();
+void gf_CinematicCleanup (int lp_room);
 void gf_CustomFadeInOut (bool lp_fadeIn, fixed lp_duration, bool lp_waitUntilDone);
 void gf_TurnClickableOnOff (unit lp_unit, bool lp_desiredState);
 void gf_TurnClickablesOnOff (unitgroup lp_whichClickables, bool lp_desiredState);
@@ -1604,6 +1610,10 @@ trigger gt_HideBaseGameUI;
 trigger gt_CoopRoomsLabDoor_Click;
 trigger gt_CoopRoomsBridgeDoor_Click;
 trigger gt_CoopRoomsCantinaDoor_Click;
+trigger gt_OnLoadPlayCinematics;
+trigger gt_ExampleCinematic;
+trigger gt_ExampleCinematicPreload;
+trigger gt_ExampleCinematicSkippable;
 trigger gt_WaitForSkipTrig;
 trigger gt_BackButtonClicked;
 trigger gt_BackButtonEscape;
@@ -2620,6 +2630,61 @@ void gf_CoopRoomsParseHotspot (unit lp_hotspot) {
         TriggerExecute(gt_CoopRoomsLabDoor_Click, true, false);
     }
 
+}
+
+void gf_CinematicPreload (int lp_room, string lp_conversation) {
+    // Automatic Variable Declarations
+    // Implementation
+    gf_PreloadRoomIfCondition(lp_room, true);
+    gf_BriefingPreloadScreens(lp_room);
+    ConversationDataPreloadLines(lp_conversation);
+}
+
+void gf_CinematicShowTimestamp (string lp_convoLine) {
+    // Automatic Variable Declarations
+    // Implementation
+    UIShowTextCrawl(PlayerGroupAll(), ConversationDataStateText(lp_convoLine, "Title"), ConversationDataStateText("Timestamps|Hanson02_Briefing", "Description"), 5.0, SoundLink("Silent", -1), SoundLink("TextCrawlType", -1));
+}
+
+void gf_CinematicSetupCinematicState () {
+    // Automatic Variable Declarations
+    // Implementation
+    gf_TurnClickablesOnOff(gv_clickables, false);
+    gf_PauseFlashing(true);
+    gf_PauseNewItemInfo(true);
+    gf_StopAllTransmissionConversation();
+    gf_HideFullScreenImage(false);
+    gf_SetWorldMode(ge_WorldMode_WorldModeSubspaceScriptedScene);
+    gf_SetIdleState(ge_IdleState_Busy);
+    gv_inCinematic = true;
+    CinematicFade(false, 0.0, c_fadeStyleNormal, ColorWithAlpha(0.00, 0.00, 0.00, 0.00), 0.0, true);
+    libNtve_gf_CinematicMode(true, PlayerGroupAll(), 0.0);
+    gf_SetAllSoundChannelVolumesStoryMode(libNtve_ge_VolumeChannelMode_Cinematic);
+}
+
+void gf_CinematicCleanup (int lp_room) {
+    // Automatic Variable Declarations
+    // Implementation
+    TriggerExecute(gt_StopSoundtrackMultiple, true, false);
+    CinematicFade(false, 0.2, c_fadeStyleNormal, Color(0.00, 0.00, 0.00), 0.0, true);
+    gf_ActorSceneClearAll();
+    gf_RoomSceneClearAll();
+    libNtve_gf_SendActorMessageToUnit(gf_RoomUnit(lp_room), "AnimSetPaused Default 0");
+    gf_ClearAnimationwithblendtime(c_animNameDefault, gf_RoomUnit(lp_room), 0.0);
+    gf_StopAllTransmissionConversation();
+    libNtve_gf_CinematicMode(false, PlayerGroupAll(), 0.0);
+    gf_SetAllSoundChannelVolumesStoryMode(libNtve_ge_VolumeChannelMode_Game);
+    gf_PauseFlashing(false);
+    gf_PauseNewItemInfo(false);
+    gf_GoToRoom(lp_room, false);
+    gf_EnterRoom(lp_room, false);
+    Wait(0.5, c_timeReal);
+    CinematicFade(true, 1.0, c_fadeStyleNormal, ColorWithAlpha(0.00, 0.00, 0.00, 0.00), 0.0, true);
+    gv_inCinematic = false;
+    gf_DisplayRoomChangePanel();
+    gf_TurnClickablesOnOff(gv_clickables, true);
+    gf_SetWorldMode(ge_WorldMode_WorldModeGlobal);
+    gf_SetIdleState(ge_IdleState_Idle);
 }
 
 void gf_CustomFadeInOut (bool lp_fadeIn, fixed lp_duration, bool lp_waitUntilDone) {
@@ -15179,6 +15244,7 @@ bool gt_CustomInit_Func (bool testConds, bool runActions) {
     TriggerExecute(gt_HideBaseGameUI, true, false);
     TriggerExecute(gt_RegisterMissions, true, false);
     TriggerExecute(gt_CustomPlanetInit, true, false);
+    TriggerExecute(gt_OnLoadPlayCinematics, true, false);
     CameraApplyInfo(1, CameraInfoFromId(12), 0.0, -1, 10, true);
     TriggerExecute(gt_Disabletips, true, false);
     return true;
@@ -15675,6 +15741,165 @@ bool gt_CoopRoomsCantinaDoor_Click_Func (bool testConds, bool runActions) {
 //--------------------------------------------------------------------------------------------------
 void gt_CoopRoomsCantinaDoor_Click_Init () {
     gt_CoopRoomsCantinaDoor_Click = TriggerCreate("gt_CoopRoomsCantinaDoor_Click_Func");
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: On Load - Play Cinematics
+//--------------------------------------------------------------------------------------------------
+bool gt_OnLoadPlayCinematics_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    if ((gv_nFMInstance.lv_onLoadCinematic == false)) {
+        return true;
+    }
+
+    TriggerExecute(gt_ExampleCinematic, true, false);
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void gt_OnLoadPlayCinematics_Init () {
+    gt_OnLoadPlayCinematics = TriggerCreate("gt_OnLoadPlayCinematics_Func");
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: ExampleCinematic
+//--------------------------------------------------------------------------------------------------
+bool gt_ExampleCinematic_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    gv_inCinematic = true;
+    TriggerExecute(gt_ExampleCinematicPreload, true, false);
+    gf_CinematicSetupCinematicState();
+    gf_GoToRoom(ge_RoomID_RoomBridge, false);
+    gf_RoomScenePrepare(ge_RoomID_RoomBridge, ge_SceneType_Scene);
+    gf_HideAllActors(false);
+    gf_ActorScenePrepare(ge_ActorID_ActorRaynor, ge_ActorID_ActorNone, ge_RoomID_RoomArmory, ge_SceneType_Scene);
+    gf_RemoveVisibleUnit(true, gf_ActorUnit(ge_ActorID_ActorRaynor));
+    gf_ActorScenePrepare(ge_ActorID_ActorHorner, ge_ActorID_ActorNone, ge_RoomID_RoomBridge, ge_SceneType_Scene);
+    gf_RemoveVisibleUnit(true, gf_ActorUnit(ge_ActorID_ActorSwann));
+    TriggerExecute(gt_ExampleCinematicSkippable, true, true);
+    gf_CinematicCleanup(ge_RoomID_RoomBridge);
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void gt_ExampleCinematic_Init () {
+    gt_ExampleCinematic = TriggerCreate("gt_ExampleCinematic_Func");
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: ExampleCinematic - Preload
+//--------------------------------------------------------------------------------------------------
+bool gt_ExampleCinematicPreload_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    gf_CinematicPreload(ge_RoomID_RoomNone, null);
+    gf_PreloadUnitStoryMap(gf_ActorUnit(ge_ActorID_ActorRaynor));
+    gf_PreloadUnitStoryMap(gf_ActorUnit(ge_ActorID_ActorHorner));
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void gt_ExampleCinematicPreload_Init () {
+    gt_ExampleCinematicPreload = TriggerCreate("gt_ExampleCinematicPreload_Func");
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Example Cinematic (Skippable)
+//--------------------------------------------------------------------------------------------------
+bool gt_ExampleCinematicSkippable_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    int lv__Room;
+    int lv_portaitLeft;
+    int lv_portaitMiddle;
+    int lv_portaitRight;
+
+    // Automatic Variable Declarations
+    // Variable Initialization
+    lv__Room = ge_RoomID_RoomNone;
+    lv_portaitLeft = c_invalidPortraitId;
+    lv_portaitMiddle = c_invalidPortraitId;
+    lv_portaitRight = c_invalidPortraitId;
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    lv__Room = ge_RoomID_RoomBridge;
+    TriggerSkippableBegin(PlayerGroupAll(), 0, null, true, false);
+    gf_BriefingPrepare(lv__Room, ge_BriefingCamera_ScreenFar, ge_ActorID_ActorRaynor, ge_ActorID_ActorHorner, ge_ActorID_ActorNone, true, true, false, false);
+    lv_portaitLeft = gf_BriefingCreatePortrait(libCamp_gf_ContactPortraitModel(libCamp_ge_ContactID_ContactTosh), "Default", ge_BriefingScreen_Left, true);
+    gf_BriefingStopVideo(lv__Room, ge_BriefingScreen_Center);
+    SoundPlay(SoundLink("TTosh01Briefing_Hyperion", 0), PlayerGroupAll(), 100.0, 0.0);
+    gv_briefingMovieSound = SoundLastPlayed();
+    libNtve_gf_SendTransmissionSimple(TransmissionSourceFromModel(null), PortraitGetPlanetPanel(), SoundLink("TRaynor01MusicIntro", 0), 0.0, c_transmissionDurationAdd, false);
+    gv_briefingMovieTransmission = TransmissionLastSent();
+    UISetWorldVisible(PlayerGroupAll(), false);
+    Wait(0.5, c_timeReal);
+    TriggerExecute(gt_BriefingTTosh01Timestamp, true, false);
+    CinematicFade(true, 1.0, c_fadeStyleNormal, Color(0.00, 0.00, 0.00), 0.0, true);
+    Wait(1.5, c_timeGame);
+    libNtve_gf_SendTransmissionSimple(TransmissionSourceFromUnit(gf_ActorUnit(ge_ActorID_ActorRaynor), false, false, "Talk"), c_invalidPortraitId, SoundLink("TTosh01BriefingRaynor00002", 0), 1.0, c_transmissionDurationAdd, true);
+    SoundtrackPlay(PlayerGroupAll(), c_soundtrackCategoryMusic, "TTosh01MusicBriefing", c_soundtrackCueAny, c_soundtrackIndexAny, false);
+    CameraApplyInfo(1, CameraInfoFromId(441), 0.0, -1, 10, true);
+    UISetWorldVisible(PlayerGroupAll(), true);
+    TransmissionClear(gv_briefingMovieTransmission);
+    gv_briefingMovieTransmission = c_invalidTransmissionId;
+    libNtve_gf_SendTransmissionSimple(TransmissionSourceFromUnit(gf_ActorUnit(ge_ActorID_ActorRaynor), false, false, "Talk"), c_invalidPortraitId, SoundLink("TTosh01BriefingRaynor00004", 0), 1.0, c_transmissionDurationAdd, false);
+    Wait(0.5, c_timeReal);
+    gf_MakeUnitLookAtUnitAndBlinkWithDebugControl(gf_ActorUnit(ge_ActorID_ActorHorner), "MedHeadOnlySubtle", gf_ActorUnit(ge_ActorID_ActorRaynor), "Ref_Head");
+    TransmissionWait(TransmissionLastSent(), 0.0);
+    libNtve_gf_SimpleLookAtStop(gf_ActorUnit(ge_ActorID_ActorHorner), "InstantStanding");
+    gf_BriefingPlayVideo("BriefingTTosh01_01", lv__Room, ge_BriefingScreen_Center, false);
+    CameraApplyInfo(1, CameraInfoFromId(442), 0.0, -1, 10, true);
+    gf_RemoveVisibleUnit(true, gf_BriefingScreen(lv__Room, ge_BriefingScreen_Left));
+    libNtve_gf_PlayAnimation(libNtve_gf_MainActorofUnit(gf_BriefingScreen(lv__Room, ge_BriefingScreen_Left)), c_animNameDefault, "Birth", c_animFlagPlayForever | c_animFlagNonLooping, 0.0);
+    gf_BriefingPlayVideo("BriefingTHorner01_00", lv__Room, ge_BriefingScreen_Center, true);
+    Wait(1.0, c_timeReal);
+    libNtve_gf_SendTransmissionSimple(TransmissionSourceFromModel(libCamp_gf_ContactPortraitModel(libCamp_ge_ContactID_ContactTosh)), lv_portaitLeft, SoundLink("TTosh01BriefingTosh00001", 0), 0.0, c_transmissionDurationAdd, false);
+    TransmissionWait(TransmissionLastSent(), 0.0);
+    libNtve_gf_SendTransmissionSimple(TransmissionSourceFromModel(libCamp_gf_ContactPortraitModel(libCamp_ge_ContactID_ContactTosh)), lv_portaitLeft, SoundLink("TTosh01BriefingTosh00007", 0), 0.0, c_transmissionDurationAdd, true);
+    libNtve_gf_SendTransmissionSimple(TransmissionSourceFromUnit(gf_ActorUnit(ge_ActorID_ActorRaynor), false, false, "Talk"), c_invalidPortraitId, SoundLink("TTosh01BriefingRaynor00003", 0), 0.0, c_transmissionDurationAdd, true);
+    libNtve_gf_SendTransmissionSimple(TransmissionSourceFromModel(libCamp_gf_ContactPortraitModel(libCamp_ge_ContactID_ContactTosh)), lv_portaitLeft, SoundLink("TTosh01BriefingTosh00010", 0), 0.0, c_transmissionDurationAdd, true);
+    libNtve_gf_SendTransmissionSimple(TransmissionSourceFromModel(libCamp_gf_ContactPortraitModel(libCamp_ge_ContactID_ContactTosh)), lv_portaitLeft, SoundLink("TTosh01BriefingTosh00005", 0), 0.0, c_transmissionDurationAdd, true);
+    Wait(1.0, c_timeReal);
+    gf_BriefingPlayVideo("BriefingTTosh01_02", lv__Room, ge_BriefingScreen_Center, true);
+    CameraApplyInfo(1, CameraInfoFromId(443), 0.0, -1, 10, true);
+    libNtve_gf_SendTransmissionSimple(TransmissionSourceFromUnit(gf_ActorUnit(ge_ActorID_ActorHorner), true, false, "Talk"), c_invalidPortraitId, SoundLink("TTosh01BriefingHorner00011", 0), 0.0, c_transmissionDurationAdd, false);
+    Wait(0.5, c_timeReal);
+    gf_MakeUnitLookAtUnitAndBlinkWithDebugControl(gf_ActorUnit(ge_ActorID_ActorHorner), "MedHeadOnlySubtle", gf_ActorUnit(ge_ActorID_ActorRaynor), "Ref_Head");
+    TransmissionWait(TransmissionLastSent(), 0.0);
+    libNtve_gf_SendTransmissionSimple(TransmissionSourceFromUnit(gf_ActorUnit(ge_ActorID_ActorHorner), true, false, "Talk"), c_invalidPortraitId, SoundLink("TTosh01BriefingHorner00006", 0), 0.0, c_transmissionDurationAdd, true);
+    CameraApplyInfo(1, CameraInfoFromId(439), 0.0, -1, 10, true);
+    libNtve_gf_SendTransmissionSimple(TransmissionSourceFromUnit(gf_ActorUnit(ge_ActorID_ActorRaynor), false, false, "Talk"), c_invalidPortraitId, SoundLink("TTosh01BriefingRaynor00012", 0), 0.0, c_transmissionDurationAdd, true);
+    libNtve_gf_SendTransmissionSimple(TransmissionSourceFromUnit(gf_ActorUnit(ge_ActorID_ActorRaynor), false, false, "Talk"), c_invalidPortraitId, SoundLink("TTosh01BriefingRaynor00008", 0), 0.0, c_transmissionDurationAdd, false);
+    Wait((SoundLengthSync(SoundLink("TTosh01BriefingRaynor00008", 0)) / 2.0), c_timeReal);
+    libNtve_gf_PlayAnimation(libNtve_gf_MainActorofUnit(gf_ActorUnit(ge_ActorID_ActorRaynor)), gv_aNIMID_BRIEFING, "Custom Turn Walk Right", c_animFlagPlayForever | c_animFlagNonLooping, c_animTimeDefault);
+    TransmissionWait(TransmissionLastSent(), 0.0);
+    libNtve_gf_PlayAnimation(libNtve_gf_MainActorofUnit(gf_ActorUnit(ge_ActorID_ActorHorner)), "Blink", "Blink", c_animFlagNonLooping, c_animTimeDefault);
+    libNtve_gf_SimpleLookAtStop(gf_ActorUnit(ge_ActorID_ActorHorner), "VerySlowHeadOnlySubtle");
+    Wait(1.0, c_timeGame);
+    gv_briefingCompleted = true;
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void gt_ExampleCinematicSkippable_Init () {
+    gt_ExampleCinematicSkippable = TriggerCreate("gt_ExampleCinematicSkippable_Func");
 }
 
 //--------------------------------------------------------------------------------------------------
@@ -18414,7 +18639,10 @@ bool gt_ReturnGeneric_Func (bool testConds, bool runActions) {
 
     Wait(0.5, c_timeReal);
     libCamp_gf_HideStoryUI(true, true);
-    gf_DisplayRoomChangePanel();
+    if ((gv_inCinematic == false)) {
+        gf_DisplayRoomChangePanel();
+    }
+
     gf_TurnClickablesOnOff(gv_clickables, true);
     gf_ReturnNewItemInfo();
     if ((lv_room == ge_RoomID_RoomObservatory)) {
@@ -42330,6 +42558,10 @@ void InitTriggers () {
     gt_CoopRoomsLabDoor_Click_Init();
     gt_CoopRoomsBridgeDoor_Click_Init();
     gt_CoopRoomsCantinaDoor_Click_Init();
+    gt_OnLoadPlayCinematics_Init();
+    gt_ExampleCinematic_Init();
+    gt_ExampleCinematicPreload_Init();
+    gt_ExampleCinematicSkippable_Init();
     gt_WaitForSkipTrig_Init();
     gt_BackButtonClicked_Init();
     gt_BackButtonEscape_Init();
